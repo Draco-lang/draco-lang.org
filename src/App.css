@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.splash-logo {
+  height: 300px;
+  pointer-events: none;
+}
+
+body {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    font-weight: 350;
+    color: white;
+  }
+}

@@ -1,0 +1,16 @@
+.top-bar {
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 16px;
+    padding-right: 25px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbar-logo {
+    height: 40px;
+}
+.topbar-icon {
+    height: 28px;
+}
