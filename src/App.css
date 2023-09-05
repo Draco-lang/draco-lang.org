@@ -4,11 +4,6 @@
   width: 100vw;
 }
 
-.splash-logo {
-  height: 300px;
-  pointer-events: none;
-}
-
 body {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,5 +18,10 @@ body {
   body {
     font-weight: 350;
     color: white;
+  }
+
+  button {
+    color: white;
+    
   }
 }

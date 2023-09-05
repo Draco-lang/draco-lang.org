@@ -1,0 +1,32 @@
+.splash-logo {
+    height: 300px;
+    pointer-events: none;
+  }
+  
+
+.mainButtons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 3rem;
+}
+
+.getstarted {
+    background-color: #009a94;
+    color: white;
+    border: none;
+}
+
+.getstarted:hover {
+    background-color: #00c8bd;
+}
+
+.specs {
+    background-color: transparent;
+    border: 1px solid #00c8bd;
+    color: inherit;
+}
+
+.specs:hover {
+    background-color: #00c8bd50;
+}

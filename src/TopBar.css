@@ -14,3 +14,15 @@
 .topbar-icon {
     height: 28px;
 }
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 75%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.links .draco-button:hover {
+    background-color: #00c8bd50;
+}
