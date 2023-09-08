@@ -30,3 +30,7 @@
 .specs:hover {
     background-color: #00c8bd50;
 }
+
+.landing-segment {
+    padding-bottom: 8em;
+}

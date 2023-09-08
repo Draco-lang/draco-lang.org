@@ -1,0 +1,32 @@
+.tab-buttons {
+    display: flex;
+}
+
+.tab-buttons button {
+    background-color: transparent;
+    font-size: 16px;
+    padding: 0.5em 1em;
+    outline: 1px solid #e5e7eb28; /* borders produces doubles borders in tabs */
+    border: 0;
+    margin-left: 1px; /**/
+}
+
+.tab-buttons button:first-child {
+    border-radius: 5px 0px 0px 0px;
+}
+
+.tab-buttons button:last-child {
+    border-radius: 0px 5px 0px 0px;
+}
+
+.tab-buttons .active {
+    outline-color: #00c8bd;
+}
+
+.tab-buttons :not(.active):hover {
+    background-color: #00c8bd50;
+}
+
+.tab-buttons :not(.active) {
+    cursor: pointer;
+}

@@ -3,7 +3,7 @@ import './LandingSegment.css';
 
 function LandingSegment() {
     return (
-        <div className="landingSegment">
+        <div className="landing-segment">
             <img src="Logo-Long.svg" className="splash-logo" alt="Big Logo of Draco" />
             <h1>
                 A new .NET programming language in the making

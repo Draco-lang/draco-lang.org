@@ -12,6 +12,7 @@ function TopBar() {
                 <DracoButton buttonSize="medium" url={"#"}>Documentation</DracoButton> {/*redirect to getting started for now*/}
                 <DracoButton buttonSize="medium" url={"#"}>Specifications</DracoButton>
                 <DracoButton buttonSize="medium" url={"#"}>Community</DracoButton>
+                <DracoButton buttonSize="medium" url={"#"}>Blog</DracoButton>
 
                 <a href="https://github.com/Draco-lang/">
                     <img src="github-logo.svg" className="topbar-icon" alt="GitHub Logo" />
