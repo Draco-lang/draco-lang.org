@@ -11,3 +11,13 @@
 .splash-code-viewer {
     width: 70%;
 }
+
+.aligned {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.superDerpy {
+    font-size: 100px;
+}

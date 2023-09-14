@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@octokit/auth-action": "^4.0.0",
+    "@octokit/rest": "^20.0.1",
     "@types/react-highlight": "^0.12.5"
   }
 }

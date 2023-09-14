@@ -5,7 +5,7 @@ function TopBar() {
     return (
         <div className="top-bar">
             <a href="/">
-                <img src="Logo-Short.svg" className="topbar-logo" alt="logo" />
+                <img src="generated/Logo-Short.svg" className="topbar-logo" alt="logo" />
             </a>
             <div className="links">
 
@@ -15,7 +15,7 @@ function TopBar() {
                 <DracoButton buttonSize="medium" url={"#"}>Blog</DracoButton>
 
                 <a href="https://github.com/Draco-lang/">
-                    <img src="github-logo.svg" className="topbar-icon" alt="GitHub Logo" />
+                    <img src="generated/github-logo.svg" className="topbar-icon" alt="GitHub Logo" />
                 </a>
             </div>
 
