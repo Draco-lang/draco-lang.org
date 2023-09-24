@@ -1,5 +1,5 @@
-import React from 'react';
-import './CodeTabs.css';
+import React from "react";
+import "./CodeTabs.css";
 
 interface CodeTabProps {
     title: string;

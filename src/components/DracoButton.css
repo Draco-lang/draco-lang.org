@@ -20,3 +20,10 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
+
+a.draco-button {
+    color: white;
+}
+a.draco-button:visited{
+    color: white;
+}

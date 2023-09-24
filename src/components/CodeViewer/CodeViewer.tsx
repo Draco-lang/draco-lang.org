@@ -1,11 +1,8 @@
-import React, { useState, ReactNode, HTMLProps } from 'react';
-import './CodeViewer.css';
-import 'highlight.js/styles/atom-one-dark.css';
-import Highlight from 'react-highlight';
+import React, { useState, ReactNode, HTMLProps } from "react";
+import "./CodeViewer.css";
+import "highlight.js/styles/atom-one-dark.css";
+import Highlight from "react-highlight";
 
-interface CodeViewerProps {
-    children: ReactNode;
-}
 
 export default function CodeViewer(prop: HTMLProps<HTMLDivElement> & {children: ReactNode}): JSX.Element {
     const { children, ...restProps } = prop;
@@ -22,7 +19,7 @@ export default function CodeViewer(prop: HTMLProps<HTMLDivElement> & {children: 
         <div {...restProps}>
             <div className="tab-buttons">
                 {tabs.map((tab, index) => (
-                    <button key={index} onClick={() => changeTab(index)} className={activeTabIndex === index ? 'active' : ''}>
+                    <button key={index} onClick={() => changeTab(index)} className={activeTabIndex === index ? "active" : ""}>
                         {tab.props.title}
                     </button>
                 ))}

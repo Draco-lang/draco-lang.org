@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   height: 100vh;
   width: 100vw;
 }
@@ -24,4 +23,13 @@ body {
     color: white;
     
   }
+}
+
+
+a {
+  color: #00c8bd;
+}
+
+a:visited {
+  color: #009a94;
 }

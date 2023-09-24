@@ -1,0 +1,76 @@
+.communityContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.communityContent>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    height: 500px;
+    border: 1px solid #e5e7eb28;
+    background-color: #333740;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 0px 30px 0px 30px;
+    width: 100%;
+    flex: 1 1 0px;
+}
+
+.communityContent p {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    margin: 0;
+}
+
+.communityContent iframe {
+    align-self: center;
+}
+
+.communityContent .discordWidget {
+    align-self: center;
+    margin-top: 1em;
+}
+
+.inlineEmoji {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -5px;
+}
+
+.community h1 {
+    text-align: center;
+    font-size: 50px;
+}
+
+.aspectRatio {
+    width: auto;
+    height: 0;
+    padding-bottom: 56.25%;
+    position: relative;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.community iframe {
+    margin-top: 1em;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+.githubCard {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+.githubCard img {
+    width: 100%;
+}
+
+.communityContent .communityPadding {
+    margin-bottom: 1em;
+}

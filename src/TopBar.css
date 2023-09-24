@@ -1,16 +1,25 @@
-.top-bar {
+.topBar {
     height: 64px;
     display: flex;
     flex-direction: row;
-    padding-left: 16px;
-    padding-right: 25px;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    background-color: #282c34;
 }
 
-.topbar-logo {
-    height: 40px;
+
+.topBarLogo {
+    padding-left: 16px;
+    height: 50px;
 }
+
+.topBarLink {
+    display: flex;
+    align-items: center;
+}
+
 .topbar-icon {
     height: 28px;
 }
@@ -21,6 +30,7 @@
     width: 75%;
     justify-content: flex-end;
     align-items: center;
+    padding-right: 25px;
 }
 
 .links .draco-button:hover {
