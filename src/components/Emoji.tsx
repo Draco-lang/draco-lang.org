@@ -5,11 +5,11 @@ export default function Emoji(prop: HTMLProps<HTMLImageElement> & { emojiName: E
     const imgClassName = `emoji ${className || ""}`;
     return (
         <img src={`generated/${emojiName}.svg`} className={imgClassName} {...restProps} alt={`Emoji ${emojiName}`}
-        style={{
-            ...style,
-            height: emojiSize ?? "1em",
-            width: emojiSize ?? "1em"
-        }}
+            style={{
+                ...style,
+                height: emojiSize ?? "1em",
+                width: emojiSize ?? "1em"
+            }}
         />
     );
 }

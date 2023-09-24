@@ -4,9 +4,9 @@ import "highlight.js/styles/atom-one-dark.css";
 import Highlight from "react-highlight";
 
 
-export default function CodeViewer(prop: HTMLProps<HTMLDivElement> & {children: ReactNode}): JSX.Element {
+export default function CodeViewer(prop: HTMLProps<HTMLDivElement> & { children: ReactNode }): JSX.Element {
     const { children, ...restProps } = prop;
-    
+
     const [activeTabIndex, setActiveTabIndex] = useState(0);
 
     const tabs = React.Children.toArray(children) as React.ReactElement[];

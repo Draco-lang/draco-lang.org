@@ -2,17 +2,24 @@ const { Octokit } = require('@octokit/rest');
 const fs = require('fs/promises');
 const createActionAuth = require('@octokit/auth-action');
 
-const fullLogoLight = 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long.svg';
-const fullLogoDark = 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long-Inverted.svg';
-const shortLogoUrlLight = 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short.svg';
-const shortLogoUrlDark = 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short-Inverted.svg';
-const githubLogoDark = 'prebuild_assets/github-mark-white.svg';
-const githubLogoLight = 'prebuild_assets/github-mark.svg';
+const fullLogo = {
+    light: 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long.svg',
+    dark: 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long-Inverted.svg'
+};
+const shortLogo = {
+    light: 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short.svg',
+    dark: 'https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short-Inverted.svg'
+}
+const githubLogo = {
+    light: 'prebuild_assets/github-mark-white.svg',
+    dark: 'prebuild_assets/github-mark.svg'
+};
 const emojis = [];
+
 async function main() {
-    downloadThemedImage(fullLogoLight, fullLogoDark, 'public/generated/Logo-Long.svg', true);
-    downloadThemedImage(shortLogoUrlLight, shortLogoUrlDark, 'public/generated/Logo-Short.svg', true);
-    downloadThemedImage(githubLogoLight, githubLogoDark, 'public/generated/github-logo.svg', false);
+    downloadThemedImage(fullLogo, 'public/generated/Logo-Long.svg', true);
+    downloadThemedImage(shortLogo, 'public/generated/Logo-Short.svg', true);
+    downloadThemedImage(githubLogo, 'public/generated/github-logo.svg', false);
     download('https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Derpy-Outlined.svg', 'public/generated/derpy.svg');
     emojis.push('derpy');
     let octokit;
@@ -31,7 +38,7 @@ async function main() {
         repo: 'Language-suggestions',
         path: 'Resources/Emojis'
     });
-    
+
     for (let i = 0; i < response.data.length; i++) {
         const element = response.data[i];
         console.log(`Downloading ${element.name}...`);
@@ -40,30 +47,26 @@ async function main() {
         await fs.writeFile(`public/generated/${element.name}`, emoji);
     }
     response.data
-        .map(s=>`${s.name.replace(/\.[^/.]+$/, "")}`)
-        .forEach(
-            s=> emojis.push(s)
-        );
+        .map(s => `${s.name.replace(/\.[^/.]+$/, "")}`)
+        .forEach(s => emojis.push(s));
     await fs.writeFile(
         'src/generated/emojiTypes.ts',
-        `export type EmojiName = ${emojis.map(s=>`"${s}"`).join(' | ')};`
+        `export type EmojiName = ${emojis.map(s => `"${s}"`).join(' | ')};`
     );
 }
 main();
 
 async function download(url, path) {
     const resp = await fetch(url);
-    const emoji = await resp.text();
-    await fs.writeFile(path, emoji);
-    
+    const text = await resp.text();
+    await fs.writeFile(path, text);
 }
 
-async function downloadThemedImage(lightImageUrl, darkImageUrl, outputPath, isUrl) {
-    const svg = await createThemeBasedLogo(lightImageUrl, darkImageUrl, isUrl);
+async function downloadThemedImage(urls, outputPath, isUrl) {
+    const svg = await createThemeBasedLogo(urls.light, urls.dark, isUrl);
     await fs.writeFile(outputPath, svg);
     console.log(`Image downloaded and saved as ${outputPath}`);
 }
-
 
 function stripXMLHeader(xml) {
     const regex = /<\??xml[^>]*>/;

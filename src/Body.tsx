@@ -18,14 +18,14 @@ export default function Body() {
   }, []);
 
   console.log(currentPath);
-  if(currentPath === "/") {
+  if (currentPath === "/") {
     return (
       <div className="body">
         <LandingPage />
       </div>
     );
   }
-  if(currentPath.startsWith("/docs")) {
+  if (currentPath.startsWith("/docs")) {
     return (
       <div className="body">
         <Documentation />
@@ -33,7 +33,7 @@ export default function Body() {
     );
   }
 
-  if(currentPath.startsWith("/specs")) {
+  if (currentPath.startsWith("/specs")) {
     return (
       <div className="body">
         <Specification />
@@ -41,7 +41,7 @@ export default function Body() {
     );
   }
 
-  if(currentPath.startsWith("/community")) {
+  if (currentPath.startsWith("/community")) {
     return (
       <div className="body">
         <Community />
@@ -49,7 +49,7 @@ export default function Body() {
     );
   }
 
-  if(currentPath.startsWith("/blog")) {
+  if (currentPath.startsWith("/blog")) {
     return (
       <div className="body">
         <Blog />
@@ -58,8 +58,8 @@ export default function Body() {
   }
 
   return (
-      <div className="body">
-        <NotFound />
-      </div>
+    <div className="body">
+      <NotFound />
+    </div>
   );
 }

@@ -4,7 +4,7 @@ import DiscordWidget from "./components/DiscordWidget";
 import Emoji from "./components/Emoji";
 
 export default function Community() {
-      return (
+    return (
         <div className="community">
             <h1>Community</h1>
             <div className="communityContent">
@@ -15,15 +15,17 @@ export default function Community() {
                         <span>Come talk to us!</span>
                         <span> And yes, we have Derpy emojis &nbsp; <Emoji className="inlineEmoji" emojiName="hearteyes" emojiSize="2.5em" /></span>
                     </p>
-                    <DiscordWidget/>
+                    <DiscordWidget />
                     <BackgroundLogo logoUrl="discord-logo.svg" />
                 </div>
                 <div>
                     <h2>Twitch </h2>
                     <span>
-                        We sometimes stream Draco development on our <a href="https://www.twitch.tv/dracolang">Twitch Channel</a>. Come watch us code, and ask us questions!                       
+                        We sometimes stream Draco development on our <a href="https://www.twitch.tv/dracolang">Twitch Channel</a>. Come watch us code, and ask us questions!
                     </span>
-                    <BackgroundLogo logoUrl="twitch-logo.svg" />
+                    <BackgroundLogo logoUrl="twitch-logo.svg" style={{
+                        marginBottom: "-35px",
+                    }} sizeOverride="200px" />
                 </div>
                 <div>
                     <h2>Youtube</h2>
@@ -43,7 +45,7 @@ export default function Community() {
                         - The Specification
                     </a>
                     <a href="https://github.com/Draco-lang/draco-lang.github.io">
-                        - This website
+                        - This Website
                     </a>
                     <BackgroundLogo logoUrl="github-logo.svg" />
                 </div>

@@ -3,18 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/node": "^16.18.46",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
     "highlight.js": "^11.8.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-highlight": "^0.15.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "react-dom": "^18.2.0"
   },
   "scripts": {
     "prestart": "node generateAssets.js",
@@ -25,8 +16,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -42,8 +32,14 @@
     ]
   },
   "devDependencies": {
-    "@octokit/auth-action": "^4.0.0",
+    "typescript": "^4.9.5",
+    "react-highlight": "^0.15.0",
+    "react-scripts": "5.0.1",
+    "@octokit/auth-action": "^4.0.1",
     "@octokit/rest": "^20.0.1",
-    "@types/react-highlight": "^0.12.5"
+    "@types/react-highlight": "^0.12.5",
+    "@types/node": "^20.6.5",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7"
   }
 }

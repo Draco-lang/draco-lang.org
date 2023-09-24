@@ -1,8 +1,8 @@
 .splash-logo {
     height: 300px;
     pointer-events: none;
-  }
-  
+}
+
 
 .mainButtons {
     display: flex;
@@ -33,6 +33,6 @@
 
 .landing-segment {
     padding-bottom: 8em;
-  text-align: center;
+    text-align: center;
 
 }

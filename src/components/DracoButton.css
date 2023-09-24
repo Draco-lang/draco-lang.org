@@ -1,4 +1,3 @@
-
 .draco-button {
     text-decoration: none;
     color: inherit;
@@ -24,6 +23,7 @@
 a.draco-button {
     color: white;
 }
-a.draco-button:visited{
+
+a.draco-button:visited {
     color: white;
 }

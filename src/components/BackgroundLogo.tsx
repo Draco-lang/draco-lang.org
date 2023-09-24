@@ -1,10 +1,13 @@
 
 import './BackgroundLogo.css';
 
-export default function BackgroundLogo({logoUrl} : {logoUrl: string}) {
+export default function BackgroundLogo(props: { logoUrl: string, sizeOverride?: string } & React.HTMLAttributes<HTMLDivElement>) {
+    const { logoUrl, sizeOverride, ...restProps } = props;
     return (
-    <div className="backgroundLogoContainer" >
-        <img className="backgroundLogo" src={logoUrl} alt="Background decoration." />
-    </div>
+        <div {...restProps} className="backgroundLogoContainer" >
+            <img className="backgroundLogo" src={logoUrl} alt="Background decoration." style={{
+                height: sizeOverride
+            }} />
+        </div>
     );
 }

@@ -6,9 +6,11 @@
     background-color: transparent;
     font-size: 16px;
     padding: 0.5em 1em;
-    outline: 1px solid #e5e7eb28; /* borders produces doubles borders in tabs */
+    outline: 1px solid #e5e7eb28;
+    /* borders produces doubles borders in tabs */
     border: 0;
-    margin-left: 1px; /**/
+    margin-left: 1px;
+    /**/
 }
 
 .tab-buttons button:first-child {
