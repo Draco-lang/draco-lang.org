@@ -32,7 +32,7 @@ func main() {
         Write("Guess a number (1-100): ");
         val input = Convert.ToInt32(ReadLine());
         if (input == value) goto break;
-        WriteLine("Incorrect. Too \{if (input < value) "low" else "high"}");
+        WriteLine("Incorrect. Too \\{if (input < value) "low" else "high"}");
     }
     WriteLine("You guessed it!");
 }`;
