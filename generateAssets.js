@@ -17,6 +17,7 @@ const githubLogo = {
 const emojis = [];
 
 async function main() {
+    fs.mkdir("public/generated");
     downloadThemedImage(fullLogo, "public/generated/Logo-Long.svg", true);
     downloadThemedImage(shortLogo, "public/generated/Logo-Short.svg", true);
     downloadThemedImage(githubLogo, "public/generated/github-logo.svg", false);
