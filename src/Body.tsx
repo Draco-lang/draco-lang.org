@@ -17,7 +17,6 @@ export default function Body() {
     window.addEventListener("navigate", onLocationChange);
   }, []);
 
-  console.log(currentPath);
   if (currentPath === "/") {
     return (
       <div className="body">
@@ -25,6 +24,7 @@ export default function Body() {
       </div>
     );
   }
+
   if (currentPath.startsWith("/docs")) {
     return (
       <div className="body">

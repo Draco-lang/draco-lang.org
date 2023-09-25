@@ -1,23 +1,23 @@
 .second-segment {
-    background-color: #1C1F26;
-    padding-top: 2em;
-    border-top: 1px solid #e5e7eb28;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-bottom: 6em;
+  background-color: #1c1f26;
+  padding-top: 2em;
+  border-top: 1px solid #e5e7eb28;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 6em;
 }
 
 .splash-code-viewer {
-    width: 70%;
+  width: 70%;
 }
 
 .aligned {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
-.superDerpy {
-    font-size: 100px;
+.super-derpy {
+  font-size: 100px;
 }

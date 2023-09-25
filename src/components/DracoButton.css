@@ -1,29 +1,23 @@
 .draco-button {
-    text-decoration: none;
-    color: inherit;
-    border-radius: 9999px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 9999px;
 }
 
 .draco-button-medium {
-    font-size: 1.2em;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+  font-size: 1.2em;
+  padding: 0.5em 1em;
 }
 
 .draco-button-large {
-    font-size: 2em;
-    padding-left: 1.0em;
-    padding-right: 1.0em;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  font-size: 2em;
+  padding: 0.5em 1em;
 }
 
 a.draco-button {
-    color: white;
+  color: white;
 }
 
 a.draco-button:visited {
-    color: white;
+  color: white;
 }

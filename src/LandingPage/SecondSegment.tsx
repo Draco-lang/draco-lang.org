@@ -1,15 +1,17 @@
 import { useState } from "react";
-import CodeTab from "../components/CodeViewer/CodeTabs";
+import CodeTab from "../components/CodeViewer/CodeTab";
 import CodeViewer from "../components/CodeViewer/CodeViewer";
 import Emoji from "../components/Emoji";
 import { EmojiName } from "../generated/emojiTypes";
 import "./SecondSegment.css";
 
 export default function SecondSegment() {
-  const [emojiState, setEmoji] = useState<{ name: EmojiName, title: string }>({ name: "smile", title: "Derpy is our mascot." });
+  const [emojiState, setEmoji] = useState<{ name: EmojiName; title: string }>({
+    name: "smile",
+    title: "Derpy is our mascot.",
+  });
   const [clickCount, setClickCount] = useState(0);
-  const fizzbuzz =
-    `import System.Console;
+  const fizzbuzz = `import System.Console;
 import System.Linq.Enumerable;
 
 func main() {
@@ -22,8 +24,7 @@ func main() {
         }
     }
 }`;
-  const guessANumber =
-    `import System;
+  const guessANumber = `import System;
 import System.Console;
 
 func main() {
@@ -41,12 +42,19 @@ func main() {
     if (clickCount >= 0 && clickCount <= 5) {
       setClickCount(clickCount + 1);
     }
+
     switch (clickCount + 1) {
       case 1:
-        setEmoji({ name: "sad", title: "Derpy is sad. He dislke to be clicked." });
+        setEmoji({
+          name: "sad",
+          title: "Derpy is sad. He dislke to be clicked.",
+        });
         break;
       case 2:
-        setEmoji({ name: "cry", title: "Derpy is crying. Why are you mean with him?" });
+        setEmoji({
+          name: "cry",
+          title: "Derpy is crying. Why are you mean with him?",
+        });
         break;
       case 3:
         setEmoji({ name: "angry", title: "Derpy is angry. He may bite you." });
@@ -55,23 +63,25 @@ func main() {
         setEmoji({ name: "ree", title: "Derpy is very angry." });
         break;
       default:
-        setEmoji({ name: "triggered", title: "You have unleashed the fury of the Derpy." });
+        setEmoji({
+          name: "triggered",
+          title: "You have unleashed the fury of the Derpy.",
+        });
         break;
     }
     console.log(emojiState);
     setTimeout(() => {
       setEmoji({ name: "smile", title: "Derpy calmed down." });
     }, 3000);
-
   };
   return (
     <div className="second-segment">
       <h1 className="aligned">Derpy™ Included.</h1>
       <Emoji
-        className="superDerpy"
+        className="super-derpy"
         emojiName={emojiState.name}
         onClick={handleEmojiClick}
-        style={{ cursor: (emojiState.name === "smile" ? "pointer" : "default") }}
+        style={{ cursor: emojiState.name === "smile" ? "pointer" : "default" }}
         title={emojiState.title}
       />
       <CodeViewer className="splash-code-viewer">

@@ -1,3 +1,10 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+    - 'src/**'
+    
 permissions:
   contents: write
   pages: write
