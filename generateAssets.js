@@ -1,5 +1,5 @@
 const { Octokit } = require("@octokit/rest");
-const fs = require("fs/promises");
+const fs = require("fs");
 const createActionAuth = require("@octokit/auth-action");
 
 const fullLogo = {
@@ -17,7 +17,10 @@ const githubLogo = {
 const emojis = [];
 
 async function main() {
-    fs.mkdir("public/generated");
+    if (!fs.existsSync("public/generated")){
+        fs.mkdirSync("public/generated", { recursive: true });
+    }
+
     downloadThemedImage(fullLogo, "public/generated/Logo-Long.svg", true);
     downloadThemedImage(shortLogo, "public/generated/Logo-Short.svg", true);
     downloadThemedImage(githubLogo, "public/generated/github-logo.svg", false);
@@ -45,12 +48,12 @@ async function main() {
         console.log(`Downloading ${element.name}...`);
         const resp = await fetch(element.download_url);
         const emoji = await resp.text();
-        await fs.writeFile(`public/generated/${element.name}`, emoji);
+        await fs.promises.writeFile(`public/generated/${element.name}`, emoji);
     }
     response.data
         .map(s => `${s.name.replace(/\.[^/.]+$/, "")}`)
         .forEach(s => emojis.push(s));
-    await fs.writeFile(
+    await fs.promises.writeFile(
         "src/generated/emojiTypes.ts",
         `export type EmojiName = ${emojis.map(s => `"${s}"`).join(" | ")};`
     );
@@ -60,12 +63,12 @@ main();
 async function download(url, path) {
     const resp = await fetch(url);
     const text = await resp.text();
-    await fs.writeFile(path, text);
+    await fs.promises.writeFile(path, text);
 }
 
 async function downloadThemedImage(urls, outputPath, isUrl) {
     const svg = await createThemeBasedLogo(urls.light, urls.dark, isUrl);
-    await fs.writeFile(outputPath, svg);
+    await fs.promises.writeFile(outputPath, svg);
     console.log(`Image downloaded and saved as ${outputPath}`);
 }
 
@@ -93,8 +96,8 @@ async function createThemeBasedLogo(lightUrl, darkUrl, isUrl) {
         bodyLight = await responseLight.text();
         bodyDark = await responseDark.text();
     } else {
-        bodyLight = await fs.readFile(lightUrl, "utf-8");
-        bodyDark = await fs.readFile(darkUrl, "utf-8");
+        bodyLight = await fs.promises.readFile(lightUrl, "utf-8");
+        bodyDark = await fs.promises.readFile(darkUrl, "utf-8");
     }
 
     let logoLight = stripXMLHeader(bodyLight);
