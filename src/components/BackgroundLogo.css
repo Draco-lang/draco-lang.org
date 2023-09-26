@@ -1,0 +1,17 @@
+.background-logo {
+  position: absolute;
+  z-index: 0;
+  height: 170px;
+  align-self: center;
+  opacity: 0.05;
+  bottom: 50px;
+}
+
+.background-logo-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

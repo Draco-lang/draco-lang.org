@@ -1,0 +1,13 @@
+.code-container {
+  border: 1px solid #e5e7eb28;
+  text-align: left;
+  border-radius: 0 5px 5px 5px;
+}
+
+.code-container code {
+  border-radius: 0 5px 5px 5px;
+}
+
+.code-container pre {
+  margin: 0;
+}

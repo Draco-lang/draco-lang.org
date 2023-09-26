@@ -1,0 +1,23 @@
+.draco-button {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 9999px;
+}
+
+.draco-button-medium {
+  font-size: 1.2em;
+  padding: 0.5em 1em;
+}
+
+.draco-button-large {
+  font-size: 2em;
+  padding: 0.5em 1em;
+}
+
+a.draco-button {
+  color: white;
+}
+
+a.draco-button:visited {
+  color: white;
+}

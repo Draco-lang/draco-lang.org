@@ -1,0 +1,109 @@
+.discord-widget {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  align-self: flex-start;
+  background-color: #2b2d31;
+  border-radius: 4px;
+  max-width: 350px;
+  min-width: 350px;
+  width: 100%;
+  user-select: none;
+  align-items: flex-start;
+}
+
+.discord-widget .content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.discord-widget button {
+  height: 40px;
+  color: white;
+  background-color: #248046;
+  cursor: pointer;
+  line-height: 20px;
+  width: 73px;
+  border: none;
+  border-radius: 3px;
+  font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  padding: 2px 16px;
+  font-weight: bold;
+}
+
+.discord-widget .server-name {
+  width: 100%;
+  text-align: left;
+  margin: 0 0 2px 0;
+}
+
+.discord-widget .server-name:hover {
+  text-decoration: underline;
+}
+
+.discord-widget .server-icon {
+  background-color: #313338;
+  background-image: url("../../public/generated/Logo-Short.svg");
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background-clip: padding-box;
+  background-size: 80% 80%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.header-line {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 16px;
+}
+
+.discord-widget .server-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.discord-widget .status-counts {
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+  color: #b5bac1;
+  line-height: 16px;
+  font-size: 100%;
+  flex: 0 1 auto;
+  font-weight: 400;
+}
+
+.discord-widget .status-online {
+  display: block;
+  margin-right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #23a559;
+}
+
+.discord-widget .status-offline {
+  display: block;
+  margin-right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #80848e;
+}
+
+.discord-widget .status-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
