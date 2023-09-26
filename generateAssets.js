@@ -11,8 +11,8 @@ const shortLogo = {
     dark: "https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short-Inverted.svg"
 };
 const githubLogo = {
-    light: "prebuild_assets/github-mark-white.svg",
-    dark: "prebuild_assets/github-mark.svg"
+    light: "prebuild_assets/github-mark.svg",
+    dark: "prebuild_assets/github-mark-white.svg"
 };
 const emojis = [];
 
