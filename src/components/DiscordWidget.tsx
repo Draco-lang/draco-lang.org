@@ -4,7 +4,7 @@ import "./DiscordWidget.css";
 export default function DiscordWidget() {
   const [info, setInfo] = useState({ online: "???", members: "???" });
   useEffect(() => {
-    const async = async () => {
+    const fetchDiscordDataAsync = async () => {
       try {
         const data = await (
           await fetch(
@@ -19,7 +19,7 @@ export default function DiscordWidget() {
         console.error(e);
       }
     };
-    async();
+    fetchDiscordDataAsync();
   }, []);
   return (
     <div className="discord-widget">
