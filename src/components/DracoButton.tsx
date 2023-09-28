@@ -1,22 +1,22 @@
-import { ReactNode, HTMLProps } from "react";
+import { ReactNode } from "react";
+import Link from "next/link";
 import "./DracoButton.css";
-import Link from "./Link";
 
 type ButtonSize = "medium" | "large";
 
-export default function DracoButton(
-  props: HTMLProps<HTMLAnchorElement> & {
-    buttonSize: ButtonSize;
-    children: ReactNode;
-  }
-) {
-  const { buttonSize, children, className, ...restProps } = props;
+export default function DracoButton(props: {
+  buttonSize: ButtonSize;
+  children: ReactNode;
+  href: string;
+  className?: string;
+}) {
+  const { buttonSize, children, className, href } = props;
   const buttonClassName = `draco-button ${
     className || ""
   } draco-button-${buttonSize}`;
 
   return (
-    <Link className={buttonClassName} {...restProps}>
+    <Link className={buttonClassName} href={href}>
       {children}
     </Link>
   );

@@ -1,0 +1,83 @@
+body {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    font-weight: 350;
+    color: white;
+  }
+
+  button {
+    color: white;
+  }
+}
+
+a {
+  color: #00c8bd;
+}
+
+a:visited {
+  color: #009a94;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.top-bar {
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  background-color: #282c34;
+}
+
+.top-bar-logo {
+  padding-left: 16px;
+  height: 50px;
+}
+
+.top-bar-link {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-icon {
+  height: 28px;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 75%;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 25px;
+}
+
+.links .draco-button:hover {
+  background-color: #00c8bd50;
+}
+
+.app {
+  height: 100vh;
+  width: 100vw;
+}
+
+.body {
+  padding-top: 6rem;
+}

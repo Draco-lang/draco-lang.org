@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import CodeTab from "../components/CodeViewer/CodeTab";
 import CodeViewer from "../components/CodeViewer/CodeViewer";

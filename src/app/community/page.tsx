@@ -1,7 +1,7 @@
-import "./Community.css";
-import BackgroundLogo from "./components/BackgroundLogo";
-import DiscordWidget from "./components/DiscordWidget";
-import Emoji from "./components/Emoji";
+import "./page.css";
+import BackgroundLogo from "@/components/BackgroundLogo";
+import DiscordWidget from "@/components/DiscordWidget";
+import Emoji from "@/components/Emoji";
 
 export default function Community() {
   return (
@@ -40,7 +40,7 @@ export default function Community() {
             style={{
               marginBottom: "-35px",
             }}
-            sizeOverride="200px"
+            sizeOverride={200}
           />
         </div>
         <div>
