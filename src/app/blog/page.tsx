@@ -1,7 +1,7 @@
-import "./Specification.css";
-import Emoji from "./components/Emoji";
+import "./page.css";
+import Emoji from "@/components/Emoji";
 
-export default function Specification() {
+export default function Blog() {
   return (
     <div className="comming-soon">
       <h1>Coming Soon&ensp;</h1>{" "}
