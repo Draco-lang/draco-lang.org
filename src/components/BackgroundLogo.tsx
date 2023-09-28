@@ -1,6 +1,6 @@
 import React from "react";
 import "./BackgroundLogo.css";
-import Image  from "next/image";
+import Image from "next/image";
 
 export default function BackgroundLogo(
   props: {

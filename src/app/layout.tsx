@@ -19,7 +19,7 @@ export default function RootLayout({
                 className="top-bar-logo"
                 alt="logo"
                 fill={true}
-                />
+              />
             </Link>
             <div className="links">
               <DracoButton buttonSize="medium" href={"/docs"}>

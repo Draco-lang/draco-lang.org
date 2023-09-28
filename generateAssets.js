@@ -17,7 +17,7 @@ const githubLogo = {
 const emojis = [];
 
 async function main() {
-    if (!fs.existsSync("public/generated")){
+    if (!fs.existsSync("public/generated")) {
         fs.mkdirSync("public/generated", { recursive: true });
     }
 
