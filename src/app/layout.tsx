@@ -18,7 +18,8 @@ export default function RootLayout({
                 src="generated/Logo-Short.svg"
                 className="top-bar-logo"
                 alt="logo"
-                fill={true}
+                height={50}
+                width={55}
               />
             </Link>
             <div className="links">
@@ -40,7 +41,8 @@ export default function RootLayout({
                   src="generated/github-logo.svg"
                   className="topbar-icon"
                   alt="GitHub Logo"
-                  fill={true}
+                  height={28}
+                  width={28}
                 />
               </a>
             </div>

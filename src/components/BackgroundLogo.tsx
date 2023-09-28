@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import "./BackgroundLogo.css";
-import Image from "next/image";
 
 export default function BackgroundLogo(
   props: {
@@ -11,12 +11,13 @@ export default function BackgroundLogo(
   const { logoUrl, sizeOverride, ...restProps } = props;
   return (
     <div {...restProps} className="background-logo-container">
-      <Image
+      <img
         className="background-logo"
         src={logoUrl}
         alt="Background decoration."
-        height={sizeOverride ?? 0}
-        width={0}
+        style={{
+          height: sizeOverride,
+        }}
       />
     </div>
   );
