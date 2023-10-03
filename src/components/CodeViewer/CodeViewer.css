@@ -1,3 +1,7 @@
+.tab-content {
+  position: relative;
+}
+
 .code-container {
   border: 1px solid #e5e7eb28;
   text-align: left;
@@ -10,4 +14,27 @@
 
 .code-container pre {
   margin: 0;
+}
+
+.splash-code-viewer input[type="radio"] {
+  display: none;
+  height: 0;
+  left: -100%;
+  position: relative;
+  top: -100%;
+}
+
+input[type="radio"] + div.tab-content > div {
+  display: none;
+  position: absolute;
+  margin-top: 37px;
+  width: 100%;
+}
+
+input[type="radio"]:checked + div.tab-content > div {
+  display: block;
+}
+
+.splash-code-viewer {
+  padding-bottom: 300px;
 }

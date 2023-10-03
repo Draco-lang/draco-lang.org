@@ -1,45 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import CodeTab from "../components/CodeViewer/CodeTab";
-import CodeViewer from "../components/CodeViewer/CodeViewer";
-import Emoji from "../components/Emoji";
 import { EmojiName } from "../generated/emojiTypes";
-import "./SecondSegment.css";
+import Emoji from "@/components/Emoji";
 
-export default function SecondSegment() {
+export default function SuperDerpy() {
   const [emojiState, setEmoji] = useState<{ name: EmojiName; title: string }>({
     name: "smile",
     title: "Derpy is our mascot.",
   });
   const [clickCount, setClickCount] = useState(0);
-  const fizzbuzz = `import System.Console;
-import System.Linq.Enumerable;
-
-func main() {
-    for (i in Range(100)) {
-        match (i mod 3, i mod 5) {
-            (0, 0) -> WriteLine("FizzBuzz");
-            (0, _) -> WriteLine("Fizz");
-            (_, 0) -> WriteLine("Buzz");
-            _ -> WriteLine(i);
-        }
-    }
-}`;
-  const guessANumber = `import System;
-import System.Console;
-
-func main() {
-    val value = Random.Shared.Next(1, 101);
-    while (true) {
-        Write("Guess a number (1-100): ");
-        val input = Convert.ToInt32(ReadLine());
-        if (input == value) goto break;
-        WriteLine("Incorrect. Too \\{if (input < value) "low" else "high"}");
-    }
-    WriteLine("You guessed it!");
-}`;
-
   const handleEmojiClick = () => {
     if (clickCount >= 0 && clickCount <= 5) {
       setClickCount(clickCount + 1);
@@ -76,24 +46,14 @@ func main() {
       setEmoji({ name: "smile", title: "Derpy calmed down." });
     }, 3000);
   };
+
   return (
-    <div className="second-segment">
-      <h1 className="aligned">Derpy™ Included.</h1>
-      <Emoji
+    <Emoji
         className="super-derpy"
         emojiName={emojiState.name}
         onClick={handleEmojiClick}
         style={{ cursor: emojiState.name === "smile" ? "pointer" : "default" }}
         title={emojiState.title}
       />
-      <CodeViewer className="splash-code-viewer">
-        <CodeTab title="FizzBuzz" language="kotlin">
-          {fizzbuzz}
-        </CodeTab>
-        <CodeTab title="Guess A Number" language="kotlin">
-          {guessANumber}
-        </CodeTab>
-      </CodeViewer>
-    </div>
   );
 }
