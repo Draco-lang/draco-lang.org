@@ -49,11 +49,11 @@ export default function SuperDerpy() {
 
   return (
     <Emoji
-        className="super-derpy"
-        emojiName={emojiState.name}
-        onClick={handleEmojiClick}
-        style={{ cursor: emojiState.name === "smile" ? "pointer" : "default" }}
-        title={emojiState.title}
-      />
+      className="super-derpy"
+      emojiName={emojiState.name}
+      onClick={handleEmojiClick}
+      style={{ cursor: emojiState.name === "smile" ? "pointer" : "default" }}
+      title={emojiState.title}
+    />
   );
 }

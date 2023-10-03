@@ -22,7 +22,14 @@ export default function CodeViewer(
             defaultChecked={index === 0}
           />
           <div className="tab-content">
-            <label className={`tab-buttons ${index===0 ? "first-tab" : ""} ${index===tabs.length-1 ? "last-tab" : ""}`} htmlFor={`check${index}`}>{tab.props.title}</label>
+            <label
+              className={`tab-buttons ${index === 0 ? "first-tab" : ""} ${
+                index === tabs.length - 1 ? "last-tab" : ""
+              }`}
+              htmlFor={`check${index}`}
+            >
+              {tab.props.title}
+            </label>
             <div className="code-container">
               <pre>
                 <Highlight language={tab.props.language}>

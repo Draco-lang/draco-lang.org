@@ -1,4 +1,4 @@
-.tab-buttons{
+.tab-buttons {
   background-color: transparent;
   font-size: 16px;
   padding: 0.5em 1em;
@@ -17,7 +17,7 @@
   border-radius: 0 5px 0 0;
 }
 
-input[type="radio"]:checked + div.tab-content > label{
+input[type="radio"]:checked + div.tab-content > label {
   outline-color: #00c8bd;
 }
 

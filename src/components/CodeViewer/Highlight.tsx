@@ -8,7 +8,7 @@ export default function Highlight(
   const { children, language, ...restProps } = prop;
   const highlighted = hljs.highlight(children, {
     language: language,
-    ignoreIllegals: true
+    ignoreIllegals: true,
   });
   return (
     <code
