@@ -1,0 +1,7 @@
+.code-viewer {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background-color: #282c34;
+  color: #abb2bf;
+}

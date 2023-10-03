@@ -1,34 +1,30 @@
 .tab-buttons {
-  display: flex;
-}
-
-.tab-buttons button {
   background-color: transparent;
   font-size: 16px;
   padding: 0.5em 1em;
   outline: 1px solid #e5e7eb28;
-
-  /* borders produces doubles borders in tabs */
-  border: 0;
+  display: inline-block;
+  border: 0; /* borders produces doubles borders in tabs */
   margin-left: 1px;
+  float: left;
 }
 
-.tab-buttons button:first-child {
+.tab-buttons.first-tab {
   border-radius: 5px 0 0 0;
 }
 
-.tab-buttons button:last-child {
+.tab-buttons.last-tab {
   border-radius: 0 5px 0 0;
 }
 
-.tab-buttons .active {
+input[type="radio"]:checked + div.tab-content > label {
   outline-color: #00c8bd;
 }
 
-.tab-buttons :not(.active):hover {
+.tab-buttons :not(:checked):hover {
   background-color: #00c8bd50;
 }
 
-.tab-buttons :not(.active) {
+.tab-buttons :not(:checked) {
   cursor: pointer;
 }

@@ -1,5 +1,5 @@
-import LandingSegment from "@/LandingPage/LandingSegment";
-import SecondSegment from "@/LandingPage/SecondSegment";
+import LandingSegment from "./LandingSegment";
+import SecondSegment from "./SecondSegment";
 
 export default function Page() {
   return (

@@ -1,43 +1,45 @@
-import React, { useState, ReactNode, HTMLProps } from "react";
+import React, { ReactNode, HTMLProps } from "react";
 import "./CodeViewer.css";
 import "highlight.js/styles/atom-one-dark.css";
-import Highlight from "react-highlight";
+import Highlight from "./Highlight";
 
 export default function CodeViewer(
   prop: HTMLProps<HTMLDivElement> & { children: ReactNode }
 ): JSX.Element {
   const { children, ...restProps } = prop;
-
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-
   const tabs = React.Children.toArray(children) as React.ReactElement[];
-
-  const changeTab = (index: number) => {
-    setActiveTabIndex(index);
-  };
 
   return (
     <div {...restProps}>
-      <div className="tab-buttons">
-        {tabs.map((tab, index) => (
-          <button
+      {tabs.map((tab, index) => (
+        <div key={index}>
+          <input
+            type="radio"
+            name="code-tabs"
+            value={index}
+            id={`check${index}`}
             key={index}
-            onClick={() => changeTab(index)}
-            className={activeTabIndex === index ? "active" : ""}
-          >
-            {tab.props.title}
-          </button>
-        ))}
-      </div>
-      <div className="code-container">
-        <pre>
-          <Highlight
-            className={`language-${tabs[activeTabIndex].props.language}`}
-          >
-            {tabs[activeTabIndex].props.children}
-          </Highlight>
-        </pre>
-      </div>
+            defaultChecked={index === 0}
+          />
+          <div className="tab-content">
+            <label
+              className={`tab-buttons ${index === 0 ? "first-tab" : ""} ${
+                index === tabs.length - 1 ? "last-tab" : ""
+              }`}
+              htmlFor={`check${index}`}
+            >
+              {tab.props.title}
+            </label>
+            <div className="code-container">
+              <pre>
+                <Highlight language={tab.props.language}>
+                  {tab.props.children}
+                </Highlight>
+              </pre>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
