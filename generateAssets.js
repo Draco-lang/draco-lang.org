@@ -52,7 +52,7 @@ async function main() {
     await Promise.all(promises);
 
     response.data
-        .map(s => {s.name.replace(/\.[^/.]+$/, "")})
+        .map(s => s.name.replace(/\.[^/.]+$/, ""))
         .forEach(s => emojis.push(s));
     await fs.promises.writeFile(
         "src/generated/emojiTypes.ts",
