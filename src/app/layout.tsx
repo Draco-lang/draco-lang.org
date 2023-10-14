@@ -8,6 +8,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <html>
       <body>
@@ -15,7 +16,7 @@ export default function RootLayout({
           <div className="top-bar">
             <Link href="/" className="top-bar-link">
               <Image
-                src="generated/Logo-Short.svg"
+                src="/generated/Logo-Short.svg"
                 className="top-bar-logo"
                 alt="logo"
                 height={50}
@@ -23,22 +24,26 @@ export default function RootLayout({
               />
             </Link>
             <div className="links">
-              <DracoButton buttonSize="medium" href={"/docs"}>
+              <DracoButton
+                buttonSize="medium"
+                href={"/docs"}
+                className="active-on-docs"
+              >
                 Documentation
-              </DracoButton>{" "}
+              </DracoButton>
               {/*redirect to getting started for now*/}
-              <DracoButton buttonSize="medium" href={"/specs"}>
+              <DracoButton buttonSize="medium" href={"/specs"} className="active-on-specs">
                 Specification
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/community"}>
+              <DracoButton buttonSize="medium" href={"/community"} className="active-on-community">
                 Community
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/blog"}>
+              <DracoButton buttonSize="medium" href={"/blog"} className="active-on-blog">
                 Blog
               </DracoButton>
               <a href="https://github.com/Draco-lang/">
                 <Image
-                  src="generated/github-logo.svg"
+                  src="/generated/github-logo.svg"
                   className="topbar-icon"
                   alt="GitHub Logo"
                   height={28}

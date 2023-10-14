@@ -1,11 +1,17 @@
+import Article from "@/components/Article";
 import "./page.css";
-import Emoji from "@/components/Emoji";
 
-export default function Specification() {
+export default function Page() {
   return (
-    <div className="comming-soon">
-      <h1>Coming Soon&ensp;</h1>{" "}
-      <Emoji emojiName="hearteyes" emojiSize="100px" />
-    </div>
+    <>
+      <Article articleName="Introduction" className="article-Introduction" />
+      <style>
+        {`
+      .article-active-on-Introduction:hover {
+        background-color: #00c8bd50 !important;
+      }  
+    `}
+      </style>
+    </>
   );
 }

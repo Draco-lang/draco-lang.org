@@ -3,9 +3,9 @@ import BackgroundLogo from "@/components/BackgroundLogo";
 import DiscordWidget from "@/components/DiscordWidget";
 import Emoji from "@/components/Emoji";
 
-export default function Community() {
+export default function Page() {
   return (
-    <div className="community">
+    <div className="page-community">
       <h1>Community</h1>
       <div className="community-content">
         <div>

@@ -42,17 +42,9 @@
   margin-left: -5px;
 }
 
-.community h1 {
+.page-community h1 {
   text-align: center;
   font-size: 50px;
-}
-
-.community iframe {
-  margin-top: 1em;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
 }
 
 .community-content .community-padding {

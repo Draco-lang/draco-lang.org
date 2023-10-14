@@ -1,0 +1,100 @@
+.not-a-link{
+  color: white;
+  text-decoration: none;
+}
+
+.not-a-link:visited {
+  color: white;
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.article-content {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  color: rgb(228, 228, 228);
+  font-weight: 400;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  color: #ccc;
+  font-weight: 400;
+}
+
+.table-of-content {
+  margin-right: 2em;
+  position: fixed;
+  right: 0;
+  font-weight: 400;
+}
+
+.toc-bar {
+  border-left: #464951 1px solid;
+  left: 0;
+  position: absolute;
+  height: 22px;
+  max-height: inherit;
+}
+
+.table-of-content ul {
+    padding-left: 20px;
+}
+
+.table-of-content a {
+  max-height: inherit;
+}
+
+.table-of-content a:hover {
+  transition: none;
+  color: #00c8bd;
+}
+
+.table-of-content li,
+.table-of-content ul {
+  overflow: hidden;
+  transition: all 300ms ease-in-out;
+}
+
+/* When the heading is active, it is displayed. */
+.active-poc-heading {
+  max-height: 1000px;
+}
+
+.active-poc-heading > a > span {
+  color: #00c8bd;
+  border-color: #00c8bd;
+  font-weight: 600;
+}
+
+/* Parent heading are also displayed. */
+li:has(.active-poc-heading) {
+  max-height: 1000px;
+}
+
+/* All parent child are also displayed */
+ul:has(.active-poc-heading) > li {
+  max-height: 1000px;
+}
+
+/* Childs of current heading is always displayed. */
+.active-poc-heading > ul > li {
+  max-height: 1000px;
+}
+
+/* Root headings are also displayed */
+.table-of-content > ul > ul > li {
+  max-height: 1000px;
+}

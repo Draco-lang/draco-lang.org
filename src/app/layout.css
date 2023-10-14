@@ -42,7 +42,9 @@ code {
   justify-content: space-between;
   position: fixed;
   width: 100%;
-  background-color: #282c34;
+  background-color: rgba(40, 44, 52, 95%);
+  backdrop-filter: blur(16px) saturate(2);
+  border-bottom: 0 solid rgb(229 231 235);
 }
 
 .top-bar-logo {
@@ -75,9 +77,53 @@ code {
 
 .app {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
 .body {
   padding-top: 6rem;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+body:has(.page-docs) .active-on-docs{
+  outline: 1px solid #00c8bd;
+  cursor: default;
+}
+
+body:has(.page-specs) .active-on-specs {
+  outline: 1px solid #00c8bd;
+  cursor: default;
+}
+
+body:has(.page-community) .active-on-community {
+  outline: 1px solid #00c8bd;
+  cursor: default;
+}
+
+body:has(.page-blog) .active-on-blog {
+  outline: 1px solid #00c8bd;
+  cursor: default;
+}
+
+
+body:has(.page-docs) .active-on-docs:hover{
+  background-color: #0000;
+}
+
+
+body:has(.page-specs) .active-on-specs:hover {
+  background-color: #0000;
+}
+
+body:has(.page-community) .active-on-community:hover {
+  background-color: #0000;
+}
+
+body:has(.page-blog) .active-on-blog:hover {
+  background-color: #0000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 64px;
 }

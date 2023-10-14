@@ -1,6 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const fs = require("fs");
-const createActionAuth = require("@octokit/auth-action");
+const { createTokenAuth } = require("@octokit/auth-token");
 
 const fullLogo = {
     light: "https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long.svg",
@@ -28,7 +28,7 @@ async function main() {
     emojis.push("derpy");
     let octokit;
     if (process.env.GITHUB_TOKEN !== undefined && process.env.GITHUB_TOKEN.length > 0) {
-        const auth = createActionAuth();
+        const auth = createTokenAuth(process.env.GITHUB_TOKEN);
         const authentication = await auth();
         octokit = new Octokit({
             auth: authentication.token
@@ -43,15 +43,16 @@ async function main() {
         path: "Resources/Emojis"
     });
 
-    for (let i = 0; i < response.data.length; i++) {
-        const element = response.data[i];
+    const promises = response.data.map( async element => {
         console.log(`Downloading ${element.name}...`);
         const resp = await fetch(element.download_url);
         const emoji = await resp.text();
         await fs.promises.writeFile(`public/generated/${element.name}`, emoji);
-    }
+    });
+    await Promise.all(promises);
+
     response.data
-        .map(s => `${s.name.replace(/\.[^/.]+$/, "")}`)
+        .map(s => {s.name.replace(/\.[^/.]+$/, "")})
         .forEach(s => emojis.push(s));
     await fs.promises.writeFile(
         "src/generated/emojiTypes.ts",

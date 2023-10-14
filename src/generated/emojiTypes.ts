@@ -1,1 +1,1 @@
-export type EmojiName = "derpy" | "angry" | "approved" | "blush" | "confused" | "cry" | "emojis" | "facepalm" | "glasses" | "gun" | "hearteyes" | "lol" | "party" | "ree" | "sad" | "sick" | "sip" | "sleep" | "smile" | "think" | "triggered";
+export type EmojiName = "derpy" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined" | "undefined";
