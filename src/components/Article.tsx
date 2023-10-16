@@ -27,7 +27,10 @@ export default async function TableOfContent(
     return (
       <ul>
         {nodes.map((node) => {
-          const id = getHeading(node.title.replace(/^#+/, "").trim(), headingsMapPoc);
+          const id = getHeading(
+            node.title.replace(/^#+/, "").trim(),
+            headingsMapPoc
+          );
           return (
             <li
               key={node.title.replace(/^#+/, "").trim()}
@@ -52,11 +55,23 @@ export default async function TableOfContent(
         language !== undefined && language.length > 0
           ? hljs.highlight(code, { language: language }).value
           : code;
-      return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
+      const base64Code = stringToBase64(code);
+      return `
+      <div class="code-box">
+        <div class="code-title-bar">
+            <div>
+              <span class="code-icon">&#60;/&#62;</span>
+              <span>${language}</span>
+            </div>
+            <span class="clipboard-icon" onclick="navigator.clipboard.writeText(decodeURIComponent(escape(atob('${base64Code}')))); this.classList.add('copy-ok'); setTimeout(() => this.classList.remove('copy-ok'), 2000);"/>
+        </div>
+        <pre><code class="language-${language}">${highlighted}</code></pre>
+      </div>
+      `;
     };
     renderer.heading = (text, level) => {
       if (level === 1) return `<h1>${text}</h1>`;
-      
+
       const hashName = getHeading(text, headingsMapArticle);
       const str = `<a href="#${hashName}" class="not-a-link"> <h${level} id="${hashName}" class="article-heading heading-${hashName}">${text}</h${level}> </a>`;
       return str;
@@ -64,7 +79,7 @@ export default async function TableOfContent(
     return renderer;
   }
 
-  function getHeading(text: string, map: {[key: string]: number}): string {
+  function getHeading(text: string, map: { [key: string]: number }): string {
     const hash = createHashLink(text);
     if (map[hash] === undefined) {
       map[hash] = 0;
@@ -93,7 +108,7 @@ export default async function TableOfContent(
         <h1>Contents</h1>
         {renderHeading(headingsToTree(headings.map((h) => h.raw)))}
       </div>
-      { <TableOfContentScrollEffect articleName={articleName} /> }
+      {<TableOfContentScrollEffect articleName={articleName} />}
     </div>
   );
 }
@@ -154,4 +169,8 @@ function headingDepth(heading: string): number {
   }
 
   return match[0].length - 1;
+}
+
+function stringToBase64(input) {
+  return btoa(unescape(encodeURIComponent(input)));
 }

@@ -1,4 +1,4 @@
-.not-a-link{
+.not-a-link {
   color: white;
   text-decoration: none;
 }
@@ -34,6 +34,100 @@
   font-weight: 400;
 }
 
+.article-content table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  min-width: 70%;
+  max-width: fit-content;
+  border-spacing: 0;
+}
+
+.article-content table th,
+.article-content table td {
+  padding: .4rem 1rem;
+  font-size: 95%;
+  white-space: nowrap;
+}
+
+.article-content table thead {
+  border-bottom: solid 2px rgba(210,215,217,75%);
+}
+
+.article-content table tbody tr {
+  border-bottom: 1px solid rgba(42, 47, 53, 52%);
+  background-color: #333740;
+}
+
+.article-content table tbody tr:nth-child(2n) {
+  background-color: #1c1f26;
+}
+
+.code-box {
+  border: 1px solid #e5e7eb28;
+  text-align: left;
+  border-radius: 5px 5px 5px 5px;
+  background-color: #1c1f26;
+  overflow: scroll;
+}
+
+.code-box > pre {
+  padding: 1em;
+}
+
+.code-title-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  margin-right: 0.5em;
+}
+
+.code-title-bar::before {
+  content: "";
+}
+
+.code-title-bar > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.code-icon {
+  font-weight: bold;
+  font-family: monospace;
+  align-items: center;
+  padding-right: 0.5em;
+  padding-top: 3px; /* make the icon vertically aligned with the title */
+  color: gray;
+}
+
+.clipboard-icon {
+  height: 1em;
+  width: 0.8em;
+  background-color: white;
+  background-repeat: no-repeat;
+  mask-image: url("/clipboard.svg");
+  cursor:pointer;
+}
+
+.copy-ok {
+  background-color: transparent;
+  mask-image: none;
+}
+
+.copy-ok::before {
+  /* checkmark */
+  content: "✔";
+  color:green;
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+  size: 3em;
+}
+
+
 .table-of-content {
   margin-right: 2em;
   position: fixed;
@@ -50,7 +144,7 @@
 }
 
 .table-of-content ul {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 .table-of-content a {
