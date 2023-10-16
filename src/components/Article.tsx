@@ -4,6 +4,7 @@ import hljs from "highlight.js";
 import "./Article.css";
 import { HTMLProps } from "react";
 import TableOfContentScrollEffect from "./TableOfContentScrollEffect";
+import "highlight.js/styles/atom-one-dark.css";
 
 export default async function TableOfContent(
   params: HTMLProps<HTMLDivElement> & { articleName: string }
