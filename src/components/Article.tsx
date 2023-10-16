@@ -171,6 +171,6 @@ function headingDepth(heading: string): number {
   return match[0].length - 1;
 }
 
-function stringToBase64(input) {
+function stringToBase64(input: string) {
   return btoa(unescape(encodeURIComponent(input)));
 }
