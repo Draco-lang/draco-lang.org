@@ -4,16 +4,22 @@
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem
+  gap: 1.25rem;
 }
 
-.blog-entries > div {
+.blog-entries > a {
   background-color: #1c1f26;
   border: 1px solid #e5e7eb28;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
   height: 10.75rem;
+  color: white;
+  text-decoration: none;
+}
+
+.blog-entries > a:hover {
+  background-color: #ffffff23;
 }
 
 .blog-entries > div img {

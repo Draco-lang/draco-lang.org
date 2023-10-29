@@ -43,7 +43,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                     teaser: attributes.teaser,
                     authors: attributes.authors,
                     image: attributes.image,
-                    path: dirEntry.name
+                    path: encodeURIComponent(dirEntry.name)
                 }
             );
         }
