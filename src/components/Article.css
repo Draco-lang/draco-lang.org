@@ -34,6 +34,25 @@
   font-weight: 400;
 }
 
+.article-content h2::after,
+.article-content h3::after,
+.article-content h4::after,
+.article-content h5::after,
+.article-content h6::after {
+  content: "";
+  background-color: gray;
+  mask: url("/link.svg");
+  height: 15px;
+  width: 18px;
+  margin-top: 5px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.article-content .not-a-link:hover {
+  text-decoration: underline;
+}
+
 .article-content table {
   display: block;
   overflow-x: auto;
@@ -68,11 +87,12 @@
   text-align: left;
   border-radius: 5px 5px 5px 5px;
   background-color: #1c1f26;
-  overflow: scroll;
 }
 
 .code-box > pre {
-  padding: 1em;
+  padding: 0 1em 2em 2em;
+  overflow-x: auto;
+  margin: 0;
 }
 
 .code-title-bar {

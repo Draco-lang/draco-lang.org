@@ -2,9 +2,7 @@
 
 import { useLayoutEffect } from "react";
 
-export default function TableOfContentScrollEffect(props: {
-  articleName: string;
-}) {
+export default function TableOfContentScrollEffect() {
   useLayoutEffect(() => {
     let lastClickTime = 0;
     function onLinkClick(event: Event) {
@@ -96,7 +94,7 @@ export default function TableOfContentScrollEffect(props: {
       });
 
     };
-  }, [props.articleName]);
+  });
 
   return <></>;
 }

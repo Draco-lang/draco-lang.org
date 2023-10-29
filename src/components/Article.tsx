@@ -1,4 +1,3 @@
-import { getSpecsInfo } from "@/server/github";
 import { Lexer, marked } from "marked";
 import hljs from "highlight.js";
 import "./Article.css";
@@ -6,14 +5,12 @@ import { HTMLProps } from "react";
 import TableOfContentScrollEffect from "./TableOfContentScrollEffect";
 import "highlight.js/styles/atom-one-dark.css";
 
-export default async function TableOfContent(
-  params: HTMLProps<HTMLDivElement> & { articleName: string }
+export default async function Article(
+  params: HTMLProps<HTMLDivElement> & { markdown: string }
 ) {
-  const { articleName, className, ...restProps } = params;
+  const { markdown, className, ...restProps } = params;
   const headingsMapPoc = {};
   const headingsMapArticle = {};
-  const specs = await getSpecsInfo();
-  const markdown = specs.find((s) => s.name === articleName)!.markdown;
   const html = marked(markdown, {
     gfm: true,
     async: false,
@@ -28,8 +25,9 @@ export default async function TableOfContent(
     return (
       <ul>
         {nodes.map((node) => {
+          const cleanedTitle = marked(node.title).replace(/^<h[0-9]>/, "").replace(/<\/h[0-9]>\n$/, "");
           const id = getHeading(
-            node.title.replace(/^#+/, "").trim(),
+            cleanedTitle,
             headingsMapPoc
           );
           return (
@@ -52,10 +50,16 @@ export default async function TableOfContent(
   function myRenderer() {
     const renderer = new marked.Renderer();
     renderer.code = (code, language) => {
-      const highlighted =
-        language !== undefined && language.length > 0
-          ? hljs.highlight(code, { language: language }).value
-          : code;
+      let highlighted = code;
+      if (language !== undefined && language.length > 0) {
+        try {
+          highlighted = hljs.highlight(code, { language: language }).value;
+        } catch (e) {
+          console.error(e);
+          highlighted = hljs.highlightAuto(code).value;
+        }
+      }
+
       const base64Code = stringToBase64(code);
       return `
       <div class="code-box">
@@ -109,7 +113,7 @@ export default async function TableOfContent(
         <h1>Contents</h1>
         {renderHeading(headingsToTree(headings.map((h) => h.raw)))}
       </div>
-      {<TableOfContentScrollEffect articleName={articleName} />}
+      {<TableOfContentScrollEffect />}
     </div>
   );
 }

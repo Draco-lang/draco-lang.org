@@ -14,9 +14,11 @@ export default async function Page({
   params: { articleName: string };
 }) {
   const { articleName } = params;
+  const specs = await getSpecsInfo();
+  const spec = specs.find((spec) => spec.name === articleName)!;
   return (
     <div className={`article-${articleName}`}>
-      <Article articleName={articleName} />
+      <Article markdown={spec.markdown} />
       <style>
         {
           `
