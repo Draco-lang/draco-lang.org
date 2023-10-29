@@ -13,7 +13,13 @@ export default async function Page({
 }: {
   params: { articleName: string };
 }) {
-  const { articleName } = params;
+  let { articleName } = params;
+
+  // https://github.com/vercel/next.js/issues/54730
+  if (process.env.NODE_ENV === "production") {
+    articleName = decodeURIComponent(articleName);
+  }
+
   const articles = await getBlogArticles();
   const article = articles.find((article) => article.path === articleName)!;
 

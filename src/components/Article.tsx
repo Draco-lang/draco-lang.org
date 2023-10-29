@@ -55,7 +55,7 @@ export default async function Article(
         try {
           highlighted = hljs.highlight(code, { language: language }).value;
         } catch (e) {
-          console.error(e);
+          console.warn(e);
           highlighted = hljs.highlightAuto(code).value;
         }
       }
