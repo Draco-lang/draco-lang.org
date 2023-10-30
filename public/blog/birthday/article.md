@@ -3,6 +3,7 @@ title: "Happy first birthday Draco compiler!"
 date:   2023-10-09 18:23:00 +0200
 teaser: "🎉 Celebrating Draco compiler's 1st birthday! Dive into a year of code, community, and incredible milestones. Let's rewind and relive the journey!"
 image: "/generated/party.svg"
+imageMargin: "20px"
 ---
 
 I'd like to go through the first year of Draco compiler development, highlighting major milestones. This first year was full of exciting, sudden contributions and some extremely active time periods. I'm hoping the project will grow throughout the years, and this won't be the only yearly history diary I'll be able to write.

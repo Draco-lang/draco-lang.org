@@ -4,11 +4,12 @@ import fm from "front-matter";
 
 export interface BlogArticle {
     title: string;
-    date: string | undefined;
+    date: string;
     tags: string[];
     markdown: string;
     authors: string[] | undefined;
     image: string | undefined;
+    imageMargin: string | undefined;
     teaser: string | undefined;
     path: string;
 }
@@ -28,12 +29,17 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
             const result = fm(article);
             const attributes = result.attributes as {
                 title: string | undefined;
-                date: string | undefined;
+                date: string;
                 tags: string[] | undefined;
                 teaser: string | undefined;
                 authors: string[] | undefined;
                 image: string | undefined;
+                imageMargin: string | undefined;
             };
+            if (attributes.date === undefined) {
+                throw new Error(`Article ${dirEntry.name} does not have a date`);
+            }
+            
             articles.push(
                 {
                     title: attributes.title ?? "Untitled",
@@ -43,6 +49,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                     teaser: attributes.teaser,
                     authors: attributes.authors,
                     image: attributes.image,
+                    imageMargin: attributes.imageMargin,
                     path: encodeURIComponent(dirEntry.name)
                 }
             );

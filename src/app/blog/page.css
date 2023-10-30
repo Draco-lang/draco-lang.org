@@ -22,7 +22,7 @@
   background-color: #ffffff23;
 }
 
-.blog-entries > div img {
+.blog-entries > a img {
   width: 20rem;
 }
 
