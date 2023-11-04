@@ -54,7 +54,6 @@ export default function TableOfContentScrollEffect() {
 
       clearActiveTag();
       let activeHeading: HTMLHeadingElement;
-      console.log(headingsInScreen);
       const hasHeadingOnScreen =
         headingsInScreen.findIndex((s) => s.isOnScreen) !== -1;
       if (!hasHeadingOnScreen) {

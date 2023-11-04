@@ -1,5 +1,6 @@
 import Article from "@/components/Article";
 import { getBlogArticles } from "@/server/blog";
+import CommentScript from "./CommentScript";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
@@ -26,6 +27,7 @@ export default async function Page({
   return (
     <div className={`article-${articleName}`}>
       <Article markdown={article.markdown} />
+      <CommentScript />
     </div>
   );
 }
