@@ -11,7 +11,7 @@ export default async function Page() {
       {articles.map((article, i) => (
         <Link key={i} href={`/blog/${article.path}`}>
           <div className="article-preview-left-part">
-            <h2 className="article-preview-title">{article.title}</h2>
+            <h1 className="article-preview-title">{article.title}</h1>
             <div>{article.teaser}</div>
           </div>
           {

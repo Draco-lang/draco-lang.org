@@ -1,6 +1,8 @@
 import Article from "@/components/Article";
 import { getBlogArticles } from "@/server/blog";
 import CommentScript from "./CommentScript";
+import "./page.css";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
@@ -22,12 +24,68 @@ export default async function Page({
   }
 
   const articles = await getBlogArticles();
+  articles.sort((a, b) => (a.date > b.date ? -1 : 1));
   const article = articles.find((article) => article.path === articleName)!;
+  const articleIndex = articles.indexOf(article);
+  const previousArticle = articles[articleIndex + 1];
+  const nextArticle = articles[articleIndex - 1];
+  const date = new Date(article.date);
+  const formattedDate = date.toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <div className={`article-${articleName}`}>
+      <div className="article-header">
+        <h1>{article.title}</h1>
+        <div className="article-meta">
+          <span className="article-date">
+            <span className="muted-color"> Posted </span>
+            <time>{formattedDate}</time>
+          </span>
+          {article.tags.length === 0 ? (<></>) : (
+            <span className="article-tags">
+            <span className="muted-color"> Tags </span>
+            {article.tags}
+          </span>
+          )}
+          <span className="article-author">
+          <span className="muted-color"> By </span>
+            {article.authors?.join(", ")}</span>
+        </div>
+        {(article.image === undefined) ? (<></>) : (<img src={article.image} style={{
+          height: article.imageHeight
+        }} />)}
+      </div>
+
       <Article markdown={article.markdown} />
-      <CommentScript />
+      <div className="article-footer">
+        <div className="footer-oldnew">
+          {previousArticle === undefined ? (
+            <></>
+          ) : (
+            <Link href={`/blog/${previousArticle!.path}`}>
+              <div>
+                <span>older</span>
+                <p>{previousArticle!.title}</p>
+              </div>
+            </Link>
+          )}
+          {nextArticle === undefined ? (
+            <></>
+          ) : (
+            <Link href={`/blog/${nextArticle!.path}`}>
+              <div>
+                <span>newer</span>
+                <p>{nextArticle!.title}</p>
+              </div>
+            </Link>
+          )}
+        </div>
+        <CommentScript />
+      </div>
     </div>
   );
 }

@@ -26,6 +26,12 @@
   width: 20rem;
 }
 
+.blog-entries > a h1 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-size: 1.25rem;
+}
+
 .article-preview-left-part {
   padding: 1.75rem 1.75rem 1.25rem;
 }

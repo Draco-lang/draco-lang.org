@@ -113,7 +113,7 @@ export default async function Article(
         <h1>Contents</h1>
         {renderHeading(headingsToTree(headings.map((h) => h.raw)))}
       </div>
-      {<TableOfContentScrollEffect />}
+      <TableOfContentScrollEffect />
     </div>
   );
 }

@@ -10,6 +10,7 @@ export interface BlogArticle {
     authors: string[] | undefined;
     image: string | undefined;
     imageMargin: string | undefined;
+    imageHeight: string | undefined;
     teaser: string | undefined;
     path: string;
 }
@@ -35,6 +36,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                 authors: string[] | undefined;
                 image: string | undefined;
                 imageMargin: string | undefined;
+                imageHeight: string | undefined;
             };
             if (attributes.date === undefined) {
                 throw new Error(`Article ${dirEntry.name} does not have a date`);
@@ -50,6 +52,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                     authors: attributes.authors,
                     image: attributes.image,
                     imageMargin: attributes.imageMargin,
+                    imageHeight: attributes.imageHeight,
                     path: encodeURIComponent(dirEntry.name)
                 }
             );

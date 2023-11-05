@@ -88,22 +88,18 @@ code {
 
 body:has(.page-docs) .active-on-docs{
   outline: 1px solid #00c8bd;
-  cursor: default;
 }
 
 body:has(.page-specs) .active-on-specs {
   outline: 1px solid #00c8bd;
-  cursor: default;
 }
 
 body:has(.page-community) .active-on-community {
   outline: 1px solid #00c8bd;
-  cursor: default;
 }
 
 body:has(.page-blog) .active-on-blog {
   outline: 1px solid #00c8bd;
-  cursor: default;
 }
 
 
