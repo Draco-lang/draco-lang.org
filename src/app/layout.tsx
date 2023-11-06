@@ -2,6 +2,34 @@ import DracoButton from "@/components/DracoButton";
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
+import { Metadata } from "next";
+
+const title = "Draco Programming Language";
+const description = "A new .NET programming language in the making.";
+const image = "/generated/Logo-Short.svg";
+const urlBase = "https://draco-lang.org/";
+export const metadata: Metadata = {
+  metadataBase: new URL(urlBase),
+  title: title,
+  description: description,
+  icons: [
+    image
+  ],
+  openGraph: {
+    type: "website",
+    title: title,
+    description: description,
+    images: [
+      image
+    ],
+    url: urlBase,
+  },
+  twitter: {
+    title: title,
+    description: description,
+    images: image
+  }
+};
 
 export default function RootLayout({
   children,

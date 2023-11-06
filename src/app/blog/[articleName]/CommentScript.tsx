@@ -16,7 +16,7 @@ export default function CommentScript() {
     scriptEl.setAttribute("data-reactions-enabled", "1");
     scriptEl.setAttribute("data-emit-metadata", "0");
     scriptEl.setAttribute("data-input-position", "top");
-    scriptEl.setAttribute("data-theme", "dark");
+    scriptEl.setAttribute("data-theme", "dark_dimmed");
     scriptEl.setAttribute("data-lang", "en");
     scriptEl.setAttribute("crossorigin", "anonymous");
     scriptEl.async = true;
