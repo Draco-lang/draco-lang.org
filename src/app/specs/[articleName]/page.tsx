@@ -1,5 +1,5 @@
 import Article from "@/components/Article";
-import { getSpecsInfo } from "@/server/github";
+import { getSpecsInfo } from "@/utils/github";
 
 export async function generateStaticParams() {
   const specs = await getSpecsInfo();

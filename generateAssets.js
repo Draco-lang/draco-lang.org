@@ -1,6 +1,7 @@
 const { Octokit } = require("@octokit/rest");
 const fs = require("fs");
 const { createTokenAuth } = require("@octokit/auth-token");
+const sharp = require("sharp");
 
 const fullLogo = {
     light: "https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Long.svg",
@@ -21,10 +22,11 @@ async function main() {
         fs.mkdirSync("public/generated", { recursive: true });
     }
 
-    downloadThemedImage(fullLogo, "public/generated/Logo-Long.svg", true);
-    downloadThemedImage(shortLogo, "public/generated/Logo-Short.svg", true);
-    downloadThemedImage(githubLogo, "public/generated/github-logo.svg", false);
-    download("https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Derpy-Outlined.svg", "public/generated/derpy.svg");
+    await downloadThemedImage(fullLogo, "public/generated/Logo-Long.svg", true);
+    await downloadThemedImage(shortLogo, "public/generated/Logo-Short.svg", true);
+    await downloadThemedImage(githubLogo, "public/generated/github-logo.svg", false);
+    await downloadAndConvertSvgToPng("https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Logo-Short-Inverted-Outline.svg", "public/generated/Logo-Short-Inverted-Outline.png");
+    await download("https://raw.githubusercontent.com/Draco-lang/Language-suggestions/main/Resources/Derpy-Outlined.svg", "public/generated/derpy.svg");
     emojis.push("derpy");
     let octokit;
     if (process.env.GITHUB_TOKEN !== undefined && process.env.GITHUB_TOKEN.length > 0) {
@@ -131,4 +133,11 @@ ${logoLight}
         </svg>
 `;
     return logoSvg;
+}
+
+async function downloadAndConvertSvgToPng(url, outputPath) {
+    const resp = await fetch(url);
+    const svgContent = await resp.text();
+    await sharp(Buffer.from(svgContent)).png().toFile(outputPath);
+    console.log(`SVG converted and saved as ${outputPath}`);
 }

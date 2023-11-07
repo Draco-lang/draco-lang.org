@@ -1,6 +1,6 @@
 import Link from "next/link";
 import "./page.css";
-import { getBlogArticles } from "@/server/blog";
+import { getBlogArticles } from "@/utils/blog";
 
 export default async function Page() {
   const articles = await getBlogArticles();

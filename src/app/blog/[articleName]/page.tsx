@@ -1,14 +1,38 @@
 import Article from "@/components/Article";
-import { getBlogArticles } from "@/server/blog";
+import { getBlogArticles } from "@/utils/blog";
 import CommentScript from "./CommentScript";
 import "./page.css";
 import Link from "next/link";
+import metadata from "@/utils/metadata";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
   return articles.map((article) => ({
     articleName: article.path,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { articleName: string };
+}): Promise<Metadata> {
+  let { articleName } = params;
+
+  // https://github.com/vercel/next.js/issues/54730
+  if (process.env.NODE_ENV === "production") {
+    articleName = decodeURIComponent(articleName);
+  }
+
+  const articles = await getBlogArticles();
+  const article = articles.find((article) => article.path === articleName)!;
+  return metadata(
+    `The Draco Blog - ${article.title}`,
+    article.teaser,
+    article.image ?? "http://blog.kuinox.io/generated/Logo-Short.svg",
+    article.image ?? "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+  );
 }
 
 export default async function Page({
@@ -24,8 +48,8 @@ export default async function Page({
   }
 
   const articles = await getBlogArticles();
-  articles.sort((a, b) => (a.date > b.date ? -1 : 1));
   const article = articles.find((article) => article.path === articleName)!;
+  articles.sort((a, b) => (a.date > b.date ? -1 : 1));
   const articleIndex = articles.indexOf(article);
   const previousArticle = articles[articleIndex + 1];
   const nextArticle = articles[articleIndex - 1];
@@ -45,19 +69,29 @@ export default async function Page({
             <span className="muted-color"> Posted </span>
             <time>{formattedDate}</time>
           </span>
-          {article.tags.length === 0 ? (<></>) : (
+          {article.tags.length === 0 ? (
+            <></>
+          ) : (
             <span className="article-tags">
-            <span className="muted-color"> Tags </span>
-            {article.tags}
-          </span>
+              <span className="muted-color"> Tags </span>
+              {article.tags}
+            </span>
           )}
           <span className="article-author">
-          <span className="muted-color"> By </span>
-            {article.authors?.join(", ")}</span>
+            <span className="muted-color"> By </span>
+            {article.authors?.join(", ")}
+          </span>
         </div>
-        {(article.image === undefined) ? (<></>) : (<img src={article.image} style={{
-          height: article.imageHeight
-        }} />)}
+        {article.image === undefined ? (
+          <></>
+        ) : (
+          <img
+            src={article.image}
+            style={{
+              height: article.imageHeight,
+            }}
+          />
+        )}
       </div>
 
       <Article markdown={article.markdown} />

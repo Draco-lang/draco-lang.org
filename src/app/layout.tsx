@@ -3,40 +3,20 @@ import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
 import { Metadata } from "next";
+import generateMetadata from "@/utils/metadata";
 
-const title = "Draco Programming Language";
-const description = "A new .NET programming language in the making.";
-const image = "/generated/Logo-Short.svg";
-const urlBase = "https://draco-lang.org/";
-export const metadata: Metadata = {
-  metadataBase: new URL(urlBase),
-  title: title,
-  description: description,
-  icons: [
-    image
-  ],
-  openGraph: {
-    type: "website",
-    title: title,
-    description: description,
-    images: [
-      image
-    ],
-    url: urlBase,
-  },
-  twitter: {
-    title: title,
-    description: description,
-    images: image
-  }
-};
+export const metadata: Metadata = generateMetadata(
+  "Draco Programming Language",
+  "A new .NET programming language in the making.",
+  "http://blog.kuinox.io/generated/Logo-Short.svg",
+  "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+);
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  
   return (
     <html>
       <body>
@@ -60,13 +40,25 @@ export default function RootLayout({
                 Documentation
               </DracoButton>
               {/*redirect to getting started for now*/}
-              <DracoButton buttonSize="medium" href={"/specs"} className="active-on-specs">
+              <DracoButton
+                buttonSize="medium"
+                href={"/specs"}
+                className="active-on-specs"
+              >
                 Specification
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/community"} className="active-on-community">
+              <DracoButton
+                buttonSize="medium"
+                href={"/community"}
+                className="active-on-community"
+              >
                 Community
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/blog"} className="active-on-blog">
+              <DracoButton
+                buttonSize="medium"
+                href={"/blog"}
+                className="active-on-blog"
+              >
                 Blog
               </DracoButton>
               <a href="https://github.com/Draco-lang/">

@@ -1,6 +1,6 @@
 import Article from "@/components/Article";
 import "./page.css";
-import { getSpecsInfo } from "@/server/github";
+import { getSpecsInfo } from "@/utils/github";
 
 export default async function Page() {
   const articles = await getSpecsInfo();

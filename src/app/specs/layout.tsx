@@ -1,5 +1,5 @@
 import "./layout.css";
-import { getSpecsInfo } from "@/server/github";
+import { getSpecsInfo } from "@/utils/github";
 import DracoButton from "@/components/DracoButton";
 
 export default async function RootLayout({
