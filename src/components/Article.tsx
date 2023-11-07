@@ -25,11 +25,10 @@ export default async function Article(
     return (
       <ul>
         {nodes.map((node) => {
-          const cleanedTitle = marked(node.title).replace(/^<h[0-9]>/, "").replace(/<\/h[0-9]>\n$/, "");
-          const id = getHeading(
-            cleanedTitle,
-            headingsMapPoc
-          );
+          const cleanedTitle = marked(node.title)
+            .replace(/^<h[0-9]>/, "")
+            .replace(/<\/h[0-9]>\n$/, "");
+          const id = getHeading(cleanedTitle, headingsMapPoc);
           return (
             <li
               key={node.title.replace(/^#+/, "").trim()}

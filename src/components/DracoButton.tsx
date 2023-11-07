@@ -11,7 +11,9 @@ export default function DracoButton(props: {
   className?: string;
 }) {
   const { buttonSize, children, className, href } = props;
-  const buttonClassName = `draco-button ${ className || "" } draco-button-${buttonSize}`;
+  const buttonClassName = `draco-button ${
+    className || ""
+  } draco-button-${buttonSize}`;
 
   return (
     <Link className={buttonClassName} href={href}>

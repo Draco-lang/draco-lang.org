@@ -41,7 +41,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
             if (attributes.date === undefined) {
                 throw new Error(`Article ${dirEntry.name} does not have a date`);
             }
-            
+
             articles.push(
                 {
                     title: attributes.title ?? "Untitled",

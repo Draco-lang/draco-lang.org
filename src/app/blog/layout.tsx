@@ -13,9 +13,5 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="page-blog">
-     {children}
-    </div>
-  );
+  return <div className="page-blog">{children}</div>;
 }

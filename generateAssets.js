@@ -45,7 +45,7 @@ async function main() {
         path: "Resources/Emojis"
     });
 
-    const promises = response.data.map( async element => {
+    const promises = response.data.map(async element => {
         console.log(`Downloading ${element.name}...`);
         const resp = await fetch(element.download_url);
         const emoji = await resp.text();

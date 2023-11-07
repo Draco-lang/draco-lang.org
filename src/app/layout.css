@@ -86,7 +86,7 @@ code {
   box-sizing: border-box;
 }
 
-body:has(.page-docs) .active-on-docs{
+body:has(.page-docs) .active-on-docs {
   outline: 1px solid #00c8bd;
 }
 
@@ -102,11 +102,9 @@ body:has(.page-blog) .active-on-blog {
   outline: 1px solid #00c8bd;
 }
 
-
-body:has(.page-docs) .active-on-docs:hover{
+body:has(.page-docs) .active-on-docs:hover {
   background-color: #0000;
 }
-
 
 body:has(.page-specs) .active-on-specs:hover {
   background-color: #0000;
@@ -120,6 +118,11 @@ body:has(.page-blog) .active-on-blog:hover {
   background-color: #0000;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   scroll-margin-top: 64px;
 }

@@ -20,17 +20,14 @@ export default async function Page({
     <div className={`article-${articleName}`}>
       <Article markdown={spec.markdown} />
       <style>
-        {
-          `
+        {`
           body:has(.article-${articleName}) .article-active-on-${articleName} {
             background-color: #00c8bd50;
           }
           .article-active-on-${articleName}:hover {
             background-color: #00c8bd50 !important;
           }
-          `
-        }
-        
+          `}
       </style>
     </div>
   );

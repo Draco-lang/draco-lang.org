@@ -12,7 +12,11 @@ export default async function RootLayout({
   return (
     <div className="page-specs">
       <div className="sidebar">
-        <DracoButton href="/specs" buttonSize="medium" className="tab-button article-active-on-Introduction">
+        <DracoButton
+          href="/specs"
+          buttonSize="medium"
+          className="tab-button article-active-on-Introduction"
+        >
           Introduction
         </DracoButton>
         {specs

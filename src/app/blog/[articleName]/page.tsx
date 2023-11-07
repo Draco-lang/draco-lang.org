@@ -31,7 +31,8 @@ export async function generateMetadata({
     `The Draco Blog - ${article.title}`,
     article.teaser,
     article.image ?? "http://blog.kuinox.io/generated/Logo-Short.svg",
-    article.image ?? "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+    article.image ??
+      "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
   );
 }
 
