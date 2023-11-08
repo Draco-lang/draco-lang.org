@@ -2,6 +2,8 @@
 import { useEffect, useRef } from "react";
 
 export default function CommentScript() {
+  // this is an "hack" because react doesn't like custom attribute in script tag.
+  // So we gotta build the script tag manually.
   const commentBox = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

@@ -19,9 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <head>
-        <link rel="icon" type="image/svg+xml" href="/generated/Logo-Short.svg" sizes="any"/>
-      </head>
       <body>
         <div className="app">
           <div className="top-bar">
