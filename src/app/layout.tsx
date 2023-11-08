@@ -8,7 +8,7 @@ import generateMetadata from "@/utils/metadata";
 export const metadata: Metadata = generateMetadata(
   "Draco Programming Language",
   "A new .NET programming language in the making.",
-  "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
+  "https://draco-lang.org/generated/Logo-Short-Inverted-Outline.png",
   false
 );
 

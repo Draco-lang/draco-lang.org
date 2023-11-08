@@ -11,7 +11,7 @@ export default function generateMetadata(
     metadataBase: new URL(urlBase),
     title: title,
     description: description,
-    icons: ["http://blog.kuinox.io/generated/Logo-Short.svg"],
+    icons: ["https://draco-lang.org/generated/Logo-Short.svg"],
     openGraph: {
       type: "website",
       title: title,

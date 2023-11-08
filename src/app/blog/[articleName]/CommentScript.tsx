@@ -7,7 +7,7 @@ export default function CommentScript() {
   useEffect(() => {
     const scriptEl = document.createElement("script");
     scriptEl.src = "https://giscus.app/client.js";
-    scriptEl.setAttribute("data-repo", "Kuinox/draco-lang.github.io");
+    scriptEl.setAttribute("data-repo", "Draco-lang/draco-lang.github.io");
     scriptEl.setAttribute("data-repo-id", "R_kgDOKNtvDA");
     scriptEl.setAttribute("data-category", "Blog Comments");
     scriptEl.setAttribute("data-category-id", "DIC_kwDOKNtvDM4CarR0");

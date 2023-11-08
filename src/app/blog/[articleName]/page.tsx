@@ -38,7 +38,7 @@ export async function generateMetadata({
     return metadata(
       `The Draco Blog - ${article.title}`,
       article.teaser,
-      `http://blog.kuinox.io/${imageUrl}`,
+      `https://draco-lang.org/${imageUrl}`,
       article.makeSocialEmbedBig
     );
   }
@@ -46,7 +46,7 @@ export async function generateMetadata({
   return metadata(
     `The Draco Blog - ${article.title}`,
     article.teaser,
-    "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
+    "https://draco-lang.org/generated/Logo-Short-Inverted-Outline.png",
     false
   );
 }
