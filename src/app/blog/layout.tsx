@@ -4,8 +4,8 @@ import { Metadata } from "next";
 export const metadata: Metadata = generateMetadata(
   "The Draco Blog",
   "",
-  "http://blog.kuinox.io/generated/Logo-Short.svg",
-  "http://factorio.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+  "http://factorio.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
+  true
 );
 
 export default async function RootLayout({
