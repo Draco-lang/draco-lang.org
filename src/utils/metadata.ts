@@ -3,15 +3,15 @@ import { Metadata } from "next";
 export default function generateMetadata(
   title: string,
   description: string | undefined,
-  image: string,
-  imagePng: string
+  imagePng: string,
+  goBig: boolean
 ): Metadata {
   const urlBase = "https://draco-lang.org/";
   return {
     metadataBase: new URL(urlBase),
     title: title,
     description: description,
-    icons: [image],
+    icons: ["http://blog.kuinox.io/generated/Logo-Short.svg"],
     openGraph: {
       type: "website",
       title: title,
@@ -35,7 +35,7 @@ export default function generateMetadata(
         type: "image/png",
       },
       site: "@Draco_lang",
-      card: "summary",
+      card: goBig ? "summary_large_image" : "summary",
     },
   };
 }

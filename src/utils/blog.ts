@@ -3,16 +3,17 @@ import fs from "fs";
 import fm from "front-matter";
 
 export interface BlogArticle {
-    title: string;
-    date: string;
-    tags: string[];
+    title: string; // The title.
+    date: string; // The date in the following format: YYYY-MM-DD hh:mm:ss YOUR_UTC_OFFSET.
+    tags: string[]; // The tags. Not really used for now.
     markdown: string;
-    authors: string[] | undefined;
-    image: string | undefined;
-    imageMargin: string | undefined;
-    imageHeight: string | undefined;
-    teaser: string | undefined;
-    path: string;
+    authors: string[] | undefined; // Authors list.
+    image: string | undefined; // This image will be put below the title, and next to the article in the articles list, and in the social embeds.
+    imageMargin: string | undefined; // The margin of the image in the article list.
+    imageHeight: string | undefined; // The height of the image in the article.
+    teaser: string | undefined; // This text is used in the article list, and social embeds.
+    path: string; // The directory name.
+    makeSocialEmbedBig: boolean; // To make the image of the social embeds bigger.
 }
 
 export async function getBlogArticles(): Promise<BlogArticle[]> {
@@ -37,6 +38,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                 image: string | undefined;
                 imageMargin: string | undefined;
                 imageHeight: string | undefined;
+                makeSocialEmbedBig: boolean | undefined;
             };
             if (attributes.date === undefined) {
                 throw new Error(`Article ${dirEntry.name} does not have a date`);
@@ -53,7 +55,8 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                     image: attributes.image,
                     imageMargin: attributes.imageMargin,
                     imageHeight: attributes.imageHeight,
-                    path: encodeURIComponent(dirEntry.name)
+                    path: encodeURIComponent(dirEntry.name),
+                    makeSocialEmbedBig: attributes.makeSocialEmbedBig ?? false,
                 }
             );
         }

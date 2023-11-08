@@ -8,8 +8,8 @@ import generateMetadata from "@/utils/metadata";
 export const metadata: Metadata = generateMetadata(
   "Draco Programming Language",
   "A new .NET programming language in the making.",
-  "http://blog.kuinox.io/generated/Logo-Short.svg",
-  "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+  "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
+  false
 );
 
 export default function RootLayout({
@@ -19,6 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/generated/Logo-Short.svg" sizes="any"/>
+      </head>
       <body>
         <div className="app">
           <div className="top-bar">

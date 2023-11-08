@@ -7,6 +7,7 @@ imageMargin: "20px"
 imageHeight: "200px"
 tags: meta
 authors: ["LPeter1997"]
+makeSocialEmbedBig: false
 ---
 
 I'd like to go through the first year of Draco compiler development, highlighting major milestones. This first year was full of exciting, sudden contributions and some extremely active time periods. I'm hoping the project will grow throughout the years, and this won't be the only yearly history diary I'll be able to write.

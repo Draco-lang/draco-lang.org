@@ -5,6 +5,8 @@ import "./page.css";
 import Link from "next/link";
 import metadata from "@/utils/metadata";
 import { Metadata } from "next";
+import sharp from "sharp";
+import { promises as fs } from "fs";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
@@ -27,12 +29,25 @@ export async function generateMetadata({
 
   const articles = await getBlogArticles();
   const article = articles.find((article) => article.path === articleName)!;
+  if (article.image !== undefined) {
+    const filePath = `./public${article.image}`;
+    const svgBuffer = await fs.readFile(filePath);
+    const imageUrl = `generated/${articleName}-cover.png`;
+    await sharp(svgBuffer).png().toFile(`./public/${imageUrl}`);
+
+    return metadata(
+      `The Draco Blog - ${article.title}`,
+      article.teaser,
+      `http://blog.kuinox.io/${imageUrl}`,
+      article.makeSocialEmbedBig
+    );
+  }
+
   return metadata(
     `The Draco Blog - ${article.title}`,
     article.teaser,
-    article.image ?? "http://blog.kuinox.io/generated/Logo-Short.svg",
-    article.image ??
-      "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png"
+    "http://blog.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
+    false
   );
 }
 
