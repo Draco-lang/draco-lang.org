@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata(
   "The Draco Blog",
-  "",
+  "Development diary of the language and compiler.",
   "http://factorio.kuinox.io/generated/Logo-Short-Inverted-Outline.png",
   true
 );
