@@ -1,4 +1,5 @@
 import Article from "@/components/Article";
+import ArticleNameParams from "@/utils/ArticleNameParams";
 import { getSpecsInfo } from "@/utils/github";
 
 export async function generateStaticParams() {
@@ -8,11 +9,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { articleName: string };
-}) {
+export default async function Page({ params }: ArticleNameParams) {
   const { articleName } = params;
   const specs = await getSpecsInfo();
   const spec = specs.find((spec) => spec.name === articleName)!;

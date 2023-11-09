@@ -1,11 +1,14 @@
 import { Metadata } from "next";
 
-export default function generateMetadata(
-  title: string,
-  description: string | undefined,
-  imagePng: string,
-  goBig: boolean
-): Metadata {
+export interface MetadataInput {
+  title: string;
+  description: string | undefined;
+  imagePng: string;
+  goBig: boolean;
+}
+
+export default function generateMetadata( metadata: MetadataInput): Metadata {
+  const { title, description, imagePng, goBig } = metadata;
   const urlBase = "https://draco-lang.org/";
   return {
     metadataBase: new URL(urlBase),

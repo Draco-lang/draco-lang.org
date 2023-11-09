@@ -7,6 +7,7 @@ import metadata from "@/utils/metadata";
 import { Metadata } from "next";
 import sharp from "sharp";
 import { promises as fs } from "fs";
+import ArticleNameParams from "@/utils/ArticleNameParams";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
@@ -15,11 +16,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { articleName: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: ArticleNameParams): Promise<Metadata> {
   let { articleName } = params;
 
   // https://github.com/vercel/next.js/issues/54730
@@ -35,27 +32,23 @@ export async function generateMetadata({
     const imageUrl = `generated/${articleName}-cover.png`;
     await sharp(svgBuffer).png().toFile(`./public/${imageUrl}`);
 
-    return metadata(
-      `The Draco Blog - ${article.title}`,
-      article.teaser,
-      `https://draco-lang.org/${imageUrl}`,
-      article.makeSocialEmbedBig
-    );
+    return metadata({
+      title: `The Draco Blog - ${article.title}`,
+      description: article.teaser,
+      imagePng: `https://draco-lang.org/${imageUrl}`,
+      goBig: article.makeSocialEmbedBig,
+    });
   }
 
-  return metadata(
-    `The Draco Blog - ${article.title}`,
-    article.teaser,
-    "https://draco-lang.org/generated/Logo-Short-Inverted-Outline.png",
-    false
-  );
+  return metadata({
+    title: `The Draco Blog - ${article.title}`,
+    description: article.teaser,
+    imagePng: "https://draco-lang.org/generated/Logo-Short-Inverted-Outline.png",
+    goBig: false,
+  });
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { articleName: string };
-}) {
+export default async function Page({ params }: ArticleNameParams) {
   let { articleName } = params;
 
   // https://github.com/vercel/next.js/issues/54730

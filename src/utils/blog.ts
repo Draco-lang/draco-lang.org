@@ -44,21 +44,19 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                 throw new Error(`Article ${dirEntry.name} does not have a date`);
             }
 
-            articles.push(
-                {
-                    title: attributes.title ?? "Untitled",
-                    date: attributes.date,
-                    tags: attributes["tags"] as string[] || [],
-                    markdown: result.body,
-                    teaser: attributes.teaser,
-                    authors: attributes.authors,
-                    image: attributes.image,
-                    imageMargin: attributes.imageMargin,
-                    imageHeight: attributes.imageHeight,
-                    path: encodeURIComponent(dirEntry.name),
-                    makeSocialEmbedBig: attributes.makeSocialEmbedBig ?? false,
-                }
-            );
+            articles.push({
+                title: attributes.title ?? "Untitled",
+                date: attributes.date,
+                tags: attributes["tags"] as string[] || [],
+                markdown: result.body,
+                teaser: attributes.teaser,
+                authors: attributes.authors,
+                image: attributes.image,
+                imageMargin: attributes.imageMargin,
+                imageHeight: attributes.imageHeight,
+                path: encodeURIComponent(dirEntry.name),
+                makeSocialEmbedBig: attributes.makeSocialEmbedBig ?? false,
+            });
         }
     }
     return articles;
