@@ -2,11 +2,11 @@ import "./layout.css";
 import { getSpecsInfo } from "@/utils/github";
 import DracoButton from "@/components/DracoButton";
 
-export default async function RootLayout({
-  children,
-}: {
+interface Params {
   children: React.ReactNode;
-}) {
+}
+
+export default async function RootLayout({ children }: Params) {
   const specs = await getSpecsInfo();
 
   return (
