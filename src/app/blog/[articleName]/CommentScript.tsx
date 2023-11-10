@@ -10,9 +10,9 @@ export default function CommentScript() {
     const scriptEl = document.createElement("script");
     scriptEl.src = "https://giscus.app/client.js";
     scriptEl.setAttribute("data-repo", "Draco-lang/draco-lang.github.io");
-    scriptEl.setAttribute("data-repo-id", "R_kgDOKNtvDA");
+    scriptEl.setAttribute("data-repo-id", "R_kgDOJbD9Tg");
     scriptEl.setAttribute("data-category", "Blog Comments");
-    scriptEl.setAttribute("data-category-id", "DIC_kwDOKNtvDM4CarR0");
+    scriptEl.setAttribute("data-category-id", "DIC_kwDOJbD9Ts4Ca3WA");
     scriptEl.setAttribute("data-mapping", "url");
     scriptEl.setAttribute("data-strict", "1");
     scriptEl.setAttribute("data-reactions-enabled", "1");
