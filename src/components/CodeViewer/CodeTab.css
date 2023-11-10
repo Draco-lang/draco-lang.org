@@ -7,6 +7,11 @@
   border: 0; /* borders produces doubles borders in tabs */
   margin-left: 1px;
   float: left;
+  cursor: pointer;
+}
+
+.tab-buttons:hover {
+  background-color: #00c8bd50;
 }
 
 .tab-buttons.first-tab {
@@ -19,12 +24,6 @@
 
 input[type="radio"]:checked + div.tab-content > label {
   outline-color: #00c8bd;
-}
-
-.tab-buttons :not(:checked):hover {
-  background-color: #00c8bd50;
-}
-
-.tab-buttons :not(:checked) {
-  cursor: pointer;
+  background-color: #0000;
+  cursor: default;
 }

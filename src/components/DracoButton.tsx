@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import "./DracoButton.css";
 
-type ButtonSize = "medium" | "large";
+export type ButtonSize = "small" | "medium" | "large";
 
 export default function DracoButton(props: {
   buttonSize: ButtonSize;

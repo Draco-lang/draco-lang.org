@@ -2,12 +2,21 @@ import DracoButton from "@/components/DracoButton";
 import Link from "next/link";
 import Image from "next/image";
 import "./layout.css";
+import { Metadata } from "next";
+import generateMetadata from "@/utils/metadata";
 
-export default function RootLayout({
-  children,
-}: {
+export const metadata: Metadata = generateMetadata({
+  title: "Draco Programming Language",
+  description: "A new .NET programming language in the making.",
+  imagePng: "https://draco-lang.org/generated/Logo-Short-Inverted-Outline.png",
+  goBig: false,
+});
+
+export interface Params {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: Params) {
   return (
     <html>
       <body>
@@ -15,7 +24,7 @@ export default function RootLayout({
           <div className="top-bar">
             <Link href="/" className="top-bar-link">
               <Image
-                src="generated/Logo-Short.svg"
+                src="/generated/Logo-Short.svg"
                 className="top-bar-logo"
                 alt="logo"
                 height={50}
@@ -23,22 +32,22 @@ export default function RootLayout({
               />
             </Link>
             <div className="links">
-              <DracoButton buttonSize="medium" href={"/docs"}>
+              <DracoButton buttonSize="medium" href={"/docs"} className="active-on-docs">
                 Documentation
-              </DracoButton>{" "}
+              </DracoButton>
               {/*redirect to getting started for now*/}
-              <DracoButton buttonSize="medium" href={"/specs"}>
+              <DracoButton buttonSize="medium" href={"/specs"} className="active-on-specs">
                 Specification
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/community"}>
+              <DracoButton buttonSize="medium" href={"/community"} className="active-on-community">
                 Community
               </DracoButton>
-              <DracoButton buttonSize="medium" href={"/blog"}>
+              <DracoButton buttonSize="medium" href={"/blog"} className="active-on-blog">
                 Blog
               </DracoButton>
               <a href="https://github.com/Draco-lang/">
                 <Image
-                  src="generated/github-logo.svg"
+                  src="/generated/github-logo.svg"
                   className="topbar-icon"
                   alt="GitHub Logo"
                   height={28}

@@ -1,11 +1,20 @@
+import Article from "@/components/Article";
 import "./page.css";
-import Emoji from "@/components/Emoji";
+import { getSpecsInfo } from "@/utils/github";
 
-export default function Specification() {
+export default async function Page() {
+  const articles = await getSpecsInfo();
+  const intro = articles.find((article) => article.name === "Introduction")!;
   return (
-    <div className="comming-soon">
-      <h1>Coming Soon&ensp;</h1>{" "}
-      <Emoji emojiName="hearteyes" emojiSize="100px" />
-    </div>
+    <>
+      <Article markdown={intro.markdown} className="article-Introduction" />
+      <style>
+        {`
+      .article-active-on-Introduction:hover {
+        background-color: #00c8bd50 !important;
+      }  
+    `}
+      </style>
+    </>
   );
 }

@@ -1,0 +1,47 @@
+.page-specs {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar {
+  position: fixed;
+  min-width: 200px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-right: 5px;
+}
+
+.sidebar > a {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  padding-left: 1.5em;
+}
+
+.spec-content {
+  width: 100%;
+}
+
+/* The followings styles include the article name, so it doesn't follow exactly the convention. */
+
+/* stylelint-disable-next-line selector-class-pattern */
+.article-active-on-Introduction {
+  margin-top: 1px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+body:has(.article-Introduction) .article-active-on-Introduction {
+  background-color: #00c8bd50;
+}
+
+.sidebar > a:hover {
+  background-color: #ffffff23;
+}
+
+.sidebar > a:visited:hover {
+  background-color: #ffffff23;
+}

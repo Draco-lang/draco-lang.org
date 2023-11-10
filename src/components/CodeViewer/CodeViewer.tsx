@@ -1,6 +1,5 @@
 import React, { ReactNode, HTMLProps } from "react";
 import "./CodeViewer.css";
-import "highlight.js/styles/atom-one-dark.css";
 import Highlight from "./Highlight";
 
 export default function CodeViewer(

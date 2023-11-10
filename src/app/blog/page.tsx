@@ -1,11 +1,34 @@
+import Link from "next/link";
 import "./page.css";
-import Emoji from "@/components/Emoji";
+import { getBlogArticles } from "@/utils/blog";
 
-export default function Blog() {
+export default async function Page() {
+  const articles = await getBlogArticles();
+  // sort by date
+  articles.sort((a, b) => (a.date > b.date ? -1 : 1));
   return (
-    <div className="comming-soon">
-      <h1>Coming Soon&ensp;</h1>{" "}
-      <Emoji emojiName="hearteyes" emojiSize="100px" />
+    <div className="blog-entries">
+      {articles.map((article, i) => (
+        <Link key={i} href={`/blog/${article.path}`}>
+          <div className="article-preview-left-part">
+            <h1 className="article-preview-title">{article.title}</h1>
+            <div>{article.teaser}</div>
+          </div>
+          {
+            /* eslint-disable @next/next/no-img-element, jsx-a11y/alt-text */
+            article.image != undefined ? (
+              <img
+                src={article.image}
+                style={{
+                  margin: article.imageMargin,
+                }}
+              />
+            ) : (
+              <></>
+            )
+          }
+        </Link>
+      ))}
     </div>
   );
 }

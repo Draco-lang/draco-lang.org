@@ -41,7 +41,6 @@ export default function SuperDerpy() {
         });
         break;
     }
-    console.log(emojiState);
     setTimeout(() => {
       setEmoji({ name: "smile", title: "Derpy calmed down." });
     }, 3000);

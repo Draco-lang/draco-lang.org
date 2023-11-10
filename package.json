@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@octokit/auth-token": "^4.0.0",
+    "@octokit/rest": "^20.0.1",
+    "front-matter": "^4.0.2",
     "highlight.js": "^11.8.0",
-    "next": "^13.5.3",
+    "marked": "^9.1.2",
+    "next": "^14.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sharp": "^0.32.6"
   },
   "scripts": {
     "prestart": "node generateAssets.js",
@@ -35,8 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@octokit/auth-action": "^4.0.1",
-    "@octokit/rest": "^20.0.1",
     "@types/node": "^20.6.5",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
