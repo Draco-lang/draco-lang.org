@@ -48,7 +48,11 @@ export default function TableOfContentScrollEffect() {
       });
 
       // Prevent scroll event after clicking on heading to change the active heading.
-      if (lastClickTime + 50 > Date.now()) {
+      // anything between ~20-300 should be ok
+      // there are events triggered from the click, and I don't know how to tell the apart from the scroll event.
+      // So we have a little debounce here.
+      const delay = 50;
+      if (lastClickTime + delay > Date.now()) {
         return;
       }
 
