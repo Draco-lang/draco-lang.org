@@ -35,7 +35,7 @@ export default async function Article(
               className={`poc-heading poc-heading-${id}`}
             >
               <a href={`#${id}`} className="not-a-link">
-                <span className="toc-bar"></span>{" "}
+                <span className="toc-bar-container"><span className="toc-bar"></span></span>
                 <span>{node.title.replace(/^#+/, "").trim()}</span>
               </a>
               {node.children.length > 0 && renderHeading(node.children)}

@@ -7,6 +7,16 @@
   justify-content: center;
   gap: 20px;
   margin-top: 3rem;
+  flex-wrap: wrap;
+  max-width: 535px;
+  flex-grow: 1;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.main-buttons a
+{
+  flex-grow: 1;
 }
 
 .getstarted {
@@ -32,4 +42,11 @@
 .landing-segment {
   padding-bottom: 8em;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-segment > h1 {
+  max-width: 95%;
 }
