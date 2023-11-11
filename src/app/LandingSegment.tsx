@@ -1,5 +1,4 @@
 import DracoButton from "../components/DracoButton";
-import Image from "next/image";
 import "./LandingSegment.css";
 
 export default function LandingSegment() {
