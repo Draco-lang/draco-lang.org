@@ -21,6 +21,7 @@
   padding-right: 3rem;
   color: rgb(228, 228, 228);
   font-weight: 400;
+  overflow: hidden;
 }
 
 .article-content h1,
@@ -94,7 +95,7 @@
 }
 
 .code-box > pre {
-  padding: 0 1em 2em 2em;
+  padding: 0 2em 2em 2em;
   overflow-x: auto;
   margin: 0;
 }
@@ -229,4 +230,17 @@ ul:has(.active-poc-heading) > li {
   .table-of-content {
     display: none;
   }
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media (max-width: 650px) {
+  .article-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .code-box > pre {
+    padding: 0 1em 2em 1em;
+  }
+
 }

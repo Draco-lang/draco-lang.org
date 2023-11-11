@@ -23,10 +23,12 @@ export default function RootLayout({ children }: Params) {
         <div className="app">
           <div className="top-bar">
             <div className="hamburger-wrapper">
-              <input type="checkbox" id="top-bar-hamburger" className="hamburger-checkbox" />
-              <label htmlFor="top-bar-hamburger" className="hamburger-icon">
+              <div className="hamburger-icon">
                 <div></div>
-              </label>
+              </div>
+              <div className="hamburger-close-icon">
+                <div></div>
+              </div>
               <Link href="/" className="top-bar-link">
                 <Image
                   src="/generated/Logo-Short.svg"
