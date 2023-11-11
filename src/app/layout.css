@@ -219,6 +219,10 @@ h6 {
     padding: 0;
   }
 
+  .hamburger-icon:active div {
+    background-image: none;
+  }
+
   .hamburger-icon:active ~ div {
     display: flex;
   }
