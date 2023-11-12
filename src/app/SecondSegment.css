@@ -21,3 +21,11 @@
 .super-derpy {
   font-size: 100px;
 }
+
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media (max-width: 650px) {
+  .splash-code-viewer {
+    width: 90%;
+  }
+}

@@ -6,8 +6,8 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,7 +30,8 @@ a:visited {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 .top-bar {
@@ -92,6 +93,10 @@ code {
   box-sizing: border-box;
 }
 
+.hamburger-checkbox {
+  display: none;
+}
+
 .hamburger-icon {
   display: none;
   cursor: pointer;
@@ -102,34 +107,22 @@ code {
   position: relative;
 }
 
-.hamburger-close-icon {
-  display: none;
-  cursor: pointer;
-  border-radius: 100%;
-  padding: 12px;
-  left: 0;
-  justify-self: start;
-  position: relative;
+.hamburger-icon:hover {
+  background-color: #00c8bd50;
 }
 
 .hamburger-icon div {
   height: 22px;
   width: 22px;
-  background-image: url("/bars.svg");
+  background-image: url('/bars.svg');
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-.hamburger-close-icon div {
-  height: 22px;
-  width: 22px;
-  background-image: url("/xmark.svg");
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+.hamburger-checkbox:checked + .hamburger-icon div {
+  background-image: url('/xmark.svg');
 }
 
 body:has(.page-docs) .active-on-docs {
@@ -182,7 +175,7 @@ h6 {
 }
 
 /* Maybe it's a good linting rule, maybe not, I don't know. */
-/* stylelint-disable-next-line media-feature-range-notation */
+/* stylelint-disable-next-line media-feature-range-notation */ 
 @media (max-width: 650px) {
   .hamburger-icon {
     display: block;
@@ -194,7 +187,7 @@ h6 {
     padding-left: 4.5px;
   }
 
-  .top-bar-link img {
+  .top-bar-link img{
     height: 40px;
   }
 
@@ -213,21 +206,9 @@ h6 {
     gap: 30px;
   }
 
-  .hamburger-icon:active {
-    height: 0;
-    width: 0;
-    padding: 0;
-  }
-
-  .hamburger-icon:active div {
-    background-image: none;
-  }
-
-  .hamburger-icon:active ~ div {
+  .hamburger-checkbox:checked ~ div {
     display: flex;
   }
 
-  .hamburger-icon:active ~ .hamburger-close-icon {
-    display: flex;
-  }
+
 }
