@@ -12,10 +12,12 @@
   border: 1px solid #e5e7eb28;
   border-radius: 5px;
   display: flex;
-  flex-direction: row;
-  height: 10.75rem;
+  flex-flow: row wrap-reverse;
+  justify-content: center;
+  min-height: 10.75rem;
   color: white;
   text-decoration: none;
+  flex-grow: 1;
 }
 
 .blog-entries > a:hover {
@@ -23,7 +25,8 @@
 }
 
 .blog-entries > a img {
-  width: 20rem;
+  max-width: 35%;
+  object-fit: cover;
 }
 
 .blog-entries > a h1 {
@@ -34,4 +37,6 @@
 
 .article-preview-left-part {
   padding: 1.75rem 1.75rem 1.25rem;
+  min-width: 60%;
+  width: auto;
 }
