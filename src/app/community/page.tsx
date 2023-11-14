@@ -16,8 +16,7 @@ export default function Page() {
             </span>
             <span>Come talk to us!</span>
             <span>
-              {" "}
-              And yes, we have Derpy emojis &nbsp;{" "}
+              And yes, we have Derpy emojis &nbsp;
               <Emoji
                 className="inline-emoji"
                 emojiName="hearteyes"

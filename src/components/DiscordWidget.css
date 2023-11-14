@@ -6,8 +6,8 @@
   background-color: #2b2d31;
   border-radius: 4px;
   max-width: 350px;
-  min-width: 350px;
-  width: 100%;
+  min-width: 200px;
+  width: auto;
   user-select: none;
   align-items: flex-start;
 }
@@ -75,7 +75,7 @@
 
 .discord-widget .status-counts {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   column-gap: 12px;
   color: #b5bac1;
   line-height: 16px;

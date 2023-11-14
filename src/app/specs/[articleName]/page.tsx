@@ -18,6 +18,11 @@ export default async function Page({ params }: ArticleNameParams) {
       <Article markdown={spec.markdown} />
       <style>
         {`
+          @media (max-width: 650px) {
+            .specs-submenu {
+              display: flex;
+            }
+          }
           body:has(.article-${articleName}) .article-active-on-${articleName} {
             background-color: #00c8bd50;
           }

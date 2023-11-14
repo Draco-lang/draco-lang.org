@@ -9,6 +9,7 @@
 .sidebar {
   position: fixed;
   min-width: 200px;
+  max-width: 200px;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -24,6 +25,14 @@
 
 .spec-content {
   width: 100%;
+}
+
+.article-content {
+  margin-left: 200px !important;
+}
+
+.article {
+  justify-content: center !important;
 }
 
 /* The followings styles include the article name, so it doesn't follow exactly the convention. */
@@ -44,4 +53,14 @@ body:has(.article-Introduction) .article-active-on-Introduction {
 
 .sidebar > a:visited:hover {
   background-color: #ffffff23;
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    display: none;
+  }
+
+  .article-content {
+    margin-left: 0 !important;
+  }
 }

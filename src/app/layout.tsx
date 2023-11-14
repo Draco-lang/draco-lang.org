@@ -4,6 +4,7 @@ import Image from "next/image";
 import "./layout.css";
 import { Metadata } from "next";
 import generateMetadata from "@/utils/metadata";
+import { getSpecsInfo } from "@/utils/github";
 
 export const metadata: Metadata = generateMetadata({
   title: "Draco Programming Language",
@@ -16,7 +17,7 @@ export interface Params {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: Params) {
+export default async function RootLayout({ children }: Params) {
   // This is an hack to close the hamburger menu when the user clicks on a link.
   // Basically next.js prevent default behavior when clicking on a link
   // So we can't close it with pure html/css
@@ -31,6 +32,12 @@ export default function RootLayout({ children }: Params) {
   };
   </script>
   `;
+
+  const specs = await getSpecsInfo();
+  const introduction = specs.find((s) => s.name === "Introduction")!;
+  specs.splice(specs.indexOf(introduction), 1);
+  specs.unshift(introduction);
+
   return (
     <html>
       <body>
@@ -52,6 +59,18 @@ export default function RootLayout({ children }: Params) {
                 <DracoButton buttonSize="medium" href="/specs" className="active-on-specs close-hamberger-menu">
                   Specification
                 </DracoButton>
+                <div className="specs-submenu">
+                  {specs.map((spec) => (
+                    <DracoButton
+                      buttonSize="small"
+                      href={`/specs/${spec.name}`}
+                      className={`close-hamberger-menu article-active-on-${spec.name}`}
+                      key={spec.name}
+                    >
+                      {spec.name}
+                    </DracoButton>
+                  ))}
+                </div>
                 <DracoButton buttonSize="medium" href="/community" className="active-on-community close-hamberger-menu">
                   Community
                 </DracoButton>
