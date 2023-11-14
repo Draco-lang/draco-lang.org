@@ -238,9 +238,8 @@ ul:has(.active-poc-heading) > li {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   .code-box > pre {
     padding: 0 1em 2em 1em;
   }
-
 }

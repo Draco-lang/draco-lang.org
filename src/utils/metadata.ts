@@ -7,7 +7,7 @@ export interface MetadataInput {
   goBig: boolean;
 }
 
-export default function generateMetadata( metadata: MetadataInput): Metadata {
+export default function generateMetadata(metadata: MetadataInput): Metadata {
   const { title, description, imagePng, goBig } = metadata;
   const urlBase = "https://draco-lang.org/";
   return {

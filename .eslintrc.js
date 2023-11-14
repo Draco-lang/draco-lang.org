@@ -1,71 +1,54 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "es2021": true,
+  env: {
+    browser: true,
+    es2021: true,
   },
-  "extends": [
+  extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
   ],
-  "overrides": [
+  overrides: [
     {
-      "env": {
-        "node": true
+      env: {
+        node: true,
       },
-      "files": [
-        ".eslintrc.{js,cjs}"
-      ],
-      "parserOptions": {
-        "sourceType": "script"
-      }
+      files: [".eslintrc.{js,cjs}"],
+      parserOptions: {
+        sourceType: "script",
+      },
     },
     {
-      "env": {
-        "node": true,
-        "es2021": false,
-        "amd": true
+      env: {
+        node: true,
+        es2021: false,
+        amd: true,
       },
-      "files": [
-        "generateAssets.js"
-      ],
-      "rules": {
+      files: ["generateAssets.js"],
+      rules: {
         "no-require-imports": "off",
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
+        "@typescript-eslint/no-var-requires": "off",
+      },
+    },
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "import"
-  ],
-  "rules": {
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+  plugins: ["@typescript-eslint", "react", "import"],
+  rules: {
+    quotes: ["error", "double"],
+    semi: ["error", "always"],
     "no-multiple-empty-lines": [
       "error",
       {
-        max: 1
-      }
+        max: 1,
+      },
     ],
     "react/react-in-jsx-scope": "off",
     "import/newline-after-import": "error",
-    "padding-line-between-statements": [
-      "error",
-      { "blankLine": "always", "prev": "if", "next": "*" }
-    ]
-  }
+    "padding-line-between-statements": ["error", { blankLine: "always", prev: "if", next: "*" }],
+  },
 };
