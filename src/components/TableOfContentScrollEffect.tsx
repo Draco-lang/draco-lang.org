@@ -26,9 +26,7 @@ export default function TableOfContentScrollEffect() {
     `;
     document.head.appendChild(style);
 
-    const headings = Array.from(
-      document.getElementsByClassName("article-heading")
-    );
+    const headings = Array.from(document.getElementsByClassName("article-heading"));
     const headingsInScreen: {
       element: HTMLHeadingElement;
       isOnScreen: boolean;
@@ -58,14 +56,12 @@ export default function TableOfContentScrollEffect() {
 
       clearActiveTag();
       let activeHeading: HTMLHeadingElement;
-      const hasHeadingOnScreen =
-        headingsInScreen.findIndex((s) => s.isOnScreen) !== -1;
+      const hasHeadingOnScreen = headingsInScreen.findIndex((s) => s.isOnScreen) !== -1;
       if (!hasHeadingOnScreen) {
         // we want to know if the headings was scrolled out of the screen from the top or from the bottom.
         // if it's at the top, the coordinate won't be 0 because it may have a padding, so we need to get this padding.
         const padding = entries[0].rootBounds!.y;
-        const positionRelativeToObserver =
-          entries[0].boundingClientRect.top - padding;
+        const positionRelativeToObserver = entries[0].boundingClientRect.top - padding;
         // if the position is negative it means the heading is above the screen, so we are scrolling down.
         const isScrollingBackward = positionRelativeToObserver > 0;
 
@@ -74,9 +70,7 @@ export default function TableOfContentScrollEffect() {
           activeHeading = entries[0].target as HTMLHeadingElement;
         } else {
           // we are scrolling up, so the current heading is the previous of the one that exited the screen.
-          const index = headingsInScreen.findIndex(
-            (s) => s.element === entries[0].target
-          );
+          const index = headingsInScreen.findIndex((s) => s.element === entries[0].target);
           if (index === 0) {
             // if somehow the first heading is far in the text, we will keep selecting it.
             activeHeading = headingsInScreen[0].element;
@@ -98,9 +92,7 @@ export default function TableOfContentScrollEffect() {
       const headingId = Array.from(activeHeading.classList)
         .find((c) => c.startsWith("heading-"))
         ?.replace("heading-", "");
-      const pocHeading = document.getElementsByClassName(
-        `poc-heading-${headingId}`
-      )[0];
+      const pocHeading = document.getElementsByClassName(`poc-heading-${headingId}`)[0];
       if (pocHeading === undefined) {
         throw new Error(`poc-heading-${headingId} not found`);
       }
@@ -124,7 +116,5 @@ export default function TableOfContentScrollEffect() {
   return <></>;
 }
 function clearActiveTag() {
-  Array.from(document.getElementsByClassName("poc-heading")).forEach((e) =>
-    e.classList.remove("active-poc-heading")
-  );
+  Array.from(document.getElementsByClassName("poc-heading")).forEach((e) => e.classList.remove("active-poc-heading"));
 }

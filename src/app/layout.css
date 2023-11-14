@@ -6,8 +6,8 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,45 +30,51 @@ a:visited {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .top-bar {
-  height: 64px;
+  padding: 4.5px 16px 4.5px 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   position: fixed;
-  width: 100%;
+  width: 100vw;
+  box-sizing: border-box;
   background-color: rgba(40, 44, 52, 95%);
   backdrop-filter: blur(16px) saturate(2);
-  border-bottom: 0 solid rgb(229 231 235);
+  border-bottom: 0 solid #e5e7eb;
+  flex-grow: 1;
+  z-index: 100;
 }
 
 .top-bar-logo {
-  padding-left: 16px;
   height: 50px;
 }
 
 .top-bar-link {
   display: flex;
   align-items: center;
+  margin-top: 9px;
+  margin-bottom: 9px;
 }
 
-.topbar-icon {
+.topbar-github-icon {
   height: 28px;
+  margin-bottom: 11px;
+  margin-top: 11px;
 }
 
 .links {
+  margin-left: auto;
   display: flex;
   flex-direction: row;
-  gap: 40px;
-  width: 75%;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
-  padding-right: 25px;
+  padding-left: 15px;
+  max-width: 730px;
+  flex-grow: 1;
 }
 
 .links .draco-button:hover {
@@ -84,6 +90,38 @@ code {
   padding-top: 6rem;
   min-height: 100%;
   box-sizing: border-box;
+}
+
+.hamburger-checkbox {
+  display: none;
+}
+
+.hamburger-icon {
+  display: none;
+  cursor: pointer;
+  border-radius: 100%;
+  padding: 12px;
+  left: 0;
+  justify-self: start;
+  position: relative;
+}
+
+.hamburger-icon:hover {
+  background-color: #00c8bd50;
+}
+
+.hamburger-icon div {
+  height: 22px;
+  width: 22px;
+  background-image: url("/bars.svg");
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.hamburger-checkbox:checked + .hamburger-icon div {
+  background-image: url("/xmark.svg");
 }
 
 body:has(.page-docs) .active-on-docs {
@@ -125,4 +163,57 @@ h4,
 h5,
 h6 {
   scroll-margin-top: 64px;
+}
+
+.hamburger-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.specs-submenu {
+  display: none;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+
+/* Maybe it's a good linting rule, maybe not, I don't know. */
+/* stylelint-disable-next-line media-feature-range-notation */
+@media (max-width: 650px) {
+  .hamburger-icon {
+    display: block;
+  }
+
+  .top-bar {
+    justify-content: space-between;
+    display: flex;
+    padding-left: 4.5px;
+  }
+
+  .top-bar-link img {
+    height: 40px;
+  }
+
+  .links {
+    padding-top: 30px;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 64px;
+    width: 100%;
+    background-color: rgba(40, 44, 52);
+    height: calc(100vh - 64px);
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
+  }
+
+  .hamburger-checkbox:checked ~ div {
+    display: flex;
+  }
 }

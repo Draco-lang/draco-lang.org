@@ -10,6 +10,11 @@ export default async function Page() {
       <Article markdown={intro.markdown} className="article-Introduction" />
       <style>
         {`
+      @media (max-width: 650px) {
+        .specs-submenu {
+          display: flex;
+        }
+      }
       .article-active-on-Introduction:hover {
         background-color: #00c8bd50 !important;
       }  

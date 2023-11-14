@@ -8,11 +8,7 @@ export default function DiscordWidget() {
   useEffect(() => {
     const fetchDiscordDataAsync = async () => {
       try {
-        const data = await (
-          await fetch(
-            "https://discord.com/api/v9/invites/cCwUgjKUuK?with_counts=true"
-          )
-        ).json();
+        const data = await (await fetch("https://discord.com/api/v9/invites/cCwUgjKUuK?with_counts=true")).json();
         setInfo({
           online: data.approximate_presence_count,
           members: data.approximate_member_count,

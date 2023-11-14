@@ -5,9 +5,7 @@ import { HTMLProps } from "react";
 import TableOfContentScrollEffect from "./TableOfContentScrollEffect";
 import "highlight.js/styles/atom-one-dark.css";
 
-export default async function Article(
-  params: HTMLProps<HTMLDivElement> & { markdown: string }
-) {
+export default async function Article(params: HTMLProps<HTMLDivElement> & { markdown: string }) {
   const { markdown, className, ...restProps } = params;
   const headingsMapPoc = {};
   const headingsMapArticle = {};
@@ -30,12 +28,11 @@ export default async function Article(
             .replace(/<\/h[0-9]>\n$/, "");
           const id = getHeading(cleanedTitle, headingsMapPoc);
           return (
-            <li
-              key={node.title.replace(/^#+/, "").trim()}
-              className={`poc-heading poc-heading-${id}`}
-            >
+            <li key={node.title.replace(/^#+/, "").trim()} className={`poc-heading poc-heading-${id}`}>
               <a href={`#${id}`} className="not-a-link">
-                <span className="toc-bar"></span>{" "}
+                <span className="toc-bar-container">
+                  <span className="toc-bar"></span>
+                </span>
                 <span>{node.title.replace(/^#+/, "").trim()}</span>
               </a>
               {node.children.length > 0 && renderHeading(node.children)}
@@ -104,10 +101,7 @@ export default async function Article(
 
   return (
     <div className={`article ${className ?? ""}`} {...restProps}>
-      <div
-        className="article-content"
-        dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
+      <div className="article-content" dangerouslySetInnerHTML={{ __html: html }}></div>
       <div className="table-of-content">
         <h1>Contents</h1>
         {renderHeading(headingsToTree(headings.map((h) => h.raw)))}
