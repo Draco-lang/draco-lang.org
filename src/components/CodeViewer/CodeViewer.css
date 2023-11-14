@@ -3,11 +3,17 @@
 }
 
 .code-container {
-  border: 1px solid #e5e7eb28;
+  border: 1px solid rgba(0, 0, 0, 10%);
   text-align: left;
   border-radius: 0 5px 5px 5px;
   min-width: 0;
   overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-container {
+    border-color: #e5e7eb28;
+  }
 }
 
 .code-container code {

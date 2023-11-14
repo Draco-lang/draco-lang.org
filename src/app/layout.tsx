@@ -22,7 +22,8 @@ export default async function RootLayout({ children }: Params) {
   // Basically next.js prevent default behavior when clicking on a link
   // So we can't close it with pure html/css
   // So we add a lightweight script that close it when the user navigate to another page
-  const scriptHTML = `
+  // The css part is to get dynamic theme for the code viewer.
+  const rawHTML = `
   <script>
   let checkbox = document.getElementById("top-bar-hamburger");
   let originalPushState = history.pushState;
@@ -31,6 +32,10 @@ export default async function RootLayout({ children }: Params) {
       checkbox.checked = false;
   };
   </script>
+  <style>
+      @import url("/generated/atom-one-light.css") screen;
+      @import url("/generated/atom-one-dark.css") screen and (prefers-color-scheme: dark);
+    </style>
   `;
 
   const specs = await getSpecsInfo();
@@ -78,7 +83,7 @@ export default async function RootLayout({ children }: Params) {
                   Blog
                 </DracoButton>
               </div>
-              <div dangerouslySetInnerHTML={{ __html: scriptHTML }}></div>
+              <div dangerouslySetInnerHTML={{ __html: rawHTML }}></div>
             </div>
             <a href="https://github.com/Draco-lang/">
               <Image

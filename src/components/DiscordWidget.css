@@ -7,9 +7,10 @@
   border-radius: 4px;
   max-width: 350px;
   min-width: 200px;
-  width: auto;
+  width: 100%;
   user-select: none;
   align-items: flex-start;
+  border: 1px transparent solid;
 }
 
 .discord-widget .content {
@@ -105,4 +106,23 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+@media (prefers-color-scheme: light) {
+  .discord-widget {
+    background-color: rgb(242, 243, 245);
+    border-color: rgba(0, 0, 0, 10%);
+}
+
+  .discord-widget .server-name {
+    color: rgb(6, 6, 7);
+  }
+
+  .discord-widget .status-counts {
+    color: rgb(78, 80, 88);
+  }
+
+  .discord-widget .server-icon {
+    background-color: white;
+  }
 }

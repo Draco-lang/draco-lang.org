@@ -2,7 +2,7 @@
   background-color: transparent;
   font-size: 16px;
   padding: 0.5em 1em;
-  outline: 1px solid #e5e7eb28;
+  outline: 1px solid rgba(0, 0, 0, 10%);
   display: inline-block;
   border: 0; /* borders produces doubles borders in tabs */
   margin-left: 1px;
@@ -26,4 +26,10 @@ input[type="radio"]:checked + div.tab-content > label {
   outline-color: #00c8bd;
   background-color: #0000;
   cursor: default;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tab-buttons {
+    outline-color: #e5e7eb28;
+  }
 }

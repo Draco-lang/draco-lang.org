@@ -11,8 +11,8 @@
   flex-direction: column;
   justify-content: left;
   height: 500px;
-  border: 1px solid #e5e7eb28;
-  background-color: #333740;
+  border: 1px solid rgba(0, 0, 0, 10%);
+  background-color: rgb(246, 247, 249);
   border-radius: 5px;
   margin: 10px;
   padding: 0 30px 0 30px;
@@ -20,6 +20,13 @@
   min-width: 300px;
   flex: 1 1 0px;
   flex-shrink: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .community-content > div {
+    background-color: #333740;
+    border-color: #e5e7eb28;
+  }
 }
 
 .community-content p {
@@ -53,6 +60,7 @@
   margin-bottom: 1em;
 }
 
+/* stylelint-disable-next-line media-feature-range-notation */
 @media (max-width: 650px) {
   .community-content {
     margin: 0 1em 2em 1em;
