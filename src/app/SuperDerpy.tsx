@@ -19,7 +19,7 @@ export default function SuperDerpy() {
       case 1:
         setEmoji({
           name: "sad",
-          title: "Derpy is sad. He dislike to be clicked.",
+          title: "Derpy is sad. He dislikes to be clicked.",
         });
         break;
       case 2:
