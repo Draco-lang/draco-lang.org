@@ -5,7 +5,6 @@
   background-color: #f6f8fa;
 }
 
-
 @media (prefers-color-scheme: dark) {
   .code-viewer {
     background-color: #282c34;

@@ -66,8 +66,14 @@ async function main() {
   );
 
   // copy hljs themes to public folder
-  await fs.promises.copyFile("node_modules/highlight.js/styles/atom-one-light.css", "public/generated/atom-one-light.css");
-  await fs.promises.copyFile("node_modules/highlight.js/styles/atom-one-dark.css", "public/generated/atom-one-dark.css");
+  await fs.promises.copyFile(
+    "node_modules/highlight.js/styles/atom-one-light.css",
+    "public/generated/atom-one-light.css"
+  );
+  await fs.promises.copyFile(
+    "node_modules/highlight.js/styles/atom-one-dark.css",
+    "public/generated/atom-one-dark.css"
+  );
 }
 main();
 

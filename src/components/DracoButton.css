@@ -22,11 +22,11 @@
 }
 
 a.draco-button {
-  color: #00857F;
+  color: #00857f;
 }
 
 a.draco-button:visited {
-  color: #00857F;
+  color: #00857f;
 }
 
 @media (prefers-color-scheme: dark) {

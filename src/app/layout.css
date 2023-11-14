@@ -113,34 +113,34 @@ code {
 }
 
 body:has(.page-docs) .active-on-docs {
-  outline: 1px solid #00857F;
+  outline: 1px solid #00857f;
 }
 
 body:has(.page-specs) .active-on-specs {
-  outline: 1px solid #00857F;
+  outline: 1px solid #00857f;
 }
 
 body:has(.page-community) .active-on-community {
-  outline: 1px solid #00857F;
+  outline: 1px solid #00857f;
 }
 
 body:has(.page-blog) .active-on-blog {
-  outline: 1px solid #00857F;
+  outline: 1px solid #00857f;
 }
 
 @media (prefers-color-scheme: dark) {
   body:has(.page-docs) .active-on-docs {
     outline: 1px solid #00c8bd;
   }
-  
+
   body:has(.page-specs) .active-on-specs {
     outline: 1px solid #00c8bd;
   }
-  
+
   body:has(.page-community) .active-on-community {
     outline: 1px solid #00c8bd;
   }
-  
+
   body:has(.page-blog) .active-on-blog {
     outline: 1px solid #00c8bd;
   }
