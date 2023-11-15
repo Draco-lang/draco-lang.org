@@ -22,9 +22,19 @@
 }
 
 a.draco-button {
-  color: white;
+  color: #00857f;
 }
 
 a.draco-button:visited {
-  color: white;
+  color: #00857f;
+}
+
+@media (prefers-color-scheme: dark) {
+  a.draco-button {
+    color: white;
+  }
+
+  a.draco-button:visited {
+    color: white;
+  }
 }

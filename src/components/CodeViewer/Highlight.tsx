@@ -1,7 +1,6 @@
 import hljs from "highlight.js";
 import { HTMLProps } from "react";
 import "./Highlight.css";
-import "highlight.js/styles/atom-one-dark.css";
 
 export default function Highlight(prop: HTMLProps<HTMLDivElement> & { language: string; children: string }) {
   const { children, language, ...restProps } = prop;

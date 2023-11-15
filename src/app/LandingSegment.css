@@ -20,7 +20,7 @@
 
 .getstarted {
   background-color: #009a94;
-  color: white;
+  color: white !important;
   border: none;
 }
 
