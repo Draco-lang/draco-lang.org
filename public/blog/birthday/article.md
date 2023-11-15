@@ -6,7 +6,7 @@ image: "/generated/party.svg"
 imageMargin: "20px"
 imageHeight: "200px"
 tags: meta
-authors: ["LPeter1997"]
+authors: "LPeter1997"
 makeSocialEmbedBig: false
 ---
 

@@ -39,6 +39,15 @@
   color: rgb(117, 117, 117);
 }
 
+.article-teaser {
+  margin-bottom: 16px;
+}
+
+.article-metadata {
+  font-weight: 400;
+  font-size: 13.6px;
+}
+
 @media (prefers-color-scheme: dark) {
   .blog-entries > a {
     background-color: #1c1f26;

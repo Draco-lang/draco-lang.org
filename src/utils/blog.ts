@@ -44,6 +44,16 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                 throw new Error(`Article ${dirEntry.name} does not have a date`);
             }
 
+            // tags can be only a string, so we need to convert it to an array
+            if (attributes.tags !== undefined && !Array.isArray(attributes.tags)) {
+                attributes.tags = [attributes.tags];
+            }
+            
+            // same for authors.
+            if (attributes.authors !== undefined && !Array.isArray(attributes.authors)) {
+                attributes.authors = [attributes.authors];
+            }
+
             articles.push({
                 title: attributes.title ?? "Untitled",
                 date: attributes.date,

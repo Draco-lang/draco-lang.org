@@ -75,19 +75,19 @@ export default async function Page({ params }: ArticleNameParams) {
         <h1>{article.title}</h1>
         <div className="article-meta">
           <span className="article-date">
-            <span className="muted-color"> Posted </span>
+            <span className="muted-color"> Posted: </span>
             <time>{formattedDate}</time>
           </span>
           {article.tags.length === 0 ? (
             <></>
           ) : (
             <span className="article-tags">
-              <span className="muted-color"> Tags </span>
+              <span className="muted-color"> Tags: </span>
               {article.tags}
             </span>
           )}
           <span className="article-author">
-            <span className="muted-color"> By </span>
+            <span className="muted-color"> By: </span>
             {article.authors?.join(", ")}
           </span>
         </div>
