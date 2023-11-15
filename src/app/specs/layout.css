@@ -55,6 +55,7 @@ body:has(.article-Introduction) .article-active-on-Introduction {
   background-color: #ffffff23;
 }
 
+/* stylelint-disable-next-line media-feature-range-notation */
 @media (max-width: 650px) {
   .sidebar {
     display: none;
