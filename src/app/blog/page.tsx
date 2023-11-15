@@ -23,7 +23,6 @@ export default async function Page() {
                 })}
               </span>
               <span className="muted-color">&nbsp;&nbsp;Tags </span>
-              {console.log(article) && ""}
               <span>{article.tags}</span>
               <span className="muted-color">&nbsp;&nbsp;By </span>
               <span>{article.authors?.join(", ")}</span>
