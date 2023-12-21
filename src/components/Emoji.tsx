@@ -11,7 +11,7 @@ export default function Emoji(
   const imgClassName = `emoji ${className || ""}`;
   return (
     <img
-      src={`generated/${emojiName}.svg`}
+      src={`/generated/${emojiName}.svg`}
       className={imgClassName}
       {...restProps}
       alt={alt ?? `Emoji ${emojiName}`}
