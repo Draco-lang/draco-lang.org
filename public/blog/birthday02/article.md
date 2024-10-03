@@ -75,3 +75,17 @@ We started reworking the binding to use async/await with these tasks, binding th
  * Lots of node-type checks in the binder code
 
 This was one of the biggest tech-debt we were carrying for quite a while and made introducing and debugging features quite painful, and now it's gone. The async-ified version torned out better than what I could have ever imagined.
+
+## A depressing end and start of the year
+
+The project hit one of its biggest inactive gaps yet. To keep personal matters short, I was feeling quite burnt-out on working on personal projects next to a full-time .NET developer job. I needed to find other hobbies to mentally recharge and re-gather my motivation for the project. During this time, Kuinox stepped in again and carried the project on his shoulders to not let it get abandoned. I'm infinitely grateful for everyone who contributed during this time and special thanks to him for holding it out as long as I needed time.
+
+- 2023 28th of November: Additional utility PowerShell scripts
+- 2023 5th of December: Fix a bug with spaces in paths in the SDK integration
+- 2023 14th of December: Publishing the Language Server Protocol and Devug Adapter protocol implementations to NuGet (people wanted to use our implementations!)
+- 2023 16th of December: Cleanup around the symbol hierarchy
+- 2023 22nd of December: CI workflow updates to the playground
+- 2023 21st of January: PowerShell utility script improvements, bug fix in the language server to update a freshly opened document
+- 2023 23rd of January: Playground build script improvement, merking well-known types and intrinsic symbols
+
+This last one might deserve a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations - like `System.Type` from `typeof(T)` - and so on.
