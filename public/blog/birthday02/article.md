@@ -242,3 +242,7 @@ The fuzzer was working better than I ever could have expected. Thank you everyon
 - 2024 28th of September: Fuzzer improvements, more crashfixes, LCOV report generation from the fuzzer
 - 2024 1st of October: Fuzzer improvements
 - 2024 3rd of October: Crashfixes, factored out a general-purpose temrinal UI for the fuzzer library
+
+## In conclusion
+
+TODO
