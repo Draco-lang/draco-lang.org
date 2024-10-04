@@ -178,3 +178,67 @@ While working on these, I've realized that the compiler is much more broken and 
 - 2024 16th of September: Run examples as part of the test suite
 
 We have long had the ability to install the Draco SDK locally in a folder and we have discussed how nice it would be, if we could run the examples as part of the test suite to test the entire SDK end to end. With this change, both the compiler test project and the CI runs the examples as part of the test suite. Locally, it can use an arbitrarily installed SDK, while the CI uses the SDK installed directly from source. The outputs are verified using the wonderful [Verify](https://github.com/VerifyTests/Verify) library.
+
+- 2024 20th of September: Bugfix in the parent-child relationship of `SyntaxList<T>` elements
+
+## We need a fuzzer
+
+Kuinox has long been vouching for a better [fuzzer](https://en.wikipedia.org/wiki/Fuzzing). The old fuzzer was nothing more than a structured random string generator and never produced anything than a few messy testcases for the lexer. The problem? There is no decent fuzzer available in .NET and I thought writing one would be a massive time sink without significant results. One long day after searching for bugs, I've opened up the [wiki page for AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)), a famous fuzzer. Reading about its high-level functionality, none of the components seemed that daunting so I've decided to give it a shot.
+
+### Step 1: Instrumentation
+
+A decent fuzzer needs to instrument the code. AFL looks at the coverage of the code being ran to pick mutations that are more interesting to run. For us to do this, we'd need a way to measure the coverage of certain .NET code. Unfortunately, all code coverage libraries in .NET seem to assume that they'll be measuring code coverage running from a test host, providing no API.
+
+Our first task was then to write a library that can add instrumentation code to the fuzzed target assembly. For that, we wrote a weaver using [Mono.Cecil](https://www.mono-project.com/docs/tools+libraries/libraries/Mono.Cecil/) and wrapped it up in a library that provides an API and an MSBuild task to automatically weave the target assembly on build. The usage became relatively simple:
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="..\Draco.Compiler\Draco.Compiler.csproj" InstrumentCoverage="True" />
+</ItemGroup>
+```
+
+```cs
+var instrumentedAssembly = InstrumentedAssembly.FromWeavedAssembly(typeof(Compiler).Assembly);
+// We can clear coverage before a run
+instrumentedAssembly.ClearCoverageData();
+// Run some code involving the instrumented assembly
+// ...
+// Get the coverage data
+var coverage = instrumentedAssembly.CoverageResult;
+```
+
+This library was merged on the 21st of September, 2024.
+
+### Step 2: Fuzzing logic
+
+Once instrumentation wasn't a problem anymore, we started working on the core fuzzer logic using the scheme that AFL uses. We have decided to make the fuzzer target.agnostic, so in the future other .NET projects could utilize it as well. The first iteration of the fuzzer followed the following steps - similar to AFL:
+ 1. Dequeue an input from the queue
+ 2. Minimize the input with random cuts as long as it produces an equivalent result (in this case coverage)
+ 3. Mutate the input to discover new paths and enqueue the interesting mutations
+ 4. Go to step 1
+
+Using the target-agnostic fuzzer library, we wrote a terminal UI wrapper around it to fuzz the compiler itself. While the fuzzer was very bare-bones and only supported in-process fuzzing, it already exposed some interesting behavior.
+
+**TODO: Screenshot of the fuzzer**
+
+### Step 3: We need speed
+
+The fuzzer was inititially insanely slow. On my machine, in-process fuzzing produced 2-3 mutations a second, so we investigated. While the compiler has a few benchmarks, they haven't been maintained and didn't provide enough information to help us improve performance. Fortunately, profiling the fuzzer directly gave us enough information to cut down the time to over 1000 mutations a second within 24 hours of finishing the core fuzzer.
+
+### Step 4: Out of process execution
+
+The fuzzer was still running in-process, which was a problem. If the compiler crashed fatally because of a stack overflow for example, the fuzzer crashed. This required some major restructuring of both the core fuzzer and the coverage tool. The main problem was keeping the coverage data around, even when the target process crashes. The target program could have communicated its weaving info over some protocol, but that would have slowed down the execution significantly. In the end, we decided to write a simple [shared memory](https://en.wikipedia.org/wiki/Shared_memory) buffer implementation that the host process can share with the target process. The target process writes the coverage data into the buffer, while the host process reads it out and keeps it around. If the target crashes, no coverage data is lost, and there is no slow down because of the coverage data being communicated.
+
+> Note: We know about the existence of [MemoryMappedFiles](https://learn.microsoft.com/en-us/dotnet/api/system.io.memorymappedfiles.memorymappedfile?view=net-8.0), but to my understanding not all of its API was available cross-platform. In the end, our implementation ended up being dead simple and had a nicer API overall for our usecase.
+
+This work was done on the 25th of September, 2024.
+
+### Evaluation
+
+The fuzzer was working better than I ever could have expected. Thank you everyone, who has contributed CPU cores to the cause, together we have crushed over 30 bugs in a really short period of time that would have been hard to find by hand. The fuzzer found type system edge cases that we weren't even sure could happen!
+
+- 2024 26th of September: Crasfixes found by the fuzzer, ability for the fuzzer to import inputs from files
+- 2024 27th of September: Many-many crashfixes, all found by the fuzzer
+- 2024 28th of September: Fuzzer improvements, more crashfixes, LCOV report generation from the fuzzer
+- 2024 1st of October: Fuzzer improvements
+- 2024 3rd of October: Crashfixes, factored out a general-purpose temrinal UI for the fuzzer library
