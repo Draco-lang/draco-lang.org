@@ -221,7 +221,7 @@ Once instrumentation wasn't a problem anymore, we started working on the core fu
 
 Using the target-agnostic fuzzer library, we wrote a terminal UI wrapper around it to fuzz the compiler itself. While the fuzzer was very bare-bones and only supported in-process fuzzing, it already exposed some interesting behavior.
 
-**TODO: Screenshot of the fuzzer**
+![The fuzzer running in the TUI host.](./img/fuzzer.png)
 
 ### Step 3: We need speed
 
