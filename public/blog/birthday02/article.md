@@ -183,7 +183,9 @@ We have long had the ability to install the Draco SDK locally in a folder and we
 
 ## We need a fuzzer
 
-Kuinox has long been vouching for a better [fuzzer](https://en.wikipedia.org/wiki/Fuzzing). The old fuzzer was nothing more than a structured random string generator and never produced anything than a few messy testcases for the lexer. The problem? There is no decent fuzzer available in .NET and I thought writing one would be a massive time sink without significant results. One long day after searching for bugs, I've opened up the [wiki page for AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)), a famous fuzzer. Reading about its high-level functionality, none of the components seemed that daunting so I've decided to give it a shot.
+Kuinox has long been vouching for a better [fuzzer](https://en.wikipedia.org/wiki/Fuzzing). The old fuzzer was nothing more than a structured random string generator and never produced anything than a few messy testcases for the lexer. The problem? There is no decent fuzzer available in .NET and I thought writing one would be a massive time sink without significant results. Kuinox has tried to fuzz the compiler with [sharpfuzz](https://github.com/Metalnem/sharpfuzz) and it caught a handful of lexer bugs, but nothing more of interest.
+
+One long day after searching for bugs, I've opened up the [wiki page for AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)), a famous fuzzer. Reading about its high-level functionality, none of the components seemed that daunting so I've decided to give it a shot.
 
 ### Step 1: Instrumentation
 
@@ -235,7 +237,7 @@ This work was done on the 25th of September, 2024.
 
 ### Evaluation
 
-The fuzzer was working better than I ever could have expected. Thank you everyone, who has contributed CPU cores to the cause, together we have crushed over 30 bugs in a really short period of time that would have been hard to find by hand. The fuzzer found type system edge cases that we weren't even sure could happen!
+The fuzzer was working better than I ever could have expected. Thank you everyone, who has contributed CPU cores to the cause, together we have crushed over 30 bugs in a really short period of time that would have been hard to find by hand. The fuzzer found type system edge cases that we weren't even sure could happen! For the type theorists out there, you know how you generally check for type-recursion before unification? Well we didn't and the fuzzer managed to find code that tried to unify `X'` with `Array<X'>`! Fun stuff.
 
 - 2024 26th of September: Crasfixes found by the fuzzer, ability for the fuzzer to import inputs from files
 - 2024 27th of September: Many-many crashfixes, all found by the fuzzer
