@@ -130,22 +130,28 @@ This has been long in the backburner. We have discussed before, how the current 
 - 2024 29th of July: Updates to the readme, it's been long obsolete
 - 2024 5th of August: Rework the type system to use the CHR solver, default value intrinsic function
 
-The solver we wrote a while back finally passed all of our regression testing, when integrated into the type system. This brought along things like better traceability, something that helped us trace down quite a few bugs.
+The solver we wrote a while back finally passed all of our regression testing, when integrated into the type system. This brought along things like better traceability, something that helped us trace down quite a few bugs. The below graph for example was produced by the generic tracing capabilities of the CHR system.
 
-**TODO: show example of visual trace, explain**
+![A trace of local type inference in a function.](./img/chr_trace_graph.png)
 
 - 2024 12th of August: Type system and overload resolution bugfixes
 - 2024 13th of August: Language server fixes, inlay hints for generics
 - 2024 15th of August: Basic delegates
 
-Until now, the language didn't have any kinf od first-class function support. This update brought in the most basic version of delegates, which can be stored in `System.Action` and `System.Func` types. There are still no lambdas or closures in the language, but named functions can be passed around as delegates now.
+Until now, the language didn't have any kind of first-class function support. This update brought in the most basic version of delegates, which can be stored in `System.Action` and `System.Func` types. There are still no lambdas or closures in the language, but named functions can be passed around as delegates now.
 
 - 2024 20th of August: Internal API simplifications, crashfixes, separated string escape sequences as separate tokens in string literals
 - 2024 21st of August: Range-Span API cleanup for the syntax tree, introduced a REPL
 
 While my main focus was improvements, I've been finding myself using tools like [csharprepl](https://github.com/waf/CSharpRepl) more and more, so I really wanted to implement a REPL for Draco. After a little prototyping, the base REPL was working and can be installed with `dotnet tool install -g dracorepl`.
 
+![A simple REPL session.](./img/repl.png)
+
 - 2024 22nd of August: REPL bugfixes, syntax highlighter service in the compiler, [PrettyPrompt](https://github.com/waf/PrettyPrompt) integration for the REPL, compiler concurrency bugfix, debugger bugfixes, project system bugfixes (busy day, huh)
+
+At this point, the REPL already looked and felt much nicer.
+
+![REPL with integrated services.](./img/nicerepl.png)
 
 - 2024 24th of August: Crashbug fix
 - 2024 25th of August: Removed the old fuzzer project, as it hasn't been used for a while and was not really useful. It was a simple, purely random input generator that didn't have any strategy.
