@@ -111,4 +111,16 @@ Until this point the language could not use any operators that were custom defin
 
 After a lengthy break with very few commits from me, I felt motivated again to jump back into working on the language and the compiler. I am generally very happy with spending time on other things I've found joy in, and in the long term made me appreciate this project even more. I've decided that I'd like to focus on improving code quality, traceability and fix crashbugs in general. The next section will contain mostly that, with occasional features sprinkled in.
 
-- 2024 3rd of June: Migrated the Playground into a separate repository, as the compiler has a stable enough API at this point
+- 2024 3rd of June: Migrated the Playground into a separate repository, as the compiler has a stable enough API at this point - it also got rid of the brittle JS toolchain needed to build the Playground, which was part of the solution
+- 2024 8th of July: General codebase cleanup, utilizing .NET 8 features like primary constructors
+- 2024 13th of July: Basic project system, LSP convenience methods
+
+Until now, the language server always assumed that a Draco project only uses the .NET BCL and did not resolve package references defined in the projectfile. The essence of the problem is locating the DLLs on the users machine for the BCL and downloaded NuGet packages. Until now, we used a package called [Basic.Reference.Assemblies](https://www.nuget.org/packages/Basic.Reference.Assemblies/) in the language server that kept the .NET BCL in memory. This did not only not look for package references, but also locked us into the .NET version shipped with the package.
+
+The solution was something called [design-time builds](https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md). After learning about them, we wrote a basic project system implementation that is able to perform a design-time build, which does things like restore and collects all the parameters that would be passed into the compiler, but does not actually invoke compilation. This allowed us to read out the metadata reference locations from the users machine, and finally get rid of the ugly hack of shipping the entire BCL metadata with the language server. Excitingly, we could finally see code suggestions for 3rd party packages for the first time in the language server!
+
+- 14th of July: CHR solver library
+
+This has been long in the backburner. We have discussed before, how the current constraint solver for the type system is kind of hard to trace and reason about, and some uniform formalization could improve it drastically. [Constraint Handling Rules](https://en.wikipedia.org/wiki/Constraint_Handling_Rules) came up in my mind from my university days, and we decided to write a library that implements a .NET-hosted CHR solver. The compiler did not utilize CHR yet, but the library was merged into the repository for future use.
+
+
