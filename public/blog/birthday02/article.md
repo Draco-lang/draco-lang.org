@@ -74,7 +74,7 @@ We started reworking the binding to use async/await with these tasks, binding th
  * Lots of nesting complexity
  * Lots of node-type checks in the binder code
 
-This was one of the biggest tech-debt we were carrying for quite a while and made introducing and debugging features quite painful, and now it's gone. The async-ified version torned out better than what I could have ever imagined.
+This was one of the biggest tech-debt we were carrying for quite a while and made introducing and debugging features quite painful, and now it's gone. The async-ified version turned out better than what I could have ever imagined.
 
 ## A depressing end and start of the year
 
@@ -82,10 +82,33 @@ The project hit one of its biggest inactive gaps yet. To keep personal matters s
 
 - 2023 28th of November: Additional utility PowerShell scripts
 - 2023 5th of December: Fix a bug with spaces in paths in the SDK integration
-- 2023 14th of December: Publishing the Language Server Protocol and Devug Adapter protocol implementations to NuGet (people wanted to use our implementations!)
+- 2023 14th of December: Publishing the Language Server Protocol and Debug Adapter protocol implementations to NuGet (people wanted to use our implementations!)
 - 2023 16th of December: Cleanup around the symbol hierarchy
 - 2023 22nd of December: CI workflow updates to the playground
-- 2023 21st of January: PowerShell utility script improvements, bug fix in the language server to update a freshly opened document
-- 2023 23rd of January: Playground build script improvement, merking well-known types and intrinsic symbols
+- 2024 21st of January: PowerShell utility script improvements, bug fix in the language server to update a freshly opened document
+- 2024 23rd of January: Playground build script improvement, merking well-known types and intrinsic symbols
 
-This last one might deserve a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations - like `System.Type` from `typeof(T)` - and so on.
+This last one might deserve a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations - like `System.Type` from `typeof(T)` - and so on. So far, we have represented these builtin types separately from the ones living in `System`, so for example, `int32` was actually a different type from `System.Int32`. This PR merged the two and got rid of a lot of ugly edge cases.
+
+- 2024 24th of January: Better error reporting for cases where the well-known primitives can't be located, formatter bugfixes, report error when import declarations are qualified with a visibility modifier
+- 2024 25th of January: Utility script fix
+- 2024 27th of January: Reworked IO workers in the debugger which fixes a bug
+- 2024 30th of January: Variance cleanup for symbol hierarchy
+- 2024 31st of January: Publish JsonRpc as a package - which was missing to be able to actually reuse the LSP and DAP implementations
+- 2024 7th of February: Upgrade to .NET 8
+- 2024 11th of February: Fixes on the Playground
+- 2024 18th of February: Basic debugger tests, debugger tracing for VS Code extension
+- 2024 23rd of February: Loading operators from metadata
+
+Until this point the language could not use any operators that were custom defined for a type. We needed to improve the lookup code to allow looking into both operand types for the given operator - in addition to intrinsicly defined operators - and allow either of the lookups and resolutions to fail.
+
+- 2024 25th of February: Multithreading improvements, debugger bugfixes
+- 2024 1st of May: Reworked how registers get allocated for intrinsic methods, fixes a bug
+- 2024 1st of June: Lexer bugfixes
+- 2024 3rd of June: Removed stryker, as it wasn't really utilized
+
+## Back in the saddle
+
+After a lengthy break with very few commits from me, I felt motivated again to jump back into working on the language and the compiler. I am generally very happy with spending time on other things I've found joy in, and in the long term made me appreciate this project even more. I've decided that I'd like to focus on improving code quality, traceability and fix crashbugs in general. The next section will contain mostly that, with occasional features sprinkled in.
+
+- 2024 3rd of June: Migrated the Playground into a separate repository, as the compiler has a stable enough API at this point
