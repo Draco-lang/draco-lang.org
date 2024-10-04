@@ -119,8 +119,30 @@ Until now, the language server always assumed that a Draco project only uses the
 
 The solution was something called [design-time builds](https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md). After learning about them, we wrote a basic project system implementation that is able to perform a design-time build, which does things like restore and collects all the parameters that would be passed into the compiler, but does not actually invoke compilation. This allowed us to read out the metadata reference locations from the users machine, and finally get rid of the ugly hack of shipping the entire BCL metadata with the language server. Excitingly, we could finally see code suggestions for 3rd party packages for the first time in the language server!
 
-- 14th of July: CHR solver library
+- 2024 14th of July: CHR solver library
 
 This has been long in the backburner. We have discussed before, how the current constraint solver for the type system is kind of hard to trace and reason about, and some uniform formalization could improve it drastically. [Constraint Handling Rules](https://en.wikipedia.org/wiki/Constraint_Handling_Rules) came up in my mind from my university days, and we decided to write a library that implements a .NET-hosted CHR solver. The compiler did not utilize CHR yet, but the library was merged into the repository for future use.
 
+- 2024 16th of July: Refactor overload resolution
+- 2024 17th of July: Passing down the cancellation token in the entire flow of the LSP/DAP implementations
+- 2024 20th of July: Cancellation support for language client in LSP
+- 2024 25th of July: Ship a few example programs with the compiler
+- 2024 29th of July: Updates to the readme, it's been long obsolete
+- 2024 5th of August: Rework the type system to use the CHR solver, default value intrinsic function
 
+The solver we wrote a while back finally passed all of our regression testing, when integrated into the type system. This brought along things like better traceability, something that helped us trace down quite a few bugs.
+
+**TODO: show example of visual trace, explain**
+
+- 2024 12th of August: Type system and overload resolution bugfixes
+- 2024 13th of August: Language server fixes, inlay hints for generics
+- 2024 15th of August: Basic delegates
+
+Until now, the language didn't have any kinf od first-class function support. This update brought in the most basic version of delegates, which can be stored in `System.Action` and `System.Func` types. There are still no lambdas or closures in the language, but named functions can be passed around as delegates now.
+
+- 2024 20th of August: Internal API simplifications, crashfixes, separated string escape sequences as separate tokens in string literals
+- 2024 21st of August: Range-Span API cleanup for the syntax tree, introduced a REPL
+
+While my main focus was improvements, I've been finding myself using tools like [csharprepl](https://github.com/waf/CSharpRepl) more and more, so I really wanted to implement a REPL for Draco. After a little prototyping, the base REPL was working and can be installed with `dotnet tool install -g dracorepl`.
+
+- 2024 22nd of August: REPL bugfixes, syntax highlighter service in the compiler, [PrettyPrompt](https://github.com/waf/PrettyPrompt) integration for the REPL, compiler concurrency bugfix, debugger bugfixes, project system bugfixes (busy day, huh)
