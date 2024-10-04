@@ -245,4 +245,4 @@ The fuzzer was working better than I ever could have expected. Thank you everyon
 
 ## In conclusion
 
-TODO
+This year was much less about features and more about tooling and stability. I personally don't mind that, we have gotten rid of a lot of technical debt and made using the language a way smoother experience. That said, there are some features that we are waiting for excitedly, the two most important being user-defined types and macros. Thank you everyone who was interested enough about the project to discuss it and special thanks to everyone who contributed. To many more years of Draco! 🎉
