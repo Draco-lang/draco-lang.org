@@ -163,3 +163,18 @@ At this point I was quite unsure about what to work on, so I've decided to work 
 - 2024 8th of September: Crashfixes, local function codegen fix, projectfile highlighting for the VS Code extension
 - 2024 10th of September: Source Generators rework. So far we have used Scriban for Roslyn Source Generators, but the tooling support was less than idea. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
 - 2024 11th of September: Add EmitCompilerGeneratedFiles tag for VS Code users
+
+## Bugs and crashes everywhere
+
+Around this time I decided to do some dogfooding and use the language. For this I decided to use our VS Code integration and write the following 2 programs:
+ * A CLI-based TODO list app
+ * Port the compiler CLI from C# to Draco, at least partially
+
+While working on these, I've realized that the compiler is much more broken and easy to crash than I've ever imagined. The language server was really easy to crash with many unfinished code portions or partial edits. I've decided that I'll focus on crashfixes until the compiler and the tooling around it is rock solid.
+
+- 2024 12th of September: Crashfix
+- 2024 14th of September: Completion and signature provider services rework to make them more resilient
+- 2024 15th of September: Codefix provider rework for resilience, crashfix
+- 2024 16th of September: Run examples as part of the test suite
+
+We have long had the ability to install the Draco SDK locally in a folder and we have discussed how nice it would be, if we could run the examples as part of the test suite to test the entire SDK end to end. With this change, both the compiler test project and the CI runs the examples as part of the test suite. Locally, it can use an arbitrarily installed SDK, while the CI uses the SDK installed directly from source. The outputs are verified using the wonderful [Verify](https://github.com/VerifyTests/Verify) library.
