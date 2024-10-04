@@ -107,7 +107,7 @@ Until this point the language could not use any operators that were custom defin
 - 2024 1st of June: Lexer bugfixes
 - 2024 3rd of June: Removed stryker, as it wasn't really utilized
 
-## Back in the saddle
+## Less debt, more stability
 
 After a lengthy break with very few commits from me, I felt motivated again to jump back into working on the language and the compiler. I am generally very happy with spending time on other things I've found joy in, and in the long term made me appreciate this project even more. I've decided that I'd like to focus on improving code quality, traceability and fix crashbugs in general. The next section will contain mostly that, with occasional features sprinkled in.
 
