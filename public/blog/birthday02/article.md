@@ -154,3 +154,12 @@ While my main focus was improvements, I've been finding myself using tools like 
 - 2024 28th of August: Design-time build fixes, crashbug fixes
 - 2024 30th of August: Handle C heritage tokens in the parser to provide better error messages, general improvements and additions (like comparison operators for enums)
 - 2024 31st of August: Test utility refactoring
+- 2024 1st of September: Codegen simplifications, REPL fixes
+- 2024 2nd of September: Lowering fix to fix an order of evaluation bug
+- 2024 7th of September: Basic attributes support, compile-time execution and evaluation
+
+At this point I was quite unsure about what to work on, so I've decided to work towards our first actually interesting feature: macros. Our plan is that macros are going to be regular functions, that take in some AST node and return some substitution AST node. The first step into this was giving the compiler the ability to execute - almost - arbitrary code compile-time. This feature is still not exposed to the user, and probably will not be until we ship the first version of macros.
+
+- 2024 8th of September: Crashfixes, local function codegen fix, projectfile highlighting for the VS Code extension
+- 2024 10th of September: Source Generators rework. So far we have used Scriban for Roslyn Source Generators, but the tooling support was less than idea. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
+- 2024 11th of September: Add EmitCompilerGeneratedFiles tag for VS Code users
