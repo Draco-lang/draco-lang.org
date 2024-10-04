@@ -146,3 +146,11 @@ Until now, the language didn't have any kinf od first-class function support. Th
 While my main focus was improvements, I've been finding myself using tools like [csharprepl](https://github.com/waf/CSharpRepl) more and more, so I really wanted to implement a REPL for Draco. After a little prototyping, the base REPL was working and can be installed with `dotnet tool install -g dracorepl`.
 
 - 2024 22nd of August: REPL bugfixes, syntax highlighter service in the compiler, [PrettyPrompt](https://github.com/waf/PrettyPrompt) integration for the REPL, compiler concurrency bugfix, debugger bugfixes, project system bugfixes (busy day, huh)
+
+- 2024 24th of August: Crashbug fix
+- 2024 25th of August: Removed the old fuzzer project, as it hasn't been used for a while and was not really useful. It was a simple, purely random input generator that didn't have any strategy.
+- 2024 26th of August: REPL binder logic refactoring that removed quite a bit of limitation from the way it handles code
+- 2024 27th of August: Integrated syntax higlhigting and completion into the REPL
+- 2024 28th of August: Design-time build fixes, crashbug fixes
+- 2024 30th of August: Handle C heritage tokens in the parser to provide better error messages, general improvements and additions (like comparison operators for enums)
+- 2024 31st of August: Test utility refactoring
