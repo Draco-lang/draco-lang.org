@@ -6,9 +6,9 @@ With motivations still high, we jumped right back into working on the compiler.
 
 - 2023 13th of October: Stackification complete in the code-generation backend
 
-This was a very important step that made the generated IL code much more tidy. The intermediate representation we translate to is register-based, but then we have to translate that to the stack-based MSIL code. Originally we took the lazy approach here and allocated a lot of local variables, only using the stack to move in and out of these local "registers".
+This was a very important step that made the generated IL code much more tidy. The intermediate representation we translate to is register-based, but then we have to translate that to the stack-based MSIL code. Originally we took the lazy approach here and allocated a lot of local variables, only using the stack to move in and out of these local "registers". The algorithm we decided to use was inspired by [this gist](https://gist.github.com/evanw/58a8a5b8b4a1da32fcdcfbf9da87c82a), which is a simplified view of how LLVM does it for WASM.
 
-**TODO: Show example of this, have screenshots, add some explanation and source for the algorithm**
+**TODO: Show example of this, have screenshots, add some explanation**
 
 - 2023 17th of October: Support for type-aliases in the compiler
 
