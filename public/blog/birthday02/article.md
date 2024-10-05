@@ -221,11 +221,11 @@ There are lots of redundant stack operations just to handle the locals as regist
 This feature isn't really exposed to the end-user to this day, but could be in the future, if we decide to. Currently, this is used to alias well-known primitive types from the standard library, so the user can type `int32` instead of `System.Int32` for example.
 
 - 2023 21st of October: LSP and DAP communication refactor
-- 2023 27th of October: Crashbuf fix for LSP cancellation
+- 2023 27th of October: Crashbug fix for LSP cancellation
 - 2023 29th of October: Formatter rework, diagnostic bag fixes, character literals
 - 2023 22nd of November: PowerShell script fixes
 
-After a bunch of fixes we added a small feature that we were missing all along, character literals! They are not too unsimilar to the C# character literals. The only major difference would be the Unicode codepoint escape sequence, which is in the format `'\u{123ABC}'`, just like in Draco string literals.
+After a bunch of fixes we added a small feature that we were missing all along, character literals! They are not too dissimilar from the C# character literals. The only major difference would be the Unicode codepoint escape sequence, which is in the format `'\u{123ABC}'`, just like in Draco string literals.
 
 ## To cut down the tree
 
@@ -292,7 +292,7 @@ The project hit one of its biggest inactive gaps yet. To keep personal matters s
 - 2023 16th of December: Cleanup around the symbol hierarchy
 - 2023 22nd of December: CI workflow updates to the playground
 - 2024 21st of January: PowerShell utility script improvements, bug fix in the language server to update a freshly opened document
-- 2024 23rd of January: Playground build script improvement, merking well-known types and intrinsic symbols
+- 2024 23rd of January: Playground build script improvement, merging well-known types and intrinsic symbols
 
 This last one might deserve a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations - like `System.Type` from `typeof(T)` - and so on. So far, we have represented these builtin types separately from the ones living in `System`, so for example, `int32` was actually a different type from `System.Int32`. This PR merged the two and got rid of a lot of ugly edge cases.
 
@@ -311,7 +311,7 @@ Until this point the language could not use any operators that were custom defin
 - 2024 25th of February: Multithreading improvements, debugger bugfixes
 - 2024 1st of May: Reworked how registers get allocated for intrinsic methods, fixes a bug
 - 2024 1st of June: Lexer bugfixes
-- 2024 3rd of June: Removed stryker, as it wasn't really utilized
+- 2024 3rd of June: Removed [stryker](https://github.com/stryker-mutator/stryker-net), as it wasn't really utilized
 
 ## Less debt, more stability
 
@@ -362,7 +362,7 @@ At this point, the REPL already looked and felt much nicer.
 - 2024 24th of August: Crashbug fix
 - 2024 25th of August: Removed the old fuzzer project, as it hasn't been used for a while and was not really useful. It was a simple, purely random input generator that didn't have any strategy.
 - 2024 26th of August: REPL binder logic refactoring that removed quite a bit of limitation from the way it handles code
-- 2024 27th of August: Integrated syntax higlhigting and completion into the REPL
+- 2024 27th of August: Integrated syntax highlighting and completion into the REPL
 - 2024 28th of August: Design-time build fixes, crashbug fixes
 - 2024 30th of August: Handle C heritage tokens in the parser to provide better error messages, general improvements and additions (like comparison operators for enums)
 - 2024 31st of August: Test utility refactoring
@@ -373,7 +373,7 @@ At this point, the REPL already looked and felt much nicer.
 At this point I was quite unsure about what to work on, so I've decided to work towards our first actually interesting feature: macros. Our plan is that macros are going to be regular functions, that take in some AST node and return some substitution AST node. The first step into this was giving the compiler the ability to execute - almost - arbitrary code compile-time. This feature is still not exposed to the user, and probably will not be until we ship the first version of macros.
 
 - 2024 8th of September: Crashfixes, local function codegen fix, projectfile highlighting for the VS Code extension
-- 2024 10th of September: Source Generators rework. So far we have used Scriban for Roslyn Source Generators, but the tooling support was less than idea. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
+- 2024 10th of September: Source Generators rework. So far we have used [Scriban](https://github.com/scriban/scriban) for [Roslyn Source Generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview), but the tooling support was less than idea. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
 - 2024 11th of September: Add EmitCompilerGeneratedFiles tag for VS Code users
 
 ## Bugs and crashes everywhere
@@ -425,7 +425,7 @@ This library was merged on the 21st of September, 2024.
 
 ### Step 2: Fuzzing logic
 
-Once instrumentation wasn't a problem anymore, we started working on the core fuzzer logic using the scheme that AFL uses. We have decided to make the fuzzer target.agnostic, so in the future other .NET projects could utilize it as well. The first iteration of the fuzzer followed the following steps - similar to AFL:
+Once instrumentation wasn't a problem anymore, we started working on the core fuzzer logic using the scheme that AFL uses. We have decided to make the fuzzer target-agnostic, so in the future other .NET projects could utilize it as well. The first iteration of the fuzzer followed the following steps - similar to AFL:
  1. Dequeue an input from the queue
  2. Minimize the input with random cuts as long as it produces an equivalent result (in this case coverage)
  3. Mutate the input to discover new paths and enqueue the interesting mutations
@@ -437,13 +437,13 @@ Using the target-agnostic fuzzer library, we wrote a terminal UI wrapper around 
 
 ### Step 3: We need speed
 
-The fuzzer was inititially insanely slow. On my machine, in-process fuzzing produced 2-3 mutations a second, so we investigated. While the compiler has a few benchmarks, they haven't been maintained and didn't provide enough information to help us improve performance. Fortunately, profiling the fuzzer directly gave us enough information to cut down the time to over 1000 mutations a second within 24 hours of finishing the core fuzzer.
+The fuzzer was initially insanely slow. On my machine, in-process fuzzing produced 2-3 mutations a second, so we investigated. While the compiler has a few benchmarks, they haven't been maintained and didn't provide enough information to help us improve performance. Fortunately, profiling the fuzzer directly gave us enough information to cut down the time to over 1000 mutations a second within 24 hours of finishing the core fuzzer.
 
 ### Step 4: Out of process execution
 
 The fuzzer was still running in-process, which was a problem. If the compiler crashed fatally because of a stack overflow for example, the fuzzer crashed. This required some major restructuring of both the core fuzzer and the coverage tool. The main problem was keeping the coverage data around, even when the target process crashes. The target program could have communicated its weaving info over some protocol, but that would have slowed down the execution significantly. In the end, we decided to write a simple [shared memory](https://en.wikipedia.org/wiki/Shared_memory) buffer implementation that the host process can share with the target process. The target process writes the coverage data into the buffer, while the host process reads it out and keeps it around. If the target crashes, no coverage data is lost, and there is no slow down because of the coverage data being communicated.
 
-> Note: We know about the existence of [MemoryMappedFiles](https://learn.microsoft.com/en-us/dotnet/api/system.io.memorymappedfiles.memorymappedfile?view=net-8.0), but to my understanding not all of its API was available cross-platform. In the end, our implementation ended up being dead simple and had a nicer API overall for our usecase.
+> Note: We know about the existence of [MemoryMappedFiles](https://learn.microsoft.com/en-us/dotnet/api/system.io.memorymappedfiles.memorymappedfile?view=net-8.0), but to my understanding not all of its API was available cross-platform. In the end, our implementation ended up being dead simple and had a nicer API overall for our use-case.
 
 This work was done on the 25th of September, 2024.
 
@@ -455,7 +455,7 @@ The fuzzer was working better than I ever could have expected. Thank you everyon
 - 2024 27th of September: Many-many crashfixes, all found by the fuzzer
 - 2024 28th of September: Fuzzer improvements, more crashfixes, LCOV report generation from the fuzzer
 - 2024 1st of October: Fuzzer improvements
-- 2024 3rd of October: Crashfixes, factored out a general-purpose temrinal UI for the fuzzer library
+- 2024 3rd of October: Crashfixes, factored out a general-purpose terminal UI for the fuzzer library
 
 ## In conclusion
 
