@@ -272,7 +272,7 @@ var sequenceExpr = new UntypedDelayedExpression(sequence.Type, () =>
 
 And finally, if we ever had to do type checks on a node, we had to take into account that it could be one of the placeholders or delays anytime, and had to wrap that logic into a delay node to deal with this.
 
-If you have ever seen [asynchronous JavaScript code](https://www.stoman.me/articles/async-await-promises-callbacks-in-javascript) before async/await, this might look familiar to you. This is the exact same problem! When we don't know something yet, it would be awesome to suspend the evaluation of the current node, continue binding other nodes, or even evaluate some constraints in the constraint solver. I told this to [Kuinox](https://github.com/Kuinox/), who immediately got to work, and not even an hour later presented the prototype: binding tasks, that work exactly like JavaScript async callbacks.
+If you have ever seen [asynchronous JavaScript code](https://www.stoman.me/articles/async-await-promises-callbacks-in-javascript) before async/await was added, this might look familiar to you. This is the exact same problem! When we don't know something yet, it would be awesome to suspend the evaluation of the current node, continue binding other nodes, or even evaluate some constraints in the constraint solver. I told this to [Kuinox](https://github.com/Kuinox/), who immediately got to work, and not even an hour later presented the prototype: binding tasks, that work exactly like JavaScript async callbacks.
 
 We started reworking the binding to use async/await with these tasks, binding the syntax tree and immediately constructing a bound tree, skipping the untyped tree entirely. The work was quite nerve wracking, as I had no idea if this was gonna work how I imagined it, if we'd hit an impossible edge case we didn't account for and all the work was for nothing. After a month of hard work, probably [one of my favorite PRs](https://github.com/Draco-lang/Compiler/pull/344) got merged on the 28th of November. It async-ified our binding logic and got rid of:
  * All of the untyped tree
@@ -282,34 +282,34 @@ We started reworking the binding to use async/await with these tasks, binding th
 
 This was one of the largest tech debt items, and we had been carrying it for quite a while. It made introducing and debugging features quite painful, and now it's gone. The async-ified version turned out better than what I could have ever imagined.
 
-## A depressing end and start of the year
+## A challenging end of 2023 and start of 2024
 
-The project hit one of its biggest inactive gaps yet. To keep personal matters short, I was feeling quite burnt-out on working on personal projects next to a full-time .NET developer job. I needed to find other hobbies to mentally recharge and re-gather my motivation for the project. During this time, Kuinox stepped in again and carried the project on his shoulders to not let it get abandoned. I'm infinitely grateful for everyone who contributed during this time and special thanks to him for holding it out as long as I needed time.
+The project hit one of its longest inactive gaps yet. To keep personal matters short, I was feeling quite burnt out on working on personal projects along with a full-time .NET developer job. I needed to find other hobbies to mentally recharge and regather my motivation for the project. During this time, Kuinox stepped in again and carried the project on his shoulders so that it wasn't abandoned. I'm infinitely grateful for everyone who contributed during this time and special thanks to him for holding the project together for as long as I needed.
 
 - 2023 28th of November: Additional utility PowerShell scripts
 - 2023 5th of December: Fix a bug with spaces in paths in the SDK integration
 - 2023 14th of December: Publishing the Language Server Protocol and Debug Adapter protocol implementations to NuGet (people wanted to use our implementations!)
 - 2023 16th of December: Cleanup around the symbol hierarchy
 - 2023 22nd of December: CI workflow updates to the playground
-- 2024 21st of January: PowerShell utility script improvements, bug fix in the language server to update a freshly opened document
-- 2024 23rd of January: Playground build script improvement, merging well-known types and intrinsic symbols
+- 2024 21st of January: PowerShell utility script improvements, and a bug fix in the language server to update a freshly opened document
+- 2024 23rd of January: Playground build script improvement, and merging well-known types and intrinsic symbols
 
-This last one might deserve a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations - like `System.Type` from `typeof(T)` - and so on. So far, we have represented these builtin types separately from the ones living in `System`, so for example, `int32` was actually a different type from `System.Int32`. This PR merged the two and got rid of a lot of ugly edge cases.
+This last one deserves a few words of explanation. Almost all compilers will have a set of intrinsic symbols that the compiler needs to know about. Primitives, all the built-in operations, the base type for all objects, known types of certain operations, such as `System.Type` from `typeof(T)`, and so on. So far, we have represented these built-in types separately from the ones in `System`. For example, `int32` was actually a different type from `System.Int32`. This PR merged the two and got rid of a lot of ugly edge cases.
 
-- 2024 24th of January: Better error reporting for cases where the well-known primitives can't be located, formatter bugfixes, report error when import declarations are qualified with a visibility modifier
+- 2024 24th of January: Better error reporting for cases where the well-known primitives can't be located, formatter bugfixes, and report an error when import declarations are qualified with a visibility modifier
 - 2024 25th of January: Utility script fix
 - 2024 27th of January: Reworked IO workers in the debugger which fixes a bug
 - 2024 30th of January: Variance cleanup for symbol hierarchy
-- 2024 31st of January: Publish JsonRpc as a package - which was missing to be able to actually reuse the LSP and DAP implementations
+- 2024 31st of January: Publish JsonRpc as a package — which was needed to be able to actually reuse the LSP and DAP implementations
 - 2024 7th of February: Upgrade to .NET 8
 - 2024 11th of February: Fixes on the Playground
-- 2024 18th of February: Basic debugger tests, debugger tracing for VS Code extension
+- 2024 18th of February: Basic debugger tests, and debugger tracing for VS Code extension
 - 2024 23rd of February: Loading operators from metadata
 
-Until this point the language could not use any operators that were custom defined for a type. We needed to improve the lookup code to allow looking into both operand types for the given operator - in addition to intrinsicly defined operators - and allow either of the lookups and resolutions to fail.
+Until this point the language could not use any user defined operators for a type. We needed to improve the lookup code to allow checking both operand types for the given operator, in addition to intrinsicly defined operators, and allow either of the lookups and resolutions to fail.
 
-- 2024 25th of February: Multithreading improvements, debugger bugfixes
-- 2024 1st of May: Reworked how registers get allocated for intrinsic methods, fixes a bug
+- 2024 25th of February: Multithreading improvements, and debugger bugfixes
+- 2024 1st of May: Reworked how registers get allocated for intrinsic methods; fixes a bug
 - 2024 1st of June: Lexer bugfixes
 - 2024 3rd of June: Removed [stryker](https://github.com/stryker-mutator/stryker-net), as it wasn't really utilized
 
