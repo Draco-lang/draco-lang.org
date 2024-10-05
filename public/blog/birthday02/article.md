@@ -218,14 +218,14 @@ There are lots of redundant stack operations to handle the locals as registers. 
 
 - 2023 17th of October: Support for type aliases in the compiler
 
-Right now, this feature isn't exposed to the end-user, but it could be if we decide to. Technically all that's stopping us is adding it to the specification and add a syntax for it. Currently, this is used to alias well-known primitive types from the standard library. This way, the user can type `int32` instead of `System.Int32` for example, similar to C# primitives.
+Right now, this feature isn't exposed to the end user, but it could be if we decide to. Technically all that's stopping us is adding it to the specification and add a syntax for it. Currently, this is used to alias well-known primitive types from the standard library. This way, the user can type `int32` instead of `System.Int32` for example, similar to C# primitives.
 
 - 2023 21st of October: LSP and DAP communication refactor
-- 2023 27th of October: Crashbug fix for LSP cancellation
-- 2023 29th of October: Formatter rework, diagnostic bag fixes, character literals
+- 2023 27th of October: Crash bug fix for LSP cancellation
+- 2023 29th of October: Formatter rework, diagnostic bag fixes, and character literals
 - 2023 22nd of November: PowerShell script fixes
 
-After a bunch of fixes we added a small feature that was missing, character literals! They are similar to the C# character literals. The only major difference would be the Unicode codepoint escape sequence, which is in the format `'\u{123ABC}'`, as it is in Draco string literals.
+After a bunch of fixes we added a small feature that was missing, character literals! They are similar to the C# character literals. The only major difference is the Unicode code point escape sequence, which is in the format `'\u{123ABC}'`, as it is in Draco string literals.
 
 ## Cutting down the trees
 
@@ -255,9 +255,9 @@ This caused plenty of pain-points around type checking. For example, the rough f
  4. Check if `TEnumerator` has a property called `Current` which returns a type `TElement`.
  5. Check if `Telement` is assignable to the type of the loop variable if it's explicitly typed.
 
-Imagine that we could not infer the exact type of the collection yet. How do we check if it has a method called `GetEnumerator()`? We can't! The solution? Introducing various kinds of sentinel, delay and placeholder nodes in the untyped tree, with the sole purpose of pushing back the check, evaluation or node construction to the point where we have more information available from future code. With this mentality, the untyped tree basically became an incomplete copy of the bound tree, with node such as `UntypedLocalExpression` or `UntypedDelayedExpression`.
+Imagine that we could not infer the exact type of the collection yet. How do we check if it has a method called `GetEnumerator()`? We can't! The solution? Introducing various kinds of sentinel, delay and placeholder nodes in the untyped tree, with the sole purpose of pushing back the check, evaluation or node construction to the point where we have more information available from future code. With this mentality, the untyped tree basically became an incomplete copy of the bound tree, with nodes such as `UntypedLocalExpression` or `UntypedDelayedExpression`.
 
-This caused multiple maintainability issues. First off, binding had to be written essentially twice. Once when translating the syntax tree to untyped trees, and then the untyped trees to bound trees — with the constraint solver invoked in between for more type information. Second, the code became multiply nested with callbacks. It was not uncommon to see this:
+This caused multiple maintainability issues. First off, binding essentially had to be written twice. Once when translating the syntax tree to untyped trees, and then the untyped trees to bound trees — with the constraint solver invoked in between for more type information. Second, the code became multiply nested with callbacks. It was not uncommon to see this:
 
 ```cs
 var sequenceExpr = new UntypedDelayedExpression(sequence.Type, () =>
@@ -270,7 +270,7 @@ var sequenceExpr = new UntypedDelayedExpression(sequence.Type, () =>
 });
 ```
 
-And finally, if we ever had to do type checks on a node, we had to take into account that it could be one of the placeholders or delays anytime, and had to wrap that logic into a delay node to deal with this.
+And finally, if we ever had to do type checks on a node, we had to take into account that it could be one of the placeholders or delays, and had to wrap that logic into a delay node to deal with this.
 
 If you have ever seen [asynchronous JavaScript code](https://www.stoman.me/articles/async-await-promises-callbacks-in-javascript) before async/await was added, this might look familiar to you. This is the exact same problem! When we don't know something yet, it would be awesome to suspend the evaluation of the current node, continue binding other nodes, or even evaluate some constraints in the constraint solver. I told this to [Kuinox](https://github.com/Kuinox/), who immediately got to work, and not even an hour later presented the prototype: binding tasks, that work exactly like JavaScript async callbacks.
 
