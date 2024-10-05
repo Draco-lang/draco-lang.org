@@ -8,7 +8,213 @@ With motivations still high, we jumped right back into working on the compiler.
 
 This was a very important step that made the generated IL code much more tidy. The intermediate representation we translate to is register-based, but then we have to translate that to the stack-based MSIL code. Originally we took the lazy approach here and allocated a lot of local variables, only using the stack to move in and out of these local "registers". The algorithm we decided to use was inspired by [this gist](https://gist.github.com/evanw/58a8a5b8b4a1da32fcdcfbf9da87c82a), which is a simplified view of how LLVM does it for WASM.
 
-**TODO: Show example of this, have screenshots, add some explanation**
+To present what this stackification algorithm did to our MSIL code generation, let's look at a simple Draco program:
+
+```draco
+import System.Console;
+
+func main() {
+    var i = 0;
+    while (i < 10) {
+        WriteLine("\{i}^2 = \{i * i}");
+        i += 1;
+    }
+}
+```
+
+Before the stackification algorithm was introduced, it compiled to the following MSIL code:
+
+```msil
+.method private hidebysig static 
+	void main () cil managed 
+{
+	// Method begins at RVA 0x2050
+	// Header size: 12
+	// Code size: 154 (0x9a)
+	.maxstack 8
+	.entrypoint
+	.locals (
+		[0] int32 i,
+		[1] object[] '',
+		[2] int32,
+		[3] bool,
+		[4] bool,
+		[5] object[],
+		[6] int32,
+		[7] object[],
+		[8] object,
+		[9] int32,
+		[10] int32,
+		[11] int32,
+		[12] object[],
+		[13] object,
+		[14] object[],
+		[15] string,
+		[16] int32,
+		[17] int32
+	)
+
+	IL_0000: nop
+	IL_0001: ldc.i4.0
+	IL_0002: stloc.0
+	IL_0003: br IL_0008
+	// loop start (head: IL_0008)
+		IL_0008: nop
+		IL_0009: ldloc.0
+		IL_000a: stloc.2
+		IL_000b: ldloc.2
+		IL_000c: ldc.i4.s 10
+		IL_000e: clt
+		IL_0010: stloc.3
+		IL_0011: ldloc.3
+		IL_0012: ldc.i4.0
+		IL_0013: ceq
+		IL_0015: stloc.s 4
+		IL_0017: ldloc.s 4
+		IL_0019: brtrue IL_0098
+
+		IL_001e: br IL_0023
+
+		IL_0023: nop
+		IL_0024: nop
+		IL_0025: ldc.i4.2
+		IL_0026: newarr [System.Runtime]System.Object
+		IL_002b: stloc.s 5
+		IL_002d: ldloc.s 5
+		IL_002f: stloc.1
+		IL_0030: ldloc.0
+		IL_0031: stloc.s 6
+		IL_0033: ldloc.1
+		IL_0034: stloc.s 7
+		IL_0036: ldloc.s 6
+		IL_0038: box [System.Runtime]System.Int32
+		IL_003d: stloc.s 8
+		IL_003f: ldloc.s 7
+		IL_0041: ldc.i4.0
+		IL_0042: ldloc.s 8
+		IL_0044: stelem [System.Runtime]System.Object
+		IL_0049: ldloc.0
+		IL_004a: stloc.s 9
+		IL_004c: ldloc.0
+		IL_004d: stloc.s 10
+		IL_004f: ldloc.s 9
+		IL_0051: ldloc.s 10
+		IL_0053: mul
+		IL_0054: stloc.s 11
+		IL_0056: ldloc.1
+		IL_0057: stloc.s 12
+		IL_0059: ldloc.s 11
+		IL_005b: box [System.Runtime]System.Int32
+		IL_0060: stloc.s 13
+		IL_0062: ldloc.s 12
+		IL_0064: ldc.i4.1
+		IL_0065: ldloc.s 13
+		IL_0067: stelem [System.Runtime]System.Object
+		IL_006c: ldloc.1
+		IL_006d: stloc.s 14
+		IL_006f: ldstr "{0}^2 = {1}"
+		IL_0074: ldloc.s 14
+		IL_0076: call string [System.Runtime]System.String::Format(string, object[])
+		IL_007b: stloc.s 15
+		IL_007d: ldloc.s 15
+		IL_007f: call void [System.Console]System.Console::WriteLine(string)
+		IL_0084: nop
+		IL_0085: ldloc.0
+		IL_0086: stloc.s 16
+		IL_0088: ldloc.s 16
+		IL_008a: ldc.i4.1
+		IL_008b: add
+		IL_008c: stloc.s 17
+		IL_008e: ldloc.s 17
+		IL_0090: stloc.0
+		IL_0091: nop
+		IL_0092: nop
+		IL_0093: br IL_0008
+	// end loop
+
+	IL_0098: nop
+	IL_0099: ret
+} // end of method FreeFunctions::main
+```
+
+There are lots of redundant stack operations just to handle the locals as registers. And with stackification enabled, all that disappears:
+
+```msil
+.method private hidebysig static 
+	void main () cil managed 
+{
+	// Method begins at RVA 0x2050
+	// Header size: 12
+	// Code size: 106 (0x6a)
+	.maxstack 8
+	.entrypoint
+	.locals (
+		[0] int32 i,
+		[1] object[] '',
+		[2] int32,
+		[3] object[],
+		[4] int32,
+		[5] object[]
+	)
+
+	IL_0000: nop
+	IL_0001: ldc.i4.0
+	IL_0002: stloc.0
+	IL_0003: br IL_0008
+	// loop start (head: IL_0008)
+		IL_0008: nop
+		IL_0009: ldloc.0
+		IL_000a: ldc.i4.s 10
+		IL_000c: clt
+		IL_000e: ldc.i4.0
+		IL_000f: ceq
+		IL_0011: brtrue IL_0068
+
+		IL_0016: br IL_001b
+
+		IL_001b: nop
+		IL_001c: nop
+		IL_001d: ldc.i4.2
+		IL_001e: newarr [System.Runtime]System.Object
+		IL_0023: stloc.1
+		IL_0024: ldloc.0
+		IL_0025: stloc.2
+		IL_0026: ldloc.1
+		IL_0027: stloc.3
+		IL_0028: ldloc.3
+		IL_0029: ldc.i4.0
+		IL_002a: ldloc.2
+		IL_002b: box [System.Runtime]System.Int32
+		IL_0030: stelem [System.Runtime]System.Object
+		IL_0035: ldloc.0
+		IL_0036: ldloc.0
+		IL_0037: mul
+		IL_0038: stloc.s 4
+		IL_003a: ldloc.1
+		IL_003b: stloc.s 5
+		IL_003d: ldloc.s 5
+		IL_003f: ldc.i4.1
+		IL_0040: ldloc.s 4
+		IL_0042: box [System.Runtime]System.Int32
+		IL_0047: stelem [System.Runtime]System.Object
+		IL_004c: ldstr "{0}^2 = {1}"
+		IL_0051: ldloc.1
+		IL_0052: call string [System.Runtime]System.String::Format(string, object[])
+		IL_0057: call void [System.Console]System.Console::WriteLine(string)
+		IL_005c: nop
+		IL_005d: ldloc.0
+		IL_005e: ldc.i4.1
+		IL_005f: add
+		IL_0060: stloc.0
+		IL_0061: nop
+		IL_0062: nop
+		IL_0063: br IL_0008
+	// end loop
+
+	IL_0068: nop
+	IL_0069: ret
+} // end of method FreeFunctions::main
+```
 
 - 2023 17th of October: Support for type-aliases in the compiler
 
@@ -30,7 +236,7 @@ Internally, we had 3 major tree representations in the compiler:
 
 So what's up with that untyped tree? Since we do full function-local type inference, we can't always know in a single pass, what kind of node to construct or what the type of something is. For example, looking at the following Draco code:
 
-```swift
+```draco
 func main() {
     // assuming the existence of a func default<T>(): T
     val x = default();
