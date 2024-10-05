@@ -315,66 +315,66 @@ Until this point the language could not use any user defined operators for a typ
 
 ## Less debt, more stability
 
-After a lengthy break with very few commits from me, I felt motivated again to jump back into working on the language and the compiler. I am generally very happy with spending time on other things I've found joy in, and in the long term made me appreciate this project even more. I've decided that I'd like to focus on improving code quality, traceability and fix crashbugs in general. The next section will contain mostly that, with occasional features sprinkled in.
+After a lengthy break with very few commits from me, I felt motivated again to jump back into working on the language and the compiler. I am generally very happy with spending time on other things I find joy in, and in the long term it made me appreciate this project even more. I decided that I'd like to focus on improving code quality, traceability and fix crash bugs in general. The next section contains mostly that, with occasional features sprinkled in.
 
-- 2024 3rd of June: Migrated the Playground into a separate repository, as the compiler has a stable enough API at this point - it also got rid of the brittle JS toolchain needed to build the Playground, which was part of the solution
-- 2024 8th of July: General codebase cleanup, utilizing .NET 8 features like primary constructors
-- 2024 13th of July: Basic project system, LSP convenience methods
+- 2024 3rd of June: Migrated the Playground into a separate repository, as the compiler has a stable enough API at this point — it also got rid of the brittle JS toolchain needed to build the Playground, which was part of the solution
+- 2024 8th of July: General codebase cleanup, and utilizing .NET 8 features like primary constructors
+- 2024 13th of July: Basic project system, and LSP convenience methods
 
-Until now, the language server always assumed that a Draco project only uses the .NET BCL and did not resolve package references defined in the projectfile. The essence of the problem is locating the DLLs on the users machine for the BCL and downloaded NuGet packages. Until now, we used a package called [Basic.Reference.Assemblies](https://www.nuget.org/packages/Basic.Reference.Assemblies/) in the language server that kept the .NET BCL in memory. This did not only not look for package references, but also locked us into the .NET version shipped with the package.
+Until this point, the language server always assumed that a Draco project only uses the .NET BCL and did not resolve package references defined in the project file. The essence of the problem is locating the DLLs on the user's machine for the BCL and downloaded NuGet packages. We used a package called [Basic.Reference.Assemblies](https://www.nuget.org/packages/Basic.Reference.Assemblies/) in the language server that kept the .NET BCL in memory. This not only didn't look for package references, but it also locked us into the .NET version shipped with the package.
 
-The solution was something called [design-time builds](https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md). After learning about them, we wrote a basic project system implementation that is able to perform a design-time build, which does things like restore and collects all the parameters that would be passed into the compiler, but does not actually invoke compilation. This allowed us to read out the metadata reference locations from the users machine, and finally get rid of the ugly hack of shipping the entire BCL metadata with the language server. Excitingly, we could finally see code suggestions for 3rd party packages for the first time in the language server!
+The solution was something called [design-time builds](https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md). After learning about them, we wrote a basic project system implementation that is able to perform a design-time build. This does things like restore and collects all the parameters that will be passed into the compiler, but does not actually invoke compilation. This allowed us to read out the metadata reference locations from the user's machine, and to finally get rid of the ugly hack of shipping the entire BCL metadata with the language server. Excitingly, for the first time the language server could finally make code suggestions for 3rd party packages!
 
 - 2024 14th of July: CHR solver library
 
-This has been long in the backburner. We have discussed before, how the current constraint solver for the type system is kind of hard to trace and reason about, and some uniform formalization could improve it drastically. [Constraint Handling Rules](https://en.wikipedia.org/wiki/Constraint_Handling_Rules) came up in my mind from my university days, and we decided to write a library that implements a .NET-hosted CHR solver. The compiler did not utilize CHR yet, but the library was merged into the repository for future use.
+This has been on the back burner a long time. We have discussed before, how the current constraint solver for the type system is kind of hard to trace and reason about, and some uniform formalization could improve it drastically. [Constraint Handling Rules](https://en.wikipedia.org/wiki/Constraint_Handling_Rules) came to mind from my university days, and we decided to write a library that implements a .NET-hosted CHR solver. The compiler did't utilize CHR yet, but the library was merged into the repository for future use.
 
 - 2024 16th of July: Refactor overload resolution
 - 2024 17th of July: Passing down the cancellation token in the entire flow of the LSP/DAP implementations
 - 2024 20th of July: Cancellation support for language client in LSP
 - 2024 25th of July: Ship a few example programs with the compiler
-- 2024 29th of July: Updates to the readme, it's been long obsolete
+- 2024 29th of July: Updates to the readme, it'd been obsolete for a long time
 - 2024 5th of August: Rework the type system to use the CHR solver, default value intrinsic function
 
-The solver we wrote a while back finally passed all of our regression testing, when integrated into the type system. This brought along things like better traceability, something that helped us trace down quite a few bugs. The below graph for example was produced by the generic tracing capabilities of the CHR system.
+The solver we wrote a while back finally passed all of our regression testing, when integrated into the type system. This also brought things like better traceability, something that helped us trace down quite a few bugs. For example, the graph below was produced by the generic tracing capabilities of the CHR system.
 
 ![A trace of local type inference in a function.](./img/chr_trace_graph.png)
 
 - 2024 12th of August: Type system and overload resolution bugfixes
-- 2024 13th of August: Language server fixes, inlay hints for generics
+- 2024 13th of August: Language server fixes, and inlay hints for generics
 - 2024 15th of August: Basic delegates
 
-Until now, the language didn't have any kind of first-class function support. This update brought in the most basic version of delegates, which can be stored in `System.Action` and `System.Func` types. There are still no lambdas or closures in the language, but named functions can be passed around as delegates now.
+The language hadn't had any kind of first-class function support. This update brought in the most basic version of delegates, which can be stored in `System.Action` and `System.Func` types. There are still no lambdas or closures in the language, but named functions can be passed around as delegates now.
 
-- 2024 20th of August: Internal API simplifications, crashfixes, separated string escape sequences as separate tokens in string literals
-- 2024 21st of August: Range-Span API cleanup for the syntax tree, introduced a REPL
+- 2024 20th of August: Internal API simplifications, crash fixes, and treat string escape sequences as separate tokens in string literals
+- 2024 21st of August: Range-Span API cleanup for the syntax tree, and introduced a REPL
 
 While my main focus was improvements, I've been finding myself using tools like [csharprepl](https://github.com/waf/CSharpRepl) more and more, so I really wanted to implement a REPL for Draco. After a little prototyping, the base REPL was working and can be installed with `dotnet tool install -g dracorepl`.
 
 ![A simple REPL session.](./img/repl.png)
 
-- 2024 22nd of August: REPL bugfixes, syntax highlighter service in the compiler, [PrettyPrompt](https://github.com/waf/PrettyPrompt) integration for the REPL, compiler concurrency bugfix, debugger bugfixes, project system bugfixes (busy day, huh)
+- 2024 22nd of August: REPL bugfixes, syntax highlighter service in the compiler, [PrettyPrompt](https://github.com/waf/PrettyPrompt) integration for the REPL, compiler concurrency bugfix, debugger bugfixes, and project system bugfixes (busy day, huh)
 
 At this point, the REPL already looked and felt much nicer.
 
 ![REPL with integrated services.](./img/nicerepl.png)
 
-- 2024 24th of August: Crashbug fix
-- 2024 25th of August: Removed the old fuzzer project, as it hasn't been used for a while and was not really useful. It was a simple, purely random input generator that didn't have any strategy.
-- 2024 26th of August: REPL binder logic refactoring that removed quite a bit of limitation from the way it handles code
+- 2024 24th of August: Crash bug fix
+- 2024 25th of August: Removed the old fuzzer project, as it hadn't been used for a while and was not really useful. It was a simple, purely random input generator that didn't have any strategy.
+- 2024 26th of August: REPL binder logic refactoring that removed quite a few limitation from the way it handles code
 - 2024 27th of August: Integrated syntax highlighting and completion into the REPL
-- 2024 28th of August: Design-time build fixes, crashbug fixes
+- 2024 28th of August: Design-time build fixes, crash bug fixes
 - 2024 30th of August: Handle C heritage tokens in the parser to provide better error messages, general improvements and additions (like comparison operators for enums)
 - 2024 31st of August: Test utility refactoring
 - 2024 1st of September: Codegen simplifications, REPL fixes
-- 2024 2nd of September: Lowering fix to fix an order of evaluation bug
-- 2024 7th of September: Basic attributes support, compile-time execution and evaluation
+- 2024 2nd of September: Lowering fix, to fix an order of evaluation bug
+- 2024 7th of September: Basic attributes support, and compile-time execution and evaluation
 
-At this point I was quite unsure about what to work on, so I've decided to work towards our first actually interesting feature: macros. Our plan is that macros are going to be regular functions, that take in some AST node and return some substitution AST node. The first step into this was giving the compiler the ability to execute - almost - arbitrary code compile-time. This feature is still not exposed to the user, and probably will not be until we ship the first version of macros.
+At this point, I was quite unsure what to work on, so I decided to work towards our first actually interesting feature: macros. Our plan is that macros are going to be regular functions that take in some AST node and return some substitution AST node. The first step into this was giving the compiler the ability to execute — almost — arbitrary code at compile-time. This feature is still not exposed to the user, and probably will not be until we ship the first version of macros.
 
-- 2024 8th of September: Crashfixes, local function codegen fix, projectfile highlighting for the VS Code extension
-- 2024 10th of September: Source Generators rework. So far we have used [Scriban](https://github.com/scriban/scriban) for [Roslyn Source Generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview), but the tooling support was less than idea. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
-- 2024 11th of September: Add EmitCompilerGeneratedFiles tag for VS Code users
+- 2024 8th of September: Crash fixes, local function codegen fix, project file highlighting for the VS Code extension
+- 2024 10th of September: Source Generators rework. We had used [Scriban](https://github.com/scriban/scriban) for [Roslyn Source Generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview), but the tooling support was less than ideal. We decided that with multiline raw string literals, there was no reason not to move the logic to regular C#.
+- 2024 11th of September: Add `EmitCompilerGeneratedFiles` tag for VS Code users
 
 ## Bugs and crashes everywhere
 
@@ -382,28 +382,28 @@ Around this time I decided to do some dogfooding and use the language. For this 
  * A CLI-based TODO list app
  * Port the compiler CLI from C# to Draco, at least partially
 
-While working on these, I've realized that the compiler is much more broken and easy to crash than I've ever imagined. The language server was really easy to crash with many unfinished code portions or partial edits. I've decided that I'll focus on crashfixes until the compiler and the tooling around it is rock solid.
+While working on these, I realized that the compiler was much more broken and easy to crash than I've ever imagined. The language server was really easy to crash with many unfinished code portions or partial edits. I decided that I would focus on crash fixes until the compiler and the tooling around it was rock solid.
 
-- 2024 12th of September: Crashfix
+- 2024 12th of September: Crash fix
 - 2024 14th of September: Completion and signature provider services rework to make them more resilient
-- 2024 15th of September: Codefix provider rework for resilience, crashfix
+- 2024 15th of September: Codefix provider rework for resilience; crash fix
 - 2024 16th of September: Run examples as part of the test suite
 
-We have long had the ability to install the Draco SDK locally in a folder and we have discussed how nice it would be, if we could run the examples as part of the test suite to test the entire SDK end to end. With this change, both the compiler test project and the CI runs the examples as part of the test suite. Locally, it can use an arbitrarily installed SDK, while the CI uses the SDK installed directly from source. The outputs are verified using the wonderful [Verify](https://github.com/VerifyTests/Verify) library.
+We have long had the ability to install the Draco SDK locally in a folder and we have discussed how nice it would be if we could run the examples as part of the test suite to test the entire SDK end-to-end. With this change, both the compiler test project and the CI runs the examples as part of the test suite. Locally, it can use an arbitrary installed SDK, while the CI uses the SDK installed directly from source. The outputs are verified using the wonderful [Verify](https://github.com/VerifyTests/Verify) library.
 
-- 2024 20th of September: Bugfix in the parent-child relationship of `SyntaxList<T>` elements
+- 2024 20th of September: Bugfix in the parent–child relationship of `SyntaxList<T>` elements
 
 ## We need a fuzzer
 
-Kuinox has long been vouching for a better [fuzzer](https://en.wikipedia.org/wiki/Fuzzing). The old fuzzer was nothing more than a structured random string generator and never produced anything than a few messy testcases for the lexer. The problem? There is no decent fuzzer available in .NET and I thought writing one would be a massive time sink without significant results. Kuinox has tried to fuzz the compiler with [sharpfuzz](https://github.com/Metalnem/sharpfuzz) and it caught a handful of lexer bugs, but nothing more of interest.
+Kuinox has long argued for a better [fuzzer](https://en.wikipedia.org/wiki/Fuzzing). The old fuzzer was nothing more than a structured random string generator and never produced anything more than a few messy test cases for the lexer. The problem? There is no decent fuzzer available in .NET and I thought writing one would be a massive time sink without significant payback. Kuinox has tried to fuzz the compiler with [sharpfuzz](https://github.com/Metalnem/sharpfuzz) and it caught a handful of lexer bugs, but nothing more of interest.
 
-One long day after searching for bugs, I've opened up the [wiki page for AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)), a famous fuzzer. Reading about its high-level functionality, none of the components seemed that daunting so I've decided to give it a shot.
+One long day after searching for bugs, I opened up the [wiki page for AFL](https://en.wikipedia.org/wiki/American_Fuzzy_Lop_(software)), a famous fuzzer. Reading about its high-level functionality, none of the components seemed that daunting so I've decided to give it a shot.
 
 ### Step 1: Instrumentation
 
-A decent fuzzer needs to instrument the code. AFL looks at the coverage of the code being ran to pick mutations that are more interesting to run. For us to do this, we'd need a way to measure the coverage of certain .NET code. Unfortunately, all code coverage libraries in .NET seem to assume that they'll be measuring code coverage running from a test host, providing no API.
+A decent fuzzer needs to instrument the code. AFL looks at the coverage of the code being run to pick mutations that are more interesting to run. For us to do this, we'd need a way to measure the coverage of certain .NET code. Unfortunately, all code coverage libraries in .NET seem to assume that they'll be measuring code coverage running from a test host, providing no API.
 
-Our first task was then to write a library that can add instrumentation code to the fuzzed target assembly. For that, we wrote a weaver using [Mono.Cecil](https://www.mono-project.com/docs/tools+libraries/libraries/Mono.Cecil/) and wrapped it up in a library that provides an API and an MSBuild task to automatically weave the target assembly on build. The usage became relatively simple:
+Our first task was then to write a library that can add instrumentation code to the fuzzed target assembly. For that, we wrote a weaver using [Mono.Cecil](https://www.mono-project.com/docs/tools+libraries/libraries/Mono.Cecil/) and wrapped it in a library that provides an API and an MSBuild task to automatically weave the target assembly on build. The usage became relatively simple:
 
 ```xml
 <ItemGroup>
@@ -425,7 +425,7 @@ This library was merged on the 21st of September, 2024.
 
 ### Step 2: Fuzzing logic
 
-Once instrumentation wasn't a problem anymore, we started working on the core fuzzer logic using the scheme that AFL uses. We have decided to make the fuzzer target-agnostic, so in the future other .NET projects could utilize it as well. The first iteration of the fuzzer followed the following steps - similar to AFL:
+Once instrumentation wasn't a problem anymore, we started working on the core fuzzer logic using the scheme that AFL uses. We have decided to make the fuzzer target-agnostic, so in the future other .NET projects could utilize it as well. The first iteration of the fuzzer used the following steps, similar to AFL:
  1. Dequeue an input from the queue
  2. Minimize the input with random cuts as long as it produces an equivalent result (in this case coverage)
  3. Mutate the input to discover new paths and enqueue the interesting mutations
@@ -437,26 +437,26 @@ Using the target-agnostic fuzzer library, we wrote a terminal UI wrapper around 
 
 ### Step 3: We need speed
 
-The fuzzer was initially insanely slow. On my machine, in-process fuzzing produced 2-3 mutations a second, so we investigated. While the compiler has a few benchmarks, they haven't been maintained and didn't provide enough information to help us improve performance. Fortunately, profiling the fuzzer directly gave us enough information to cut down the time to over 1000 mutations a second within 24 hours of finishing the core fuzzer.
+The fuzzer was initially insanely slow. On my machine, in-process fuzzing produced 2–3 mutations a second. So we investigated. While the compiler has a few benchmarks, they haven't been maintained and didn't provide enough information to help us improve performance. Fortunately, profiling the fuzzer directly gave us enough information to cut down the time to 1000+ mutations a second within 24 hours of finishing the core fuzzer.
 
 ### Step 4: Out of process execution
 
-The fuzzer was still running in-process, which was a problem. If the compiler crashed fatally because of a stack overflow for example, the fuzzer crashed. This required some major restructuring of both the core fuzzer and the coverage tool. The main problem was keeping the coverage data around, even when the target process crashes. The target program could have communicated its weaving info over some protocol, but that would have slowed down the execution significantly. In the end, we decided to write a simple [shared memory](https://en.wikipedia.org/wiki/Shared_memory) buffer implementation that the host process can share with the target process. The target process writes the coverage data into the buffer, while the host process reads it out and keeps it around. If the target crashes, no coverage data is lost, and there is no slow down because of the coverage data being communicated.
+The fuzzer was still running in-process, which was a problem. If the compiler crashed fatally because of a stack overflow for example, the fuzzer crashed. This required some major restructuring of both the core fuzzer and the coverage tool. The main problem was keeping the coverage data around, even when the target process crashes. The target program could have communicated its coverage info over some protocol, but that would have slowed down the execution significantly. In the end, we decided to write a simple [shared memory](https://en.wikipedia.org/wiki/Shared_memory) buffer implementation that the host process can share with the target process. The target process writes the coverage data into the buffer, while the host process reads it out and keeps it around. If the target crashes, no coverage data is lost, and there is no slow down because of the coverage data being communicated.
 
-> Note: We know about the existence of [MemoryMappedFiles](https://learn.microsoft.com/en-us/dotnet/api/system.io.memorymappedfiles.memorymappedfile?view=net-8.0), but to my understanding not all of its API was available cross-platform. In the end, our implementation ended up being dead simple and had a nicer API overall for our use-case.
+> Note: We know about the existence of [MemoryMappedFiles](https://learn.microsoft.com/en-us/dotnet/api/system.io.memorymappedfiles.memorymappedfile?view=net-8.0), but to my understanding not all of the API is available cross-platform. In the end, our implementation ended up being dead simple and had a nicer API overall for our use-case.
 
-This work was done on the 25th of September, 2024.
+This work was complete on the 25th of September, 2024.
 
 ### Evaluation
 
-The fuzzer was working better than I ever could have expected. Thank you everyone, who has contributed CPU cores to the cause, together we have crushed over 30 bugs in a really short period of time that would have been hard to find by hand. The fuzzer found type system edge cases that we weren't even sure could happen! For the type theorists out there, you know how you generally check for type-recursion before unification? Well we didn't and the fuzzer managed to find code that tried to unify `X'` with `Array<X'>`! Fun stuff.
+The fuzzer was working better than I ever could have expected. Thank you everyone who has contributed CPU cores to the cause. Together we have crushed over 30 bugs in a really short period of time that would have been hard to find by hand. The fuzzer found type system edge cases that we weren't even sure could happen! For the type theorists out there, you know how you generally check for type-recursion before unification? Well we didn't and the fuzzer managed to find code that tried to unify `X'` with `Array<X'>`! Fun stuff.
 
-- 2024 26th of September: Crasfixes found by the fuzzer, ability for the fuzzer to import inputs from files
-- 2024 27th of September: Many-many crashfixes, all found by the fuzzer
-- 2024 28th of September: Fuzzer improvements, more crashfixes, LCOV report generation from the fuzzer
+- 2024 26th of September: Crash fixes found by the fuzzer, and ability for the fuzzer to import inputs from files
+- 2024 27th of September: Many, many crash fixes, all found by the fuzzer
+- 2024 28th of September: Fuzzer improvements, more crash fixes, and LCOV report generation from the fuzzer
 - 2024 1st of October: Fuzzer improvements
-- 2024 3rd of October: Crashfixes, factored out a general-purpose terminal UI for the fuzzer library
+- 2024 3rd of October: Crash fixes, factored out a general-purpose terminal UI for the fuzzer library
 
 ## In conclusion
 
-This year was much less about features and more about tooling and stability, hardening what we already had. I personally don't mind that, we have gotten rid of a lot of technical debt and made using the language a way smoother experience. That said, there are some features that we are waiting for excitedly, the two most important being user-defined types and macros. Thank you everyone who was interested enough about the project to discuss it and special thanks to everyone who contributed. To many more years of Draco! 🎉
+This year was much less about features and more about tooling and stability. Hardening what we already had. I personally don't mind that, we have gotten rid of a lot of technical debt and made using the language a way smoother experience. That said, there are some features that we are waiting for excitedly, the two most important being user-defined types and macros. Thank you everyone who was interested enough in the project to discuss it, and special thanks to everyone who contributed. Here is to many more years of Draco! 🎉
