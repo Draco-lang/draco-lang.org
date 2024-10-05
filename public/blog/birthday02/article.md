@@ -6,9 +6,9 @@ With motivations still high, we jumped right back into working on the compiler.
 
 - 2023 13th of October: Stackification complete in the code-generation backend
 
-This was a very important step that made the generated IL code much more tidy. The intermediate representation we translate to is register-based, but then we have to translate that to the stack-based MSIL code. Originally we took the lazy approach here and allocated a lot of local variables, only using the stack to move in and out of these local "registers". The algorithm we decided to use was inspired by [this gist](https://gist.github.com/evanw/58a8a5b8b4a1da32fcdcfbf9da87c82a), which is a simplified view of how LLVM does it for WASM.
+This was a very important step that made the generated IL code much more tidy. The intermediate representation we translate to is register-based, but then we have to translate that to the stack-based MSIL code. Originally we took the lazy approach and allocated a lot of local variables. Only used the stack to move in and out of these local "registers". The algorithm we decided to use was inspired by [this gist](https://gist.github.com/evanw/58a8a5b8b4a1da32fcdcfbf9da87c82a), which is a simplified version of how LLVM does it for WASM.
 
-To present what this stackification algorithm did to our MSIL code generation, let's look at a simple Draco program:
+To see what this stackification algorithm did to our MSIL code generation, let's look at a simple Draco program:
 
 ```draco
 import System.Console;
@@ -137,7 +137,7 @@ Before the stackification algorithm was introduced, it compiled to the following
 } // end of method FreeFunctions::main
 ```
 
-There are lots of redundant stack operations just to handle the locals as registers. And with stackification enabled, all that disappears:
+There are lots of redundant stack operations to handle the locals as registers. With stackification enabled, all that disappears:
 
 ```msil
 .method private hidebysig static 
@@ -216,25 +216,25 @@ There are lots of redundant stack operations just to handle the locals as regist
 } // end of method FreeFunctions::main
 ```
 
-- 2023 17th of October: Support for type-aliases in the compiler
+- 2023 17th of October: Support for type aliases in the compiler
 
-This feature isn't really exposed to the end-user to this day, but could be in the future, if we decide to. Currently, this is used to alias well-known primitive types from the standard library, so the user can type `int32` instead of `System.Int32` for example.
+Right now, this feature isn't exposed to the end-user, but it could be if we decide to. Technically all that's stopping us is adding it to the specification and add a syntax for it. Currently, this is used to alias well-known primitive types from the standard library. This way, the user can type `int32` instead of `System.Int32` for example, similar to C# primitives.
 
 - 2023 21st of October: LSP and DAP communication refactor
 - 2023 27th of October: Crashbug fix for LSP cancellation
 - 2023 29th of October: Formatter rework, diagnostic bag fixes, character literals
 - 2023 22nd of November: PowerShell script fixes
 
-After a bunch of fixes we added a small feature that we were missing all along, character literals! They are not too dissimilar from the C# character literals. The only major difference would be the Unicode codepoint escape sequence, which is in the format `'\u{123ABC}'`, just like in Draco string literals.
+After a bunch of fixes we added a small feature that was missing, character literals! They are similar to the C# character literals. The only major difference would be the Unicode codepoint escape sequence, which is in the format `'\u{123ABC}'`, as it is in Draco string literals.
 
-## To cut down the tree
+## Cutting down the trees
 
 Internally, we had 3 major tree representations in the compiler:
- 1. The syntax tree. This is pretty self-explanitory, directly contains the parsed source code without throwing out any detail from it. Even comments and whitespaces are stored as trivia around the tokens.
- 2. The untyped tree. The reason for this will be explained below, but a slight hint: Roslyn does not need this and we only need this because of the amount of type-inference we do.
- 3. The bound tree. This is essentially the abstract syntax tree, with known types and resolved symbols. The flow analysis, lowering and code generation can work off of this tree.
+ 1. Syntax tree: This is pretty self-explanitory, it directly contains the parsed source code without throwing out any details. Even comments and whitespaces are stored as trivia around the tokens.
+ 2. Untyped tree: The reason for this will be explained below, but here is a slight hint: Roslyn does not need this and we only need this because of the amount of type-inference we do.
+ 3. Bound tree: This is essentially the abstract syntax tree, with known types and resolved symbols. The flow analysis, lowering and code generation can work off of this tree.
 
-So what's up with that untyped tree? Since we do full function-local type inference, we can't always know in a single pass, what kind of node to construct or what the type of something is. For example, looking at the following Draco code:
+So what's up with that untyped tree? Since we do full function-local type inference, we can't always know in a single pass what kind of node to construct or what the type of something is. For example, looking at the following Draco code:
 
 ```draco
 func main() {
@@ -245,19 +245,19 @@ func main() {
 }
 ```
 
-Initially, the type of `x` is unknown. When trying to look at the next line, we call a method called `Successor()` on it, we have no way to resolve, until we have more information about the type. The bound tree would expect to know all the symbols and types at this point, so we can't create a bound tree from this right away. This is why we introduced an awkward in-between state, something more abstract than the syntax tree, but with less type and symbolic information than the bound tree.
+Initially, the type of `x` is unknown. When trying to look at the next line, we call a method called `Successor()` on it. We have no way to resolve the called symbol, until we have more information about the type — which only appears at the next line. The bound tree would expect to know all the symbols and types at this point, so we can't create a bound tree from this right away. This is why we introduced an awkward in-between state, something more abstract than the syntax tree, but with less type and symbolic information than the bound tree.
 
-This caused plenty of pain-points around type checking. For example, the rough flow of checking, if a `for` loop is type-safe and valid, is the following.
+This caused plenty of pain-points around type checking. For example, the rough flow of checking if a `for` loop is type-safe and valid is the following.
 
- 1. Check what the type of the iterated collection is, call it `TCollection`
- 2. Check, if `TCollection` has a method called `GetEnumerator()`, which returns a type `TEnumerator`
- 3. Check, if `TEnumerator` has a method called `MoveNext()`, which returns a `bool`
- 4. Check, if `TEnumerator` has a property called `Current`, which returns a type `TElement`
- 5. Check, if `Telement` is assignable to the type of the loop variable, in case it's explicitly typed
+ 1. Check what the type of the iterated collection is and call it `TCollection`.
+ 2. Check if `TCollection` has a method called `GetEnumerator()` which returns a type `TEnumerator`.
+ 3. Check if `TEnumerator` has a method called `MoveNext()` which returns a `bool`.
+ 4. Check if `TEnumerator` has a property called `Current` which returns a type `TElement`.
+ 5. Check if `Telement` is assignable to the type of the loop variable if it's explicitly typed.
 
-Imagine, that we could not infer the exact type of the collection yet. How do we check if it has a method called `GetEnumerator()`? We can't! The solution? Introducing various kinds of sentinel, delay and placeholder nodes in the untyped tree, with the sole purpose of pushing back the check, evaluation or node construction to the point, where we have more information available from future code. With this mentality, the untyped tree basically became an incomplete copy of the bound tree, with node such as `UntypedLocalExpression` or `UntypedDelayedExpression`.
+Imagine that we could not infer the exact type of the collection yet. How do we check if it has a method called `GetEnumerator()`? We can't! The solution? Introducing various kinds of sentinel, delay and placeholder nodes in the untyped tree, with the sole purpose of pushing back the check, evaluation or node construction to the point where we have more information available from future code. With this mentality, the untyped tree basically became an incomplete copy of the bound tree, with node such as `UntypedLocalExpression` or `UntypedDelayedExpression`.
 
-This caused multiple maintainability issues. First off, binding had to be written essentially twice. Once when translating the syntax tree to untyped trees, and then the untyped trees to bound trees - with the constraint solver invoked in between for more type information. Second, the code became multiply nested with callbacks. It was not uncommon to see this:
+This caused multiple maintainability issues. First off, binding had to be written essentially twice. Once when translating the syntax tree to untyped trees, and then the untyped trees to bound trees — with the constraint solver invoked in between for more type information. Second, the code became multiply nested with callbacks. It was not uncommon to see this:
 
 ```cs
 var sequenceExpr = new UntypedDelayedExpression(sequence.Type, () =>
@@ -270,17 +270,17 @@ var sequenceExpr = new UntypedDelayedExpression(sequence.Type, () =>
 });
 ```
 
-And finally, if we ever had to do type-checks on a node, we had to take into account that it could be one of the placeholders or delays anytime, and had to wrap that logic itself into a delay node to deal with this.
+And finally, if we ever had to do type checks on a node, we had to take into account that it could be one of the placeholders or delays anytime, and had to wrap that logic into a delay node to deal with this.
 
-If you have ever seen [asynchronous JavaScript code](https://www.stoman.me/articles/async-await-promises-callbacks-in-javascript) before async/await, you might get a very familiar feeling. This is the exact same problem! When we don't know something yet, it would be awesome to suspend the evaluation of the current node, continue binding other nodes, or even evaluate some constraints in the constraint solver. I told this to [Kuinox](https://github.com/Kuinox/), who immediately got to work, and not even an hour later presented the prototype: binding tasks, that work exactly like JavaScript async callbacks.
+If you have ever seen [asynchronous JavaScript code](https://www.stoman.me/articles/async-await-promises-callbacks-in-javascript) before async/await, this might look familiar to you. This is the exact same problem! When we don't know something yet, it would be awesome to suspend the evaluation of the current node, continue binding other nodes, or even evaluate some constraints in the constraint solver. I told this to [Kuinox](https://github.com/Kuinox/), who immediately got to work, and not even an hour later presented the prototype: binding tasks, that work exactly like JavaScript async callbacks.
 
-We started reworking the binding to use async/await with these tasks, binding the syntax tree and immediately constructing a bound tree, skipping the untyped tree entirely. The work was quite nerve wracking, as I had no idea if this was gonna work how I imagined it, if we'd hit an impossible edge-case we didn't account for and all the work was for nothing. After a month of hard work, probably [one of my favorite PRs](https://github.com/Draco-lang/Compiler/pull/344) got merged on the 28th of November. It async-ified our binding logic and got rid of:
+We started reworking the binding to use async/await with these tasks, binding the syntax tree and immediately constructing a bound tree, skipping the untyped tree entirely. The work was quite nerve wracking, as I had no idea if this was gonna work how I imagined it, if we'd hit an impossible edge case we didn't account for and all the work was for nothing. After a month of hard work, probably [one of my favorite PRs](https://github.com/Draco-lang/Compiler/pull/344) got merged on the 28th of November. It async-ified our binding logic and got rid of:
  * All of the untyped tree
  * All of the logic needed to bridge the untyped tree to the bound tree
  * Lots of nesting complexity
  * Lots of node-type checks in the binder code
 
-This was one of the biggest tech-debt we were carrying for quite a while and made introducing and debugging features quite painful, and now it's gone. The async-ified version turned out better than what I could have ever imagined.
+This was one of the largest tech debt items, and we had been carrying it for quite a while. It made introducing and debugging features quite painful, and now it's gone. The async-ified version turned out better than what I could have ever imagined.
 
 ## A depressing end and start of the year
 
