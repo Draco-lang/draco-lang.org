@@ -1,4 +1,4 @@
-It's been a year since our last blog post, so it's time for another retrospective to see what we managed to achieve in a year. The year had its ups and downs, people getting interested and disinterested in the project, phases of burnout, but we managed to put together enough progress to justify a blogpost about it.
+It's been a year since our last blog post, so it's time for another retrospective to see what we managed to achieve in a year. The year had its ups and downs, people getting interested and disinterested in the project and phases of burnout, but we managed to put together enough progress to justify a blogpost about it.
 
 ## Right after the first birthday
 
