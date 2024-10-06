@@ -1,4 +1,18 @@
+---
+title: "Happy second birthday Draco compiler!"
+date: 2024-10-09 18:00:00 +0200
+teaser: "🎉 Celebrating Draco compiler's 2nd birthday! Let's see what we have managed to achieve in our second year of compiler development."
+image: "/generated/party.svg"
+imageMargin: "20px"
+imageHeight: "200px"
+tags: meta
+authors: "LPeter1997"
+makeSocialEmbedBig: false
+---
+
 It's been a year since our last blog post, so it's time for another retrospective to see what we managed to achieve in a year. The year had its ups and downs, people getting interested and disinterested in the project and phases of burnout, but we managed to put together enough progress to justify a blogpost about it.
+
+Special thanks to [Jeff Walker](https://github.com/WalkerCodeRanger) for proofreading and fixing my English!
 
 ## Right after the first birthday
 
