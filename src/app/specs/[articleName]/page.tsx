@@ -15,7 +15,7 @@ export default async function Page({ params }: ArticleNameParams) {
   const spec = specs.find((spec) => spec.name === articleName)!;
   return (
     <div className={`article-${articleName}`}>
-      <Article markdown={spec.markdown} />
+      <Article markdown={spec.markdown} markdownFilePath={null} />
       <style>
         {`
           @media (max-width: 650px) {

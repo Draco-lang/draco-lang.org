@@ -19,7 +19,8 @@ export interface BlogArticle {
 export async function getBlogArticles(): Promise<BlogArticle[]> {
     // list directories in /blog
     // for each directory, read the markdown file article.md
-    const dir = await fs.promises.opendir(path.join(process.cwd(), "public/blog"));
+    const publicDir = path.join(process.cwd(), "public");
+    const dir = await fs.promises.opendir(path.join(publicDir, "blog"));
     const articles: BlogArticle[] = [];
     for await (const dirEntry of dir) {
         if (dirEntry.isDirectory()) {
@@ -53,6 +54,8 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
             if (attributes.authors !== undefined && !Array.isArray(attributes.authors)) {
                 attributes.authors = [attributes.authors];
             }
+            // blogPath relative to public
+            const blogPath = path.relative(publicDir, articlePath).replace(/\\/g, "/");
 
             articles.push({
                 title: attributes.title ?? "Untitled",
@@ -64,7 +67,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
                 image: attributes.image,
                 imageMargin: attributes.imageMargin,
                 imageHeight: attributes.imageHeight,
-                path: encodeURIComponent(dirEntry.name),
+                path: blogPath,
                 makeSocialEmbedBig: attributes.makeSocialEmbedBig ?? false,
             });
         }
