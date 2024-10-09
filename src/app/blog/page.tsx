@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "./page.css";
 import { getBlogArticles } from "@/utils/blog";
+import path from "path";
 
 export default async function Page() {
   const articles = await getBlogArticles();
@@ -9,7 +10,7 @@ export default async function Page() {
   return (
     <div className="blog-entries">
       {articles.map((article, i) => (
-        <Link key={i} href={`/blog/${article.path}`}>
+        <Link key={i} href={`/blog/${path.basename(path.dirname(article.path))}`}>
           <div className="article-preview-left-part">
             <h1 className="article-preview-title">{article.title}</h1>
             <div className="article-teaser">{article.teaser}</div>
