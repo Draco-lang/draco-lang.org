@@ -54,6 +54,7 @@ export async function getBlogArticles(): Promise<BlogArticle[]> {
             if (attributes.authors !== undefined && !Array.isArray(attributes.authors)) {
                 attributes.authors = [attributes.authors];
             }
+            
             // blogPath relative to public
             const blogPath = path.relative(publicDir, articlePath).replace(/\\/g, "/");
 
