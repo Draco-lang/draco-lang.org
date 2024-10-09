@@ -4,9 +4,9 @@ import "./Article.css";
 import { HTMLProps } from "react";
 import TableOfContentScrollEffect from "./TableOfContentScrollEffect";
 import "highlight.js/styles/atom-one-dark.css";
-
-export default async function Article(params: HTMLProps<HTMLDivElement> & { markdown: string }) {
-  const { markdown, className, ...restProps } = params;
+import path from "path";
+export default function Article(params: HTMLProps<HTMLDivElement> & { markdown: string, markdownFilePath: string|null}) {
+  const { markdown, className, markdownFilePath, ...restProps } = params;
   const headingsMapPoc = {};
   const headingsMapArticle = {};
   const html = marked(markdown, {
@@ -76,6 +76,12 @@ export default async function Article(params: HTMLProps<HTMLDivElement> & { mark
       const hashName = getHeading(text, headingsMapArticle);
       const str = `<a href="#${hashName}" class="not-a-link"> <h${level} id="${hashName}" class="article-heading heading-${hashName}">${text}</h${level}> </a>`;
       return str;
+    };
+    renderer.image = (href, title) => {
+      if (markdownFilePath === null) return `<img src="${href}" title="${title || ''}" />`;
+      const markdownDir = markdownFilePath.substring(0, markdownFilePath.lastIndexOf('/'));
+      const resolvedPath = path.join(path.relative('blog/', markdownDir),href);
+      return `<img src="${resolvedPath}" title="${title || ''}" />`;
     };
     return renderer;
   }

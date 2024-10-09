@@ -8,11 +8,13 @@ import { Metadata } from "next";
 import sharp from "sharp";
 import { promises as fs } from "fs";
 import ArticleNameParams from "@/utils/ArticleNameParams";
+import path from "path";
 
 export async function generateStaticParams() {
   const articles = await getBlogArticles();
   return articles.map((article) => ({
-    articleName: article.path,
+    // get filename without extension from path
+    articleName: encodeURIComponent(path.basename(path.dirname(article.path))),
   }));
 }
 
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: ArticleNameParams): Promise<M
   }
 
   const articles = await getBlogArticles();
-  const article = articles.find((article) => article.path === articleName)!;
+  const article = articles.find((article) => path.basename(path.dirname(article.path)) === articleName)!;
   if (article.image !== undefined) {
     const filePath = `./public${article.image}`;
     const svgBuffer = await fs.readFile(filePath);
@@ -57,7 +59,7 @@ export default async function Page({ params }: ArticleNameParams) {
   }
 
   const articles = await getBlogArticles();
-  const article = articles.find((article) => article.path === articleName)!;
+  const article = articles.find((article) => path.basename(path.dirname(article.path)) === articleName)!;
   articles.sort((a, b) => (a.date > b.date ? -1 : 1));
   const articleIndex = articles.indexOf(article);
   const previousArticle = articles[articleIndex + 1];
@@ -103,7 +105,7 @@ export default async function Page({ params }: ArticleNameParams) {
         )}
       </div>
 
-      <Article markdown={article.markdown} />
+      <Article markdown={article.markdown} markdownFilePath={article.path} />
       <div className="article-footer">
         <div className="footer-oldnew">
           {previousArticle === undefined ? (

@@ -7,7 +7,7 @@ export default async function Page() {
   const intro = articles.find((article) => article.name === "Introduction")!;
   return (
     <>
-      <Article markdown={intro.markdown} className="article-Introduction" />
+      <Article markdown={intro.markdown} markdownFilePath={null} className="article-Introduction" />
       <style>
         {`
       @media (max-width: 650px) {
