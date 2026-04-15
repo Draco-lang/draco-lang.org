@@ -96,6 +96,14 @@ export default async function RootLayout({ children }: Params) {
             </a>
           </div>
           <div className="body">{children}</div>
+          <footer className="site-footer">
+            <span className="muted-color">
+              Hosted with the support of{" "}
+              <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" aria-label="Cloudflare (opens in a new tab)">
+                Cloudflare
+              </a>
+            </span>
+          </footer>
         </div>
       </body>
     </html>

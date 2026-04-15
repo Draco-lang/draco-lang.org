@@ -252,3 +252,11 @@ h6 {
     color: rgb(134, 134, 134);
   }
 }
+
+.site-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  font-size: 0.85rem;
+}
